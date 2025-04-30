@@ -1,0 +1,24 @@
+.header {
+    height: 60px;
+    z-index: 99;
+    transition: var(--transition-duration);
+    background-color: var(--primary-bg-color);
+}
+
+.header-logo-container {
+    height: 30px;
+}
+
+.header-logo {
+    height: 30px;
+    width: auto;
+}
+
+.header-text-logo {
+    margin-left: 1rem;
+    margin-top: 0.25rem;
+}
+
+.header-container {
+    padding: 0 20px;
+}
