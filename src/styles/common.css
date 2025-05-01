@@ -5212,3 +5212,9 @@ p.text.off {
         height: calc(100vh - 55px)
     }
 }
+
+@media only screen and (min-width: 360px) {
+    .input {
+        padding: 0 20px;
+    }
+}

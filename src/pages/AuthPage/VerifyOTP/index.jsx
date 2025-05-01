@@ -1,0 +1,117 @@
+import React, { useState, useRef, useEffect } from 'react';
+
+const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
+    const [otp, setOtp] = useState(['', '', '', '']);
+    const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+    const [timer, setTimer] = useState(30);
+    const inputRefs = useRef([]);
+
+    const handleChange = (e, index) => {
+        const value = e.target.value.replace(/\D/, '')
+
+        const newOtp = [...otp];
+        newOtp[index] = value;
+        setOtp(newOtp);
+
+        // Move to next input only if a digit was typed
+        if (value && index < 3) {
+            inputRefs.current[index + 1].focus();
+        }
+    };
+
+
+    const handleKeyDown = (e, index) => {
+        if (e.key === 'Backspace' && !otp[index] && index > 0) {
+            const newOtp = [...otp];
+            newOtp[index - 1] = '';
+            setOtp(newOtp);
+            inputRefs.current[index - 1].focus();
+        }
+    };
+
+    useEffect(() => {
+        setIsSubmitEnabled(otp.every(d => d !== ''));
+    }, [otp]);
+
+    useEffect(() => {
+        if (timer <= 0) return;
+        const interval = setInterval(() => setTimer(prev => prev - 1), 1000);
+        return () => clearInterval(interval);
+    }, [timer]);
+
+    const handleSubmit = () => {
+        const enteredOtp = otp.join('');
+        alert(`Submitted OTP: ${enteredOtp}`);
+        // Make API call here
+    };
+
+    const handleResend = () => {
+        setOtp(['', '', '', '']);
+        setTimer(30);
+        inputRefs.current[0].focus();
+        // Trigger resend API here
+    };
+
+    return (
+        <div className="flex flex-col h-dynamic-screen flex flex-col justify-between pb-20">
+            <div className="px-30 text-center flex-1">
+                <div className="mt-80 text-18 font-black dark:text-CFFFFFF">Enter OTP</div>
+                <div className="flex items-center justify-center mt-4 text-12">
+                    <div className="text-C676767 dark:text-C8789C3">Sent on {phoneNumber}</div>
+                    <div className="px-6 text-C676767 font-bold">·</div>
+                    <div className="font-bold text-C3E51B5 cursor-pointer dark:text-CFFCC5B" onClick={onChangeNumber}>Change Number</div>
+                </div>
+                <div data-testid="phone-login-otp-input" className="mt-30 flex justify-between relative">
+                    {otp.map((digit, i) => (
+                        <input
+                            key={i}
+                            autoComplete="off"
+                            type="tel"
+                            id={`otpInput${i}`}
+                            className="bg-CFAFAFA border-CE0E0E0 h-50 w-50 border rounded-5 text-18 font-medium text-center outline-none focus:border-C3957EA dark:border-C404380 dark:bg-C20213F dark:text-CFFFFFF"
+                            maxLength={1}
+                            value={digit}
+                            onChange={(e) => handleChange(e, i)}
+                            onKeyDown={(e) => handleKeyDown(e, i)}
+                            ref={el => (inputRefs.current[i] = el)}
+                        />
+                    ))}
+                </div>
+                <button
+                    data-testid="phone-login-otp-button-inactive"
+                    disabled={!isSubmitEnabled}
+                    onClick={handleSubmit}
+                    className={`py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 w-full mt-36 cursor-pointer flex items-center flex-col select-none ${isSubmitEnabled ? 'opacity-100' : 'opacity-70'
+                        }`}
+                >
+                    Submit OTP
+                </button>
+                <div
+                    data-testid="phone-login-otp-resend-timer"
+                    className="mt-20 text-center text-C2C2C2C dark:text-CFFFFFF text-12 uppercase cursor-pointer"
+                >
+                    Resend OTP in {timer} seconds
+                </div>
+            </div>
+            <div className="w-screen text-center max-w-maxW">
+                <div className="text-14 font-bold mb-8 mt-28 dark:text-CFFCC5B">
+                    Complete sign up & start winning coins
+                </div>
+                <div className="flex justify-center">
+                    <img
+                        alt="treasure"
+                        loading="lazy"
+                        width={131}
+                        height={120}
+                        decoding="async"
+                        src="https://static.quizzop.com/newton/assets/treasure.svg"
+                        style={{ color: 'transparent' }}
+                    />
+                </div>
+            </div>
+        </div>
+
+    );
+};
+
+export default VerifyOTP;

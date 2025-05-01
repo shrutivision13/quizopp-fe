@@ -6,11 +6,13 @@ import { routes } from './routing/route.jsx';
 
 function App() {
   return (
-    <Routes>
-      {routes.map(({ path, element }, index) => (
-        <Route key={index} path={path} element={<Wrapper>{element}</Wrapper>} />
-      ))}
-    </Routes>
+    <>
+      <Routes>
+        {routes.map(({ path, element }, index) => (
+          <Route key={index} path={path} element={<Wrapper>{element}</Wrapper>} />
+        ))}
+      </Routes>
+    </>
   );
 }
 
