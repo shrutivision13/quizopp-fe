@@ -3,6 +3,7 @@ import InitialPage from '../pages/InitialPage';
 import StartQuiz from '../pages/Start-Quiz';
 import AuthPage from '../pages/AuthPage';
 import PhoneLogin from '../pages/AuthPage/PhoneLogin';
+import Home from '../pages/Home';
 
 export const routes = [
   {
@@ -18,7 +19,11 @@ export const routes = [
     element: <AuthPage />,
   },
   {
-    path: '//login/phone',
+    path: '/login/phone',
     element: <PhoneLogin />,
+  },
+  {
+    path: '/',
+    element: <Home />,
   },
 ];

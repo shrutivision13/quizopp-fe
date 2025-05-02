@@ -62,7 +62,6 @@ const InitialPage = () => {
 
     const handleProceed = () => {
         if (selectedTopics.length > 0) {
-            console.log('Selected Topics:', selectedTopics);
             navigate('/start-quiz')
         } else {
             alert('Please select at least one topic to proceed.');

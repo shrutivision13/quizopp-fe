@@ -12,9 +12,6 @@ const AuthPage = () => {
       const user = result.user;
       const idToken = await user.getIdToken(); // 🔐 This is the ID token
 
-      console.log('User:', user);
-      console.log('ID Token:', idToken);
-
       // TODO: Send `idToken` to your backend for verification/authentication
     } catch (error) {
       console.error('Error during sign-in:', error);
