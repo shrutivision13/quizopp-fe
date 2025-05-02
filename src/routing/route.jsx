@@ -4,6 +4,7 @@ import StartQuiz from '../pages/Start-Quiz';
 import AuthPage from '../pages/AuthPage';
 import PhoneLogin from '../pages/AuthPage/PhoneLogin';
 import Home from '../pages/Home';
+import MenuPage from '../pages/MenuPage';
 
 export const routes = [
   {
@@ -25,5 +26,7 @@ export const routes = [
   {
     path: '/',
     element: <Home />,
+    path: '/menu-page',
+    element: <MenuPage />,
   },
 ];
