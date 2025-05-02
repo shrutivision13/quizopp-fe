@@ -1,0 +1,21 @@
+import React from "react";
+import PickCategories from "../../../components/PickCategories/PickCategories";
+
+const QuizBites = () => {
+  return (
+    <section className="px-20 mt-24">
+      <div className="mb-14">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-CFFFFFF text-18 font-bold">Quiz Bites</h2>
+        </div>
+        <p className="text-12 text-C8789C3">
+          Short, quick quizzes from topics you ❤️ love!
+        </p>
+      </div>
+
+      <PickCategories />
+    </section>
+  );
+};
+
+export default QuizBites;
