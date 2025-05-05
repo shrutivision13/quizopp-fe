@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react"; // Add useRef
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import AdSlot from "../../components/AdSense/AdSlot"; // Import AdSlot
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 
 function Category() {
   const [categories, setCategories] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // Add state for search input
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false); // State to toggle filter dropdown
+  const [selectedFilter, setSelectedFilter] = useState("ALL"); // State to track selected filter
+  const filterRef = useRef(null); // Ref for the filter dropdown
 
   useEffect(() => {
     ApiGetCategories()
@@ -15,9 +18,21 @@ function Category() {
         }
       })
       .catch((err) => {
-        // dispatch(handleLoader(false));
-        // Toast.error(err);
+        console.error("Error fetching categories:", err);
       });
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setIsFilterOpen(false); // Close dropdown if clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   return (
@@ -40,16 +55,19 @@ function Category() {
             <input
               data-testid="search-bar"
               className="h-40 w-full rounded-full text-[14px] outline-none text-C959595 placeholder:text-C959595 dark:text-C8789C3 placeholder:dark:text-C8789C3 bg-CFFFFFF dark:bg-C20213F"
-              placeholder="Search for topics you like"
+              placeholder={searchTerm === "" ? "Search for topics you like" : ""} // Conditional placeholder
               value={searchTerm} // Bind input value to state
               onChange={(e) => setSearchTerm(e.target.value)} // Update state on input change
+              onFocus={(e) => (e.target.placeholder = "")} // Remove placeholder on focus
+              onBlur={(e) => (e.target.placeholder = "Search for topics you like")} // Restore placeholder on blur
             />
           </div>
         </div>
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-left" ref={filterRef}>
           <div
             className="flex justify-center items-center w-48 h-48 border border-CFFFFFF bg-CFFFFFF dark:bg-C20213F dark:border-C26284C rounded-10 cursor-pointer shadow-filter"
             data-testid="filter-button"
+            onClick={() => setIsFilterOpen(!isFilterOpen)} // Toggle filter dropdown
           >
             <svg
               width="24"
@@ -76,22 +94,92 @@ function Category() {
               ></path>
             </svg>
           </div>
+          {isFilterOpen && ( // Render filter options if dropdown is open
+            <div
+              className="absolute right-0 z-10 mt-10 w-[180px] pt-20 pb-20 border border-CFFFFFF bg-CFFFFFF dark:bg-C20213F dark:border-C26284C origin-top-right rounded-10 shadow-filterContainer ring-1 ring-[#FFFFFF] dark:ring-black ring-opacity-5 focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu-button"
+            >
+              <div
+                data-testid="filter-all-button"
+                className="px-20 flex cursor-pointer dark:text-CFFFFFF mb-12"
+                onClick={() => setSelectedFilter("ALL")} // Update selected filter
+              >
+                <input
+                  id="ALL"
+                  type="radio"
+                  className="mr-10 form-radio custom-radio-button"
+                  value="ALL"
+                  checked={selectedFilter === "ALL"}
+                  readOnly
+                />
+                <label htmlFor="ALL" className="text-14 w-full cursor-pointer">
+                  All
+                </label>
+              </div>
+              <div
+                data-testid="filter-liked-button"
+                className="px-20 flex cursor-pointer dark:text-CFFFFFF mb-12"
+                onClick={() => setSelectedFilter("LIKED_TOPICS")} // Update selected filter
+              >
+                <input
+                  id="LIKED_TOPICS"
+                  type="radio"
+                  className="mr-10 form-radio custom-radio-button"
+                  value="LIKED_TOPICS"
+                  checked={selectedFilter === "LIKED_TOPICS"}
+                  readOnly
+                />
+                <label
+                  htmlFor="LIKED_TOPICS"
+                  className="text-14 w-full cursor-pointer"
+                >
+                  Liked Topics
+                </label>
+              </div>
+              <div
+                data-testid="filter-other-button"
+                className="px-20 flex cursor-pointer dark:text-CFFFFFF"
+                onClick={() => setSelectedFilter("OTHER_TOPICS")} // Update selected filter
+              >
+                <input
+                  id="OTHER_TOPICS"
+                  type="radio"
+                  className="mr-10 form-radio custom-radio-button"
+                  value="OTHER_TOPICS"
+                  checked={selectedFilter === "OTHER_TOPICS"}
+                  readOnly
+                />
+                <label
+                  htmlFor="OTHER_TOPICS"
+                  className="text-14 w-full cursor-pointer"
+                >
+                  Other Topics
+                </label>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      <section className="px-20 mt-24">
+      <section className="px-20 mt-8">
         <div className="flex justify-between items-center mb-14"></div>
         <div className="grid grid-cols-3 gap-14">
           {categories?.slice(0, 6).map((category) => (
             <CategoryCard key={category?._id} category={category} />
           ))}
         </div>
-        <div className="w-full mt-10">
-          <AdSlot
-            slotId="ad-slot-1"
-            adUnitPath="/123456/ad-unit"
-            sizes={[728, 250]} // Full-width ad size
-          />
-        </div>
+      </section>
+      <div className="w-full px-0 mt-10">
+        {" "}
+        {/* AdSlot moved outside the section */}
+        <AdSlot
+          slotId="ad-slot-1"
+          adUnitPath="/123456/ad-unit"
+          sizes={[728, 250]}
+        />
+      </div>
+      <section className="px-20 mt-8">
         <div className="grid grid-cols-3 gap-14 mt-14">
           {categories?.slice(6).map((category) => (
             <CategoryCard key={category?._id} category={category} />

@@ -8,7 +8,11 @@ const useCookie = () => {
         return null;
     }, []);
 
-    return { getCookie };
+    const deleteCookie = useCallback((name) => {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }, []);
+
+    return { getCookie, deleteCookie };
 };
 
 export default useCookie;

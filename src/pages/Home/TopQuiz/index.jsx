@@ -23,7 +23,7 @@ const TopQuiz = () => {
   }, []);
   return (
     <div className="px-20 mt-24">
-      <SectionHeading title={"Top Quizzes"} />
+      <SectionHeading title={"Top Quizzes"} route="/category" />
       <div className="grid grid-cols-3 gap-14">
         {categories?.slice(0, 6).map((category) => (
           <CategoryCard key={category?._id} category={category} />

@@ -28,7 +28,6 @@ const CountdownTimer = ({ endTime }) => {
     return `${h}:${m}:${s}`;
   };
 
-  console.log(formatTime(timeLeft));
 
   return (
     <p className="ml-6 text-12 text-C8789C3">Ends in {formatTime(timeLeft)}</p>

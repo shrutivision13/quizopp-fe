@@ -9,6 +9,6 @@ export const ApiGetSatrted = (payload) => {
         "Content-Type": "application/json",
       },
     })
-    .then((res) => res.data)
-    .catch((res) => res.data);
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
 };

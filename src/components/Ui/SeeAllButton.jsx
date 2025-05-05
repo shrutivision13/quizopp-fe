@@ -1,8 +1,8 @@
 import React from "react";
 import arrow from "../../assets/images/next-arrow-yellow.svg";
 
-export const SeeAllButton = () => (
-  <a href="/category">
+export const SeeAllButton = ({ route }) => (
+  <a href={route}>
     <div className="w-full flex cursor-pointer items-center">
       <p
         className="text-10 font-bold uppercase text-CFFCC5B mr-4"

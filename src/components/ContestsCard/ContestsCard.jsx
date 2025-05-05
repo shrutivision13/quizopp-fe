@@ -1,7 +1,10 @@
 import React from "react";
 import CountdownTimer from "../CountdownTimer/CountdownTimer";
+import { useNavigate } from "react-router-dom";
 
 const ContestsCard = ({ quizContest }) => {
+
+  const navigate = useNavigate();
   const data = {
     _id: "680a12111b04c23b60a600df",
     categoryId: {
@@ -20,13 +23,19 @@ const ContestsCard = ({ quizContest }) => {
     participation: 165,
   };
 
+ 
+
+  const handelJoinContest = () => {
+      navigate(
+        `/${quizContest?.categoryId?.categoryName.toLowerCase().replace(/\s+/g, '-')}/join-contest?contestId=${quizContest?._id}`,
+        { state: { quizContest } }
+      );
+  
+  };
+
   return (
-    <div className="contests-card-container" key={quizContest.id}>
-      <a
-        className="link-anchor"
-        data-testid="contest-card-category-0"
-        href="/bollywood/join-contest?contestId=642ea820-e794-4209-87cb-9cda426ba990"
-      >
+    <div onClick={handelJoinContest} className="contests-card-container" key={quizContest.id}>
+     
         <div className="bg-C20213F flex rounded-10 p-20 shadow-contestCard mt-20">
           <div className="w-120 mr-20 flex">
             <div
@@ -110,7 +119,6 @@ const ContestsCard = ({ quizContest }) => {
             </button>
           </div>
         </div>
-      </a>
     </div>
   );
 };

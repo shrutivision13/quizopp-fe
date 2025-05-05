@@ -398,3 +398,28 @@ body {
 .__variable_8cc5aa {
   --font-roboto: "__Roboto_8cc5aa"
 }
+
+.dark .custom-radio-button:checked {
+  background: #4782f4;
+  box-shadow: 0 0 0 1px #4782f4;
+}
+
+.dark .custom-radio-button {
+  border: 3px solid #20213f;
+  box-shadow: 0 0 0 1px #404380;
+}
+
+.custom-radio-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 16px;
+  margin: 0 10px 0 0;
+  transform: translateY(1px);
+  width: 18px;
+}
+
+

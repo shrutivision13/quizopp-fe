@@ -4,8 +4,10 @@ import StartQuiz from "../pages/Start-Quiz";
 import AuthPage from "../pages/AuthPage";
 import PhoneLogin from "../pages/AuthPage/PhoneLogin";
 import Home from "../pages/Home";
-import MenuPage from "../pages/MenuPage";
 import Category from "../pages/Category";
+import CategoryDetails from "../pages/CategoryDetails";
+import { Contests } from "../pages/Contests";
+import JoinContest from "../pages/JoinContest";
 
 export const routes = [
   {
@@ -31,5 +33,17 @@ export const routes = [
   {
     path: "/category",
     element: <Category />,
+  },
+  {
+    path: "/:categoryName/category",
+    element: <CategoryDetails />,
+  },
+  {
+    path: "/contests",
+    element: <Contests />,
+  },
+  {
+    path: "/:categoryName/join-contest",
+    element: <JoinContest />,
   },
 ];

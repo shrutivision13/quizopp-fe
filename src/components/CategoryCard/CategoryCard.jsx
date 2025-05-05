@@ -1,10 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const CategoryCard = ({ category }) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleCardClick = () => {
+    navigate(`/${category?.categorySlug}/category`, { state: category }); // Pass the entire category object in state
+  };
+
   const isLiked = category?.categoryName === "Holi";
 
   return (
-    <div className="relative" key={category?._id}>
+    <div className="relative" key={category?._id} onClick={handleCardClick}> {/* Add onClick */}
       {/* Like Icon */}
       <div
         data-testid={`category-${category?.categoryName?.toLowerCase()}-like-icon`}
@@ -27,28 +34,23 @@ const CategoryCard = ({ category }) => {
       </div>
 
       {/* Category Content */}
-      <a className="anchor-link" href="/narendra-modi/begin-quiz">
-        <div
-          className="rounded-12 h-140 flex flex-col items-center justify-center"
-          style={{ backgroundColor: category?.backgroundColor }}
-        >
-          <div className="flex justify-center mb-14">
-            <img
-              alt={category?.categoryName}
-              loading="lazy"
-              width="70"
-              height="70"
-              style={{ color: "transparent" }}
-              src={`http://132.148.0.110:3000/images/category/${category?.categoryIcon}`}
-            />
-          </div>
-          <div className="z-10 w-full flex justify-center px-10">
-            <p className="text-12 text-C000000 font-bold text-center">
-              {category?.categoryName}
-            </p>
-          </div>
+      <div className="rounded-12 h-140 flex flex-col items-center justify-center" style={{ backgroundColor: category?.backgroundColor }}>
+        <div className="flex justify-center mb-14">
+          <img
+            alt={category?.categoryName}
+            loading="lazy"
+            width="70"
+            height="70"
+            style={{ color: "transparent" }}
+            src={`http://132.148.0.110:3000/images/category/${category?.categoryIcon}`}
+          />
         </div>
-      </a>
+        <div className="z-10 w-full flex justify-center px-10">
+          <p className="text-12 text-C000000 font-bold text-center">
+            {category?.categoryName}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

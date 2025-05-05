@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MenuPage from "../../pages/MenuPage";
 
 import "../../styles/components/header/header.css";
@@ -13,11 +13,19 @@ import freeCoins from "../../assets/images/free-coins.gif";
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { categoryName } = useParams();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const path = location.pathname;
 
-  const isBackHeader = ["/login", "/login/phone" , "/category"].includes(path);
+  const isBackHeader = [
+    "/login",
+    "/login/phone",
+    "/category",
+    `/${categoryName}/category`,
+    "/contests",
+  ].includes(path) || path.includes("/join-contest"); // Include dynamic join-contest paths
   const isHiddenHeader = [];
   const isMainHeader = !isBackHeader && !isHiddenHeader.includes(path);
   const initHeader = ["/get-started"].includes(path);
@@ -47,11 +55,22 @@ const Header = () => {
             <div
               data-testid="top-back-nav-button"
               className="py-14 pr-4 flex justify-center cursor-pointer"
+              onClick={() => navigate(-1)}
             >
               <img src={sidearrow} alt="Back" />
             </div>
             <div className="py-10">
-              <h1 className="text-14 font-bold dark:text-CFFFFFF">Back</h1>
+              <h1 className="text-14 font-bold dark:text-CFFFFFF">
+                {path === "/contests" || path.includes("/join-contest") ? ( // Updated condition
+                  <img src={logo} alt="Quizzop" width="100" height="18" />
+                ) : path.includes("/category") && !categoryName ? (
+                  "Quiz Topics"
+                ) : path.includes("/category") && categoryName ? (
+                  categoryName.replace(/-/g, " ")
+                ) : (
+                  "Back"
+                )}
+              </h1>
             </div>
           </div>
           <div className="ml-20 cursor-pointer" data-testid="bell-icon">
