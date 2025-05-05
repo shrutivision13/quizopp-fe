@@ -1,29 +1,35 @@
-import React from 'react';
-import InitialPage from '../pages/InitialPage';
-import StartQuiz from '../pages/Start-Quiz';
-import AuthPage from '../pages/AuthPage';
-import PhoneLogin from '../pages/AuthPage/PhoneLogin';
-import Home from '../pages/Home';
+import React from "react";
+import InitialPage from "../pages/InitialPage";
+import StartQuiz from "../pages/Start-Quiz";
+import AuthPage from "../pages/AuthPage";
+import PhoneLogin from "../pages/AuthPage/PhoneLogin";
+import Home from "../pages/Home";
+import MenuPage from "../pages/MenuPage";
+import Category from "../pages/Category";
 
 export const routes = [
   {
-    path: '/get-started',
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/get-started",
     element: <InitialPage />,
   },
   {
-    path: '/start-quiz',
+    path: "/start-quiz",
     element: <StartQuiz />,
   },
   {
-    path: '/login',
+    path: "/login",
     element: <AuthPage />,
   },
   {
-    path: '/login/phone',
+    path: "/login/phone",
     element: <PhoneLogin />,
   },
   {
-    path: '/',
-    element: <Home />,
+    path: "/category",
+    element: <Category />,
   },
 ];

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import MenuPage from "../../pages/MenuPage";
 
 import "../../styles/components/header/header.css";
 
@@ -12,16 +13,28 @@ import freeCoins from "../../assets/images/free-coins.gif";
 
 const Header = () => {
   const location = useLocation();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const path = location.pathname;
 
-  const isBackHeader = ["/login", "/login/phone"].includes(path);
+  const isBackHeader = ["/login", "/login/phone" , "/category"].includes(path);
   const isHiddenHeader = [];
   const isMainHeader = !isBackHeader && !isHiddenHeader.includes(path);
   const initHeader = ["/get-started"].includes(path);
 
+  const handleMenuClick = () => {
+    setIsMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setIsMenuVisible(false);
+  };
+
   if (isHiddenHeader.includes(path)) return null;
 
+  if (isMenuVisible) {
+    return <MenuPage closeMenu={closeMenu} />;
+  }
   if (isBackHeader) {
     return (
       <nav
@@ -76,6 +89,7 @@ const Header = () => {
           <div
             data-testid="side-menu-button"
             className="py-14 pr-8 flex justify-center cursor-pointer"
+            onClick={handleMenuClick}
           >
             {/* Hamburger Icon */}
             <img

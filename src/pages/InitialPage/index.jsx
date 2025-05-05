@@ -1,72 +1,56 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-
-const topics = [
-    {
-        title: 'India',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/india-new.png'
-    },
-    {
-        title: 'Bollywood',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/bollywood.png'
-    },
-    {
-        title: 'IPL',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/ipl.png'
-    },
-    {
-        title: 'Hindi English',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/hindi_english.png'
-    },
-    {
-        title: 'SSC',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/ssc.png'
-    },
-    {
-        title: 'Brain Teasers',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/brain_teasers.png'
-    },
-    {
-        title: 'Quick Maths',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/quick_maths.png'
-    },
-    {
-        title: 'General Knowledge',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/general_knowledge.png'
-    },
-    {
-        title: 'Geography',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/geography.png'
-    },
-    {
-        title: 'Logo Quiz',
-        imgSrc: 'https://static.quizzop.com/newton/assets/category/logo_quiz.png'
-    }
-];
+import { ApiGetSatrted } from '../../api-wrapper/getStarted/ApiGetStarted';
+import { ApiGetCategories } from '../../api-wrapper/categories/ApiCategories';
 
 const InitialPage = () => {
-
+    const [categories, setCategories] = useState([]); // State for categories from API
     const [selectedTopics, setSelectedTopics] = useState([]);
     const navigate = useNavigate();
 
-    const handleSelect = (topicTitle) => {
+    useEffect(() => {
+        ApiGetCategories()
+            .then((response) => {
+                if (response?.isSuccess) {
+                    setCategories(response?.data); // Set categories from API response
+                }
+            })
+            .catch((err) => {
+                console.error('Error fetching categories:', err);
+            });
+    }, []);
+
+    const handleSelect = (categoryId) => {
         setSelectedTopics((prevSelected) => {
-            if (prevSelected.includes(topicTitle)) {
-                return prevSelected.filter((title) => title !== topicTitle);
+            if (prevSelected.includes(categoryId)) {
+                return prevSelected.filter((id) => id !== categoryId);
             } else {
-                return [...prevSelected, topicTitle];
+                return [...prevSelected, categoryId];
             }
         });
     };
 
     const handleProceed = () => {
-        if (selectedTopics.length > 0) {
-            navigate('/start-quiz')
-        } else {
-            alert('Please select at least one topic to proceed.');
-        }
-    }
+        ApiGetSatrted({
+            favouriteCategories: selectedTopics, // Send selected category IDs
+        })
+            .then((res) => {
+                if (res?.isSuccess) {
+                    document.cookie = `authToken=${res.data.authToken}; path=/; max-age=${7 * 24 * 60 * 60}`; // Store authToken in cookies
+                    document.cookie = `userData=${encodeURIComponent(JSON.stringify(res.data))}; path=/; max-age=${7 * 24 * 60 * 60}`; // Store userData in cookies
+
+                    if (selectedTopics.length > 0) {
+                        navigate('/start-quiz');
+                    } else {
+                        alert('Please select at least one topic to proceed.');
+                    }
+                }
+            })
+            .catch((err) => {
+                console.error('Error fetching data:', err);
+            });
+    };
 
     return (
         <>
@@ -78,12 +62,12 @@ const InitialPage = () => {
             <div className="flex flex-col justify-between flex-1 hide-scroll-bar">
                 <div className="pb-48 flex-grow">
                     <div className="mx-auto flex flex-wrap px-20">
-                        {topics && topics?.map((topic, index) => {
-                            const isSelected = selectedTopics?.includes(topic?.title);
+                        {categories.slice(0, 10).map((category) => { // Limit to 10 categories
+                            const isSelected = selectedTopics.includes(category._id);
                             return (
-                                <div key={index} className="last:ml-0 mr-10 mb-10">
+                                <div key={category._id} className="last:ml-0 mr-10 mb-10">
                                     <button
-                                        onClick={() => handleSelect(topic?.title)}
+                                        onClick={() => handleSelect(category._id)}
                                         className="whitespace-nowrap text-18 font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer relative justify-center items-center flex border-1 border-C404380 bg-C20213F h-40 px-0 rounded-[99px]"
                                         style={{
                                             borderColor: isSelected ? '#fedc34' : '',
@@ -91,22 +75,22 @@ const InitialPage = () => {
                                     >
                                         <div className="flex justify-center pl-8 w-auto">
                                             <img
-                                                alt={topic?.title}
+                                                alt={category.categoryName}
                                                 loading="lazy"
                                                 width="38"
                                                 height="38"
                                                 decoding="async"
                                                 className="h-27 w-38"
                                                 style={{ color: 'transparent' }}
-                                                src={topic?.imgSrc}
+                                                src={`http://132.148.0.110:3000/images/category/${category.categoryIcon}`}
                                             />
                                         </div>
                                         <div className="z-10 w-full flex justify-center bottom-0 relative pr-12">
-                                            <p className="text-14 dark:text-CFFFFFF leading-16 font-semibold">{topic?.title}</p>
+                                            <p className="text-14 dark:text-CFFFFFF leading-16 font-semibold">{category.categoryName}</p>
                                         </div>
                                     </button>
                                 </div>
-                            )
+                            );
                         })}
                     </div>
                 </div>
@@ -119,12 +103,10 @@ const InitialPage = () => {
                             shine={selectedTopics.length > 0}
                             onClick={handleProceed}
                         />
-
                     </div>
                 </div>
             </div>
         </>
-
     );
 };
 
