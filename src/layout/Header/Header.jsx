@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MenuPage from "../../pages/MenuPage";
-
 import "../../styles/components/header/header.css";
 
+import coin from "../../assets/images/coin.png";
 import logo from "../../assets/images/quizzop-logo-dark.svg";
 import sidearrow from "../../assets/images/side-arrow.svg";
 import bellGif from "../../assets/images/bell-new.gif";
 import menuIcon from "../../assets/images/icons8-menu.svg";
-import coin from "../../assets/images/coin.png";
 import freeCoins from "../../assets/images/free-coins.gif";
+import useCookie from "../../Hooks/useCookie";
 
 const Header = () => {
   const location = useLocation();
@@ -17,23 +17,23 @@ const Header = () => {
 
   const path = location.pathname;
 
-  const isBackHeader = ["/login", "/login/phone" , "/category"].includes(path);
+  const isBackHeader = ["/login", "/login/phone", "/category"].includes(path);
   const isHiddenHeader = [];
   const isMainHeader = !isBackHeader && !isHiddenHeader.includes(path);
   const initHeader = ["/get-started"].includes(path);
 
-  const handleMenuClick = () => {
-    setIsMenuVisible(true);
-  };
+  const { getCookie } = useCookie();
+  const [userToken, setUserToken] = useState(null);
 
-  const closeMenu = () => {
-    setIsMenuVisible(false);
-  };
+  useEffect(() => {
+    const token = getCookie("authToken"); // replace 'userToken' with your cookie name
+    setUserToken(token);
+  }, [getCookie]);
 
   if (isHiddenHeader.includes(path)) return null;
 
   if (isMenuVisible) {
-    return <MenuPage closeMenu={closeMenu} />;
+    return <MenuPage closeMenu={() => setIsMenuVisible(false)} />;
   }
   if (isBackHeader) {
     return (
@@ -89,7 +89,7 @@ const Header = () => {
           <div
             data-testid="side-menu-button"
             className="py-14 pr-8 flex justify-center cursor-pointer"
-            onClick={handleMenuClick}
+            onClick={() => setIsMenuVisible(true)}
           >
             {/* Hamburger Icon */}
             <img
@@ -105,44 +105,55 @@ const Header = () => {
           <div className="mr-10 h-30 flex flex-auto items-center justify-start">
             <img src={logo} alt="logo" className="h-30" />
           </div>
-          <div className="flex items-center">
-            <a className="link-anchor" href="/order-history">
-              <div className="flex flex-row justify-center items-center border px-8 rounded-6 bg-C191A32 cursor-pointer border-C191A32">
-                <span className="h-14">
-                  <img
-                    alt="coin"
-                    src={coin}
-                    style={{
-                      width: "14px",
-                      height: "14px",
-                      display: "inline-block",
-                      marginBottom: "2px",
-                    }}
-                  />
-                </span>
-                <span className="ml-8 uppercase">
-                  <div className="text-10 relative top-2 font-medium text-C6063AF">
-                    Coins
+          {userToken && (
+            <div className="flex items-center">
+              {userToken ? (
+                <a className="link-anchor" href="/order-history">
+                  <div className="flex flex-row justify-center items-center border px-8 rounded-6 bg-C191A32 cursor-pointer border-C191A32">
+                    <span className="h-14">
+                      <img
+                        alt="coin"
+                        src={coin}
+                        style={{
+                          width: "14px",
+                          height: "14px",
+                          display: "inline-block",
+                          marginBottom: "2px",
+                        }}
+                      />
+                    </span>
+                    <span className="ml-8 uppercase">
+                      <div className="text-10 relative top-2 font-medium text-C6063AF">
+                        Coins
+                      </div>  
+                      <div className="text-12 font-black text-CFFFFFF">
+                        1,170
+                      </div>
+                    </span>
                   </div>
-                  <div className="text-12 font-black text-CFFFFFF">1,170</div>
-                </span>
+                </a>
+              ) : (
+                <button className="items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-3 font-bold text-CFFFFFF uppercase text-center inline-block py-5 px-20 rounded-3 text-14 bg-C0DB25B">
+                  LOGIN
+                </button>
+              )}
+
+              <div
+                className="ml-10 cursor-pointer"
+                data-testid="free-coins-button"
+              >
+                <img
+                  alt="free coins"
+                  loading="lazy"
+                  width="34"
+                  height="34"
+                  decoding="async"
+                  src={freeCoins}
+                  style={{ color: "transparent" }}
+                />
               </div>
-            </a>
-            <div
-              className="ml-10 cursor-pointer"
-              data-testid="free-coins-button"
-            >
-              <img
-                alt="free coins"
-                loading="lazy"
-                width="34"
-                height="34"
-                decoding="async"
-                src={freeCoins}
-                style={{ color: "transparent" }}
-              />
             </div>
-          </div>
+          )}
         </div>
       </header>
     );

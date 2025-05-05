@@ -1,11 +1,11 @@
 import React from "react";
 import InitialPage from "../pages/InitialPage";
-import StartQuiz from "../pages/Start-Quiz";
+import StartQuiz from "../pages/StartQuiz";
 import AuthPage from "../pages/AuthPage";
 import PhoneLogin from "../pages/AuthPage/PhoneLogin";
 import Home from "../pages/Home";
-import MenuPage from "../pages/MenuPage";
 import Category from "../pages/Category";
+import OrderHistory from "../pages/OrderHistory";
 
 export const routes = [
   {
@@ -31,5 +31,9 @@ export const routes = [
   {
     path: "/category",
     element: <Category />,
+  },
+  {
+    path: "/order-history",
+    element: <OrderHistory />,
   },
 ];

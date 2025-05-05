@@ -5,6 +5,9 @@ import QuizBites from "./QuizBites";
 import TrendingQuiz from "./TrendingQuiz";
 import AdSlot from "../../components/AdSense/AdSlot";
 import TrendingArticles from "./TrendingArticles/TrendingArticles";
+import TrendingGames from "./TrendingGames/Index";
+import LiveScoreCard from "./LiveScoreCard";
+import HoroscopeCard from "./HoroscopeCard";
 
 const Home = () => {
   return (
@@ -24,6 +27,9 @@ const Home = () => {
       />
       <TrendingQuiz />
       <TrendingArticles />
+      <LiveScoreCard />
+      <TrendingGames />
+      <HoroscopeCard />
     </>
   );
 };

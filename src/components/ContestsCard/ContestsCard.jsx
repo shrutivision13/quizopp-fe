@@ -2,23 +2,6 @@ import React from "react";
 import CountdownTimer from "../CountdownTimer/CountdownTimer";
 
 const ContestsCard = ({ quizContest }) => {
-  const data = {
-    _id: "680a12111b04c23b60a600df",
-    categoryId: {
-      _id: "6809c8051b04c23b60a5fb10",
-      isActive: true,
-      categoryName: "Hollywood",
-      categoryIcon: "/hollywood.webp",
-      backgroundColor: "#FFF6E2",
-    },
-    questionCount: 10,
-    prize: 550,
-    entryFee: 0,
-    startTime: 1746163200,
-    endTime: 1746170400,
-    timeAllowed: 75,
-    participation: 165,
-  };
 
   return (
     <div className="contests-card-container" key={quizContest.id}>

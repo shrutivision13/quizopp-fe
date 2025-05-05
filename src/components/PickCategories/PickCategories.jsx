@@ -20,8 +20,7 @@ const PickCategories = () => {
             color: "transparent",
           }}
           sizes="100vw"
-          srcSet="https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=640&q=75 640w, https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=750&q=75 750w, https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=828&q=75 828w, https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=1080&q=75 1080w, https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=1200&q=75 1200w, https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=1920&q=75 1920w, https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=2048&q=75 2048w, https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=3840&q=75 3840w"
-          src="https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=3840&q=75"
+          src="https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=3840&q=75" 
         />
       </div>
 

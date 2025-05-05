@@ -5266,3 +5266,27 @@ p.text.off {
     transform: rotate(360deg);
   }
 }
+
+.wrapper-image {
+  display: block;
+  max-height: 80px;
+  max-width: 80px;
+  min-width: 80px;
+}
+
+.scaled-image {
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  height: 80px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+}
+
+.homepage-banner_cricketBannerText__KxgLC {
+  color: red;
+  font-size: 32px;
+  line-height: 37.5px;
+  text-transform: uppercase;
+}

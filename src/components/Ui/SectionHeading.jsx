@@ -1,9 +1,27 @@
 import React from "react";
 import { SeeAllButton } from "./SeeAllButton";
 
-export const SectionHeading = ({ title }) => (
-  <div className="flex justify-between items-center mb-14">
-    <h2 className="text-18 font-black text-CFFFFFF">{title}</h2>
-    <SeeAllButton />
+export const SectionHeading = ({ title, button, powerdBy }) => (
+  <div className="mb-14">
+    <div className="flex justify-between items-center ">
+      <h2 className="text-18 font-black text-CFFFFFF">{title}</h2>
+      {
+        button && <SeeAllButton name={button} />
+      }
+    </div>
+    {powerdBy && (
+      <p className="flex text-12 font-normal italic text-CFAFAFA">
+        <span className="mr-4">Powered by</span>
+        <img
+          alt="Gamezop"
+          loading="lazy"
+          width={65}
+          height={16}
+          decoding="async"
+          style={{ color: "transparent" }}
+          src="https://static.quizzop.com/newton/assets/gamezop-logo-dark.svg"
+        />
+      </p>
+    )}
   </div>
 );
