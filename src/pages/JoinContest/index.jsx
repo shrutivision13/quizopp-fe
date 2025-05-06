@@ -138,100 +138,42 @@ function JoinContest() {
               <div className="overflow-hidden border border-CE0E0E0 rounded-5 mb-36 dark:bg-C272D52 dark:border-C404380">
                 <table className="table-auto w-full">
                   <tbody>
-                    <tr className="text-12 tr flex bg-CFFFFFF dark:bg-C272D52">
-                      <td className="px-20 py-10 flex-1 dark:text-CFFFFFF">
-                        Rank 1
-                      </td>
-                      <td
-                        className="font-bold px-20 py-10 flex items-center dark:text-CFFFFFF"
-                        style={{ width: "79.5px" }}
+                    {[
+                      { rank: "Rank 1", prize: 100 },
+                      { rank: "Ranks: 2 - 5", prize: 50 },
+                      { rank: "Ranks: 6 - 10", prize: 10 },
+                      { rank: "Ranks: 11 - 50", prize: 5 },
+                    ].map((item, index) => (
+                      <tr
+                        key={index}
+                        className={`text-12 tr flex ${
+                          index % 2 === 0
+                            ? "bg-CFFFFFF dark:bg-C272D52"
+                            : "bg-C20213F dark:bg-C20213F"
+                        }`}
                       >
-                        <span className="mr-4" style={{ height: "14px" }}>
-                          <img
-                            alt="coin"
-                            loading="lazy"
-                            width="14"
-                            height="12.55"
-                            decoding="async"
-                            src="https://static.quizzop.com/newton/assets/coin.png"
-                            style={{ color: "transparent" }}
-                          />
-                        </span>
-                        <span>100</span>
-                      </td>
-                    </tr>
-                    <tr
-                      style={{ backgroundColor: "#20213F" }}
-                      className="text-12 tr flex bg-CFFFFFF dark:bg-C272D52"
-                    >
-                      <td className="px-20 py-10 flex-1 dark:text-CFFFFFF">
-                        Ranks: 2 - 5
-                      </td>
-                      <td
-                        className="font-bold px-20 py-10 flex items-center dark:text-CFFFFFF"
-                        style={{ width: "79.5px" }}
-                      >
-                        <span className="mr-4" style={{ height: "14px" }}>
-                          <img
-                            alt="coin"
-                            loading="lazy"
-                            width="14"
-                            height="12.55"
-                            decoding="async"
-                            src="https://static.quizzop.com/newton/assets/coin.png"
-                            style={{ color: "transparent" }}
-                          />
-                        </span>
-                        <span>50</span>
-                      </td>
-                    </tr>
-                    <tr className="text-12 tr flex bg-CFFFFFF dark:bg-C272D52">
-                      <td className="px-20 py-10 flex-1 dark:text-CFFFFFF">
-                        Ranks: 6 - 10
-                      </td>
-                      <td
-                        className="font-bold px-20 py-10 flex items-center dark:text-CFFFFFF"
-                        style={{ width: "79.5px" }}
-                      >
-                        <span className="mr-4" style={{ height: "14px" }}>
-                          <img
-                            alt="coin"
-                            loading="lazy"
-                            width="14"
-                            height="12.55"
-                            decoding="async"
-                            src="https://static.quizzop.com/newton/assets/coin.png"
-                            style={{ color: "transparent" }}
-                          />
-                        </span>
-                        <span>10</span>
-                      </td>
-                    </tr>
-                    <tr
-                      style={{ backgroundColor: "#20213F" }}
-                      className="text-12 tr flex bg-CFFFFFF dark:bg-C272D52"
-                    >
-                      <td className="px-20 py-10 flex-1 dark:text-CFFFFFF">
-                        Ranks: 11 - 50
-                      </td>
-                      <td
-                        className="font-bold px-20 py-10 flex items-center dark:text-CFFFFFF"
-                        style={{ width: "79.5px" }}
-                      >
-                        <span className="mr-4" style={{ height: "14px" }}>
-                          <img
-                            alt="coin"
-                            loading="lazy"
-                            width="14"
-                            height="12.55"
-                            decoding="async"
-                            src="https://static.quizzop.com/newton/assets/coin.png"
-                            style={{ color: "transparent" }}
-                          />
-                        </span>
-                        <span>5</span>
-                      </td>
-                    </tr>
+                        <td className="px-20 py-10 flex-1 dark:text-CFFFFFF">
+                          {item.rank}
+                        </td>
+                        <td
+                          className="font-bold px-20 py-10 flex items-center dark:text-CFFFFFF"
+                          style={{ width: "79.5px" }}
+                        >
+                          <span className="mr-4" style={{ height: "14px" }}>
+                            <img
+                              alt="coin"
+                              loading="lazy"
+                              width="14"
+                              height="12.55"
+                              decoding="async"
+                              src="https://static.quizzop.com/newton/assets/coin.png"
+                              style={{ color: "transparent" }}
+                            />
+                          </span>
+                          <span>{item.prize}</span>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
