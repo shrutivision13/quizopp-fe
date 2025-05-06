@@ -6,6 +6,9 @@ import PhoneLogin from "../pages/AuthPage/PhoneLogin";
 import Home from "../pages/Home";
 import Category from "../pages/Category";
 import OrderHistory from "../pages/OrderHistory";
+import CategoryDetails from "../pages/CategoryDetails";
+import { Contests } from "../pages/Contests";
+import JoinContest from "../pages/JoinContest";
 
 export const routes = [
   {
@@ -35,5 +38,17 @@ export const routes = [
   {
     path: "/order-history",
     element: <OrderHistory />,
+  },
+  {
+    path: "/:categoryName/category",
+    element: <CategoryDetails />,
+  },
+  {
+    path: "/contests",
+    element: <Contests />,
+  },
+  {
+    path: "/:categoryName/join-contest",
+    element: <JoinContest />,
   },
 ];

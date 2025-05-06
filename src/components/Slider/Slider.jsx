@@ -1,19 +1,19 @@
 import React, { useRef, useState, useEffect } from "react";
 
-function Slider({ children }) {
+function Slider({ children, arrowSize = 20 }) {
   const scrollContainerRef = useRef(null);
   const [isLeftArrowVisible, setIsLeftArrowVisible] = useState(false);
   const [isRightArrowVisible, setIsRightArrowVisible] = useState(true);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: -350, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: 350, behavior: "smooth" });
     }
   };
 
@@ -50,8 +50,8 @@ function Slider({ children }) {
           <div className="pl-10 mb-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width={arrowSize}
+              height={arrowSize}
               viewBox="0 0 30 30"
               fill="none"
             >
@@ -78,8 +78,8 @@ function Slider({ children }) {
           <div className="pr-10 mb-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width={arrowSize}
+              height={arrowSize}
               viewBox="0 0 30 30"
               fill="none"
               className="rotate-180 fill-C20213F"
@@ -100,7 +100,7 @@ function Slider({ children }) {
       {/* Scrollable Content */}
       <div
         ref={scrollContainerRef}
-        className="flex scroll  snap-x snap-mandatory overflow-scroll  hide-scroll-bar"
+        className="flex scroll snap-x snap-mandatory overflow-scroll hide-scroll-bar"
       >
         {children}
       </div>

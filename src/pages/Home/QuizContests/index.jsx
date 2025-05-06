@@ -24,7 +24,7 @@ export const QuizContests = () => {
 
   return (
     <section className="px-20 mt-24">
-      <SectionHeading title={"Quiz Contests For You"} button={"See all"} />
+      <SectionHeading title={"Quiz Contests For You"} route="/contests" button={"See all"} />
       <div className="w-full max-w-maxW">
         {contest?.slice(0, 5)?.map((quizContest) => (
           <ContestsCard key={quizContest?._id} quizContest={quizContest} />

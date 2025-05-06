@@ -7,8 +7,8 @@ const api = `${import.meta.env.VITE_API_BASE_URL}/api/contest/`;
 const ApiGetContests = (data) => {
   return axios
     .get(`${api}getActiveContests`)
-    .then((res) => res.data)
-    .catch((res) => res.data);
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
 };
 
 export { ApiGetContests };

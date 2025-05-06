@@ -132,7 +132,7 @@ function PopularQuizTopics() {
               </div>
             </a>
           </div>
-          <Slider>
+          <Slider arrowSize={20}>
             <div className="relative">
               <div className="flex scroll snap-x snap-mandatory overflow-scroll px-14 hide-scroll-bar">
                 {quizTopics.map((topic, index) => (

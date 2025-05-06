@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ApiVerifyOtp } from '../../../api-wrapper/Auth/ApiRegisterWithPhone'; // Adjust the import path as necessary
 
 const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
     const [otp, setOtp] = useState(['', '', '', '']);
@@ -18,7 +19,6 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
             inputRefs.current[index + 1].focus();
         }
     };
-
 
     const handleKeyDown = (e, index) => {
         if (e.key === 'Backspace' && !otp[index] && index > 0) {
@@ -41,8 +41,23 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
 
     const handleSubmit = () => {
         const enteredOtp = otp.join('');
-        alert(`Submitted OTP: ${enteredOtp}`);
-        // Make API call here
+        const payload = {
+            phoneNumber,
+            otp: enteredOtp,
+        };
+
+        ApiVerifyOtp(payload)
+            .then((response) => {
+                if (response?.isSuccess === 200) {
+                    console.log('OTP verified successfully:', response?.data);
+        
+                } else {
+                    console.error('Failed to verify OTP:', response?.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error during OTP verification:', error);
+            });
     };
 
     const handleResend = () => {

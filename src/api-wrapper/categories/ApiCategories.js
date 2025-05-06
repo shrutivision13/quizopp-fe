@@ -23,4 +23,11 @@ const ApiGetCategories = () => {
     .catch((err) => err?.response?.data || { error: "Network error" });
 };
 
-export { ApiGetCategories };
+const ApiGetActiveContent = (categoryId) => {
+  return axios
+    .get(`${api}/contest/getActiveContests?categoryId=${categoryId}`)
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+};
+
+export { ApiGetCategories , ApiGetActiveContent };
