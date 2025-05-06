@@ -423,3 +423,7 @@ body {
 }
 
 
+.rule-lifeline-list {
+  list-style: disc;
+  margin: 20px 0 20px 15px;
+}

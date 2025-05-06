@@ -8,7 +8,10 @@ import Category from "../pages/Category";
 import OrderHistory from "../pages/OrderHistory";
 import CategoryDetails from "../pages/CategoryDetails";
 import { Contests } from "../pages/Contests";
-import JoinContest from "../pages/JoinContest";
+import JoinContest from "../pages/Contests/JoinContest";
+import ContestRules from "../pages/Contests/ContestRules";
+import PlayContest from "../pages/Contests/PlayContest";
+import ContestResult from "../pages/Contests/ContestResult";
 
 export const routes = [
   {
@@ -50,5 +53,17 @@ export const routes = [
   {
     path: "/:categoryName/join-contest",
     element: <JoinContest />,
+  },
+  {
+    path: "/contest-rules",
+    element: <ContestRules />,
+  },
+  {
+    path: "/:categoryName/play-contest",
+    element: <PlayContest />,
+  },
+  {
+    path: "/:categoryName/contest-rank",
+    element: <ContestResult />,
   },
 ];

@@ -6,7 +6,7 @@ const getCookie = (name) => {
   if (parts.length === 2) return parts.pop().split(";").shift();
   return null;
 };
-const api = `${import.meta.env.VITE_API_BASE_URL}/api/category/`;
+const api = `${import.meta.env.VITE_API_BASE_URL}/api`;
 
 
 const ApiGetCategories = () => {
@@ -18,7 +18,7 @@ const ApiGetCategories = () => {
   };
 
   return axios
-    .get(`${api}getCategories`, { headers }) // headers must be in config object
+    .get(`${api}/category/getCategories`, { headers }) // headers must be in config object
     .then((res) => res.data)
     .catch((err) => err?.response?.data || { error: "Network error" });
 };

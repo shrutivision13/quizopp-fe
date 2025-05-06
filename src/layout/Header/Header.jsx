@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MenuPage from "../../pages/MenuPage";
 import "../../styles/components/header/header.css";
@@ -19,26 +19,27 @@ const Header = () => {
 
   const path = location.pathname;
 
-  const isBackHeader = [
-    "/login",
-    "/login/phone",
-    "/category",
-    `/${categoryName}/category`,
-    "/contests",
-  ].includes(path) || path.includes("/join-contest"); // Include dynamic join-contest paths
-  const isHiddenHeader = [];
+  const isBackHeader =
+    [
+      "/login",
+      "/login/phone",
+      "/category",
+      `/${categoryName}/category`,
+      "/contests",
+    ].includes(path) || path.includes("/join-contest") || path.includes("/contest-rank") ;
+  const isHiddenHeader = [`/${categoryName}/play-contest`];
   const isMainHeader = !isBackHeader && !isHiddenHeader.includes(path);
-  const initHeader = ["/get-started"].includes(path);
+  const initHeader = ["/get-started" ].includes(path);
 
   const { getCookie } = useCookie();
   const [userToken, setUserToken] = useState(null);
 
   useEffect(() => {
-    const token = getCookie("authToken"); // replace 'userToken' with your cookie name
+    const token = getCookie("authToken");
     setUserToken(token);
   }, [getCookie]);
 
-  if (isHiddenHeader.includes(path)) return null;
+  if (isHiddenHeader.includes(path) ) return null;
 
   if (isMenuVisible) {
     return <MenuPage closeMenu={() => setIsMenuVisible(false)} />;
@@ -61,7 +62,7 @@ const Header = () => {
             </div>
             <div className="py-10">
               <h1 className="text-14 font-bold dark:text-CFFFFFF">
-                {path === "/contests" || path.includes("/join-contest") ? ( // Updated condition
+                {path === "/contests" || path.includes("/join-contest") || path.includes("/contest-rank") ? ( // Updated condition
                   <img src={logo} alt="Quizzop" width="100" height="18" />
                 ) : path.includes("/category") && !categoryName ? (
                   "Quiz Topics"
@@ -124,7 +125,7 @@ const Header = () => {
           <div className="mr-10 h-30 flex flex-auto items-center justify-start">
             <img src={logo} alt="logo" className="h-30" />
           </div>
-          {userToken && (
+          {userToken  && (
             <div className="flex items-center">
               {userToken ? (
                 <a className="link-anchor" href="/order-history">
@@ -144,7 +145,7 @@ const Header = () => {
                     <span className="ml-8 uppercase">
                       <div className="text-10 relative top-2 font-medium text-C6063AF">
                         Coins
-                      </div>  
+                      </div>
                       <div className="text-12 font-black text-CFFFFFF">
                         1,170
                       </div>

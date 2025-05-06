@@ -1,12 +1,12 @@
 import React from "react";
 import { SeeAllButton } from "./SeeAllButton";
 
-export const SectionHeading = ({ title, button, powerdBy, root }) => (
+export const SectionHeading = ({ title, button, powerdBy, route }) => (
   <div className="mb-14">
     <div className="flex justify-between items-center ">
       <h2 className="text-18 font-black text-CFFFFFF">{title}</h2>
       {
-        button && <SeeAllButton name={button} root={root} />
+        button && <SeeAllButton name={button} route={route} />
       }
     </div>
     {powerdBy && (

@@ -19,7 +19,7 @@ function CategoryDetails() {
         .then((data) => {
           if (data?.isSuccess) {
             setActiveContests(data?.data);
-          } 
+          }
         })
         .catch((error) =>
           console.error("Error fetching active contests:", error)
@@ -106,7 +106,9 @@ Tеst your knowlеdgе of India's statеs and capitals and sее if you can idе
                         </div>
                         <div>
                           <div
-                            style={{ background: categoryData?.backgroundColor }}
+                            style={{
+                              background: categoryData?.backgroundColor,
+                            }}
                             className="rounded-12 bg-CFFDEE5 cursor-pointer relative flex justify-center items-center h-[80px] w-[80px]"
                           >
                             <div className="w-full flex justify-center px-12">
