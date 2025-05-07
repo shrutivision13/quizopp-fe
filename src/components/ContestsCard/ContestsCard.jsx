@@ -1,16 +1,21 @@
 import React from "react";
 import CountdownTimer from "../CountdownTimer/CountdownTimer";
 import { useNavigate } from "react-router-dom";
+import { ApiJoinContest } from "../../api-wrapper/contest/ApiGetcontest";
+import useCookie from "../../hooks/useCookie";
 
 const ContestsCard = ({ quizContest }) => {
-
+  const {getCookie} = useCookie();
+  const authToken = getCookie("authToken"); 
   const navigate = useNavigate();
 
   const handelJoinContest = () => {
-      navigate(
-        `/${quizContest?.categoryId?.categoryName.toLowerCase().replace(/\s+/g, '-')}/join-contest?contestId=${quizContest?._id}`,
-        { state: { quizContest } }
-      );
+    ApiJoinContest(quizContest?._id , authToken).then((res) => {
+          navigate(
+            `/${quizContest?.categoryId?.categoryName.toLowerCase().replace(/\s+/g, '-')}/join-contest?contestId=${quizContest?._id}`,
+            { state: { quizContest , participant: res?.data } }
+          );
+        })
   
   };
 

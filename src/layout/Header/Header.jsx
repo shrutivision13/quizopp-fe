@@ -26,21 +26,20 @@ const Header = () => {
       "/category",
       `/${categoryName}/category`,
       "/contests",
-      "/mini-quiz-category-selection",
-    ].includes(path) || path.includes("/join-contest"); // Include dynamic join-contest paths
-  const isHiddenHeader = [];
+    ].includes(path) || path.includes("/join-contest") || path.includes("/contest-rank") ;
+  const isHiddenHeader = [`/${categoryName}/play-contest`];
   const isMainHeader = !isBackHeader && !isHiddenHeader.includes(path);
-  const initHeader = ["/get-started"].includes(path);
+  const initHeader = ["/get-started" ].includes(path);
 
   const { getCookie } = useCookie();
   const [userToken, setUserToken] = useState(null);
 
   useEffect(() => {
-    const token = getCookie("authToken"); // replace 'userToken' with your cookie name
+    const token = getCookie("authToken");
     setUserToken(token);
   }, [getCookie]);
 
-  if (isHiddenHeader.includes(path)) return null;
+  if (isHiddenHeader.includes(path) ) return null;
 
   if (isMenuVisible) {
     return <MenuPage closeMenu={() => setIsMenuVisible(false)} />;
@@ -63,7 +62,7 @@ const Header = () => {
             </div>
             <div className="py-10">
               <h1 className="text-14 font-bold dark:text-CFFFFFF">
-                {path === "/contests" || path.includes("/join-contest") ? ( // Updated condition
+                {path === "/contests" || path.includes("/join-contest") || path.includes("/contest-rank") ? ( // Updated condition
                   <img src={logo} alt="Quizzop" width="100" height="18" />
                 ) : path.includes("/category") && !categoryName ? (
                   "Quiz Topics"
