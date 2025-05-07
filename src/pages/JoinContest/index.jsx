@@ -8,8 +8,6 @@ function JoinContest() {
   const location = useLocation();
   const quizContest = location.state?.quizContest; // Ensure state is accessed correctly
 
-  console.log(quizContest);
-
   return (
     <>
       <div className="py-20 h-dynamic-screen hide-scroll-bar">

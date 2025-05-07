@@ -3,11 +3,18 @@ import { ApiGetCategories } from "../../../api-wrapper/categories/ApiCategories"
 import CategoryCard from "../../../components/CategoryCard/CategoryCard";
 import { useLoader } from "../../../context/LoaderContext";
 import { SectionHeading } from "../../../components/Ui/SectionHeading";
-import { ApiDislikeCategory, ApiLikeCategory } from "../../../api-wrapper/user/ApiUser";
+import {
+  ApiDislikeCategory,
+  ApiLikeCategory,
+} from "../../../api-wrapper/user/ApiUser";
 
-const TopQuiz = () => {
+const TopQuiz = ({ removeHeader }) => {
   const [categories, setCategories] = useState([]);
   const { setLoading } = useLoader();
+
+  const displayedCategories = removeHeader
+    ? categories
+    : categories?.slice(0, 6) || [];
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -15,7 +22,7 @@ const TopQuiz = () => {
       const res = await ApiGetCategories();
       if (res.isSuccess) {
         setCategories(res.data);
-          setLoading(false);
+        setLoading(false);
       } else {
         console.error("Error fetching categories:", res.message);
       }
@@ -67,10 +74,17 @@ const TopQuiz = () => {
   };
   return (
     <div className="px-20 mt-24">
-      <SectionHeading title={"Top Quizzes"} button={"See all"} route="/category" />
+      {!removeHeader && (
+        <SectionHeading
+          title={"Top Quizzes"}
+          button={"See all"}
+          route="/category"
+        />
+      )}
       <div className="grid grid-cols-3 gap-14">
-        {categories?.slice(0, 6).map((category) => (
+        {displayedCategories.slice(6, 20).map((category) => (
           <CategoryCard
+            removeHeader={true}
             key={category?._id}
             category={category}
             handleLikeCategory={handleLikeCategory}

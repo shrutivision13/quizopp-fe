@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react"; // Add useRef
+import React, { useEffect, useState, useRef } from "react";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
-import AdSlot from "../../components/AdSense/AdSlot"; // Import AdSlot
+import AdSlot from "../../components/AdSense/AdSlot";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 
 function Category() {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // State to toggle filter dropdown
-  const [selectedFilter, setSelectedFilter] = useState("ALL"); // State to track selected filter
-  const filterRef = useRef(null); // Ref for the filter dropdown
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("ALL");
+  const filterRef = useRef(null);
 
   useEffect(() => {
     ApiGetCategories()
@@ -25,7 +25,7 @@ function Category() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (filterRef.current && !filterRef.current.contains(event.target)) {
-        setIsFilterOpen(false); // Close dropdown if clicked outside
+        setIsFilterOpen(false);
       }
     };
 
@@ -55,11 +55,15 @@ function Category() {
             <input
               data-testid="search-bar"
               className="h-40 w-full rounded-full text-[14px] outline-none text-C959595 placeholder:text-C959595 dark:text-C8789C3 placeholder:dark:text-C8789C3 bg-CFFFFFF dark:bg-C20213F"
-              placeholder={searchTerm === "" ? "Search for topics you like" : ""} // Conditional placeholder
+              placeholder={
+                searchTerm === "" ? "Search for topics you like" : ""
+              } // Conditional placeholder
               value={searchTerm} // Bind input value to state
               onChange={(e) => setSearchTerm(e.target.value)} // Update state on input change
               onFocus={(e) => (e.target.placeholder = "")} // Remove placeholder on focus
-              onBlur={(e) => (e.target.placeholder = "Search for topics you like")} // Restore placeholder on blur
+              onBlur={(e) =>
+                (e.target.placeholder = "Search for topics you like")
+              } // Restore placeholder on blur
             />
           </div>
         </div>
@@ -166,13 +170,16 @@ function Category() {
         <div className="flex justify-between items-center mb-14"></div>
         <div className="grid grid-cols-3 gap-14">
           {categories?.slice(0, 6).map((category) => (
-            <CategoryCard key={category?._id} category={category} />
+            <CategoryCard
+              key={category?._id}
+              category={category}
+              removeHeader={true}
+            />
           ))}
         </div>
       </section>
       <div className="w-full px-0 mt-10">
         {" "}
-        {/* AdSlot moved outside the section */}
         <AdSlot
           slotId="ad-slot-1"
           adUnitPath="/123456/ad-unit"
@@ -182,7 +189,11 @@ function Category() {
       <section className="px-20 mt-8">
         <div className="grid grid-cols-3 gap-14 mt-14">
           {categories?.slice(6).map((category) => (
-            <CategoryCard key={category?._id} category={category} />
+            <CategoryCard
+              key={category?._id}
+              category={category}
+              removeHeader={true}
+            />
           ))}
         </div>
       </section>

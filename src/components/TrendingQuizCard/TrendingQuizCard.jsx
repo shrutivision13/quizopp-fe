@@ -13,7 +13,6 @@ const TrendingQuizCard = () => {
         >
           <img
             alt="India"
-            fetchpriority="high"
             width="70"
             height="70"
             decoding="async"

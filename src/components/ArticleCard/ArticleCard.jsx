@@ -9,8 +9,6 @@ const ArticleCard = ({ article }) => {
     return `${day} ${month}, ${year}`;
   }
 
-  console.log(formatDate(article?.publishedAt));
-
   return (
     <div key={article?._id}>
       <a

@@ -13,7 +13,11 @@ const QuizBites = () => {
         </p>
       </div>
 
-      <PickCategories />
+      <PickCategories
+        title={"Pick Upto 3 Categories"}
+        button={{ name: "CREATE QUIZ" }}
+        quizBites={false}
+      />
     </section>
   );
 };

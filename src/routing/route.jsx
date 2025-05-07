@@ -9,6 +9,7 @@ import OrderHistory from "../pages/OrderHistory";
 import CategoryDetails from "../pages/CategoryDetails";
 import { Contests } from "../pages/Contests";
 import JoinContest from "../pages/JoinContest";
+import QuizBites from "../pages/QuizBites";
 
 export const routes = [
   {
@@ -51,4 +52,8 @@ export const routes = [
     path: "/:categoryName/join-contest",
     element: <JoinContest />,
   },
+  {
+    path: "/mini-quiz-category-selection",
+    element: <QuizBites />,
+  }
 ];

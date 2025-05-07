@@ -2513,7 +2513,7 @@ body {
 }
 
 .overflow-y-scroll {
-  overflow-y: scroll;
+  overflow-y: scroll !important;
 }
 
 .scroll-smooth {
@@ -5290,3 +5290,13 @@ p.text.off {
   line-height: 37.5px;
   text-transform: uppercase;
 }
+
+/* Hide scrollbars but allow scrolling */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
