@@ -8,7 +8,7 @@ const getCookie = (name) => {
 };
 const api = `${import.meta.env.VITE_API_BASE_URL}/api`;
 
-const ApiGetCategories = () => {
+const ApiGetCategories = (data) => {
   const token = getCookie("authToken");
 
   const headers = {
@@ -17,7 +17,7 @@ const ApiGetCategories = () => {
   };
 
   return axios
-    .get(`${api}/category/getCategories`, { headers }) // headers must be in config object
+    .post(`${api}/category/getCategories`,data , { headers }) // headers must be in config object
     .then((res) => res.data)
     .catch((err) => err?.response?.data || { error: "Network error" });
 };

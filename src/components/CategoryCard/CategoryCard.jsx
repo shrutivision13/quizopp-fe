@@ -11,9 +11,8 @@ const CategoryCard = ({
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleCardClick = () => {
-    navigate(`/${category?.categorySlug}/category`, { state: category }); // Pass the entire category object in state
+    navigate(category?.categorySlug, { state: category }); // Pass the entire category object in state
   };
-
 
   return (
     <div className="relative" key={category?._id} onClick={handleCardClick}>

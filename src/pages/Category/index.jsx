@@ -3,29 +3,33 @@ import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import AdSlot from "../../components/AdSense/AdSlot";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 
-const allTopics = 
-  {
-    _id: "6809c8051b04c23b60asdsds7",
-    isActive: true,
-    categoryName: "All Topics",
-    sideMenuIcon: null,
-    backgroundColor: "#E4CDAE",
-    categorySlug: "contests",
-    bannerImage: null,
-    uiKey: "DEFAULT",
-    isPopular: false,
-    imgsrc: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fcategory%2Fall_categories.png&w=96&q=75"
-  }
+const allTopics = {
+  _id: "6809c8051b04c23b60asdsds7",
+  isActive: true,
+  categoryName: "All Topics",
+  sideMenuIcon: null,
+  backgroundColor: "#E4CDAE",
+  categorySlug: "/contests",
+  bannerImage: null,
+  uiKey: "DEFAULT",
+  isPopular: false,
+  imgsrc:
+    "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fcategory%2Fall_categories.png&w=96&q=75",
+};
 
 function Category() {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("ALL");
+  const [selectedFilter, setSelectedFilter] = useState("all");
   const filterRef = useRef(null);
 
   useEffect(() => {
-    ApiGetCategories()
+    const data = {
+      search: searchTerm,
+      filter: selectedFilter,
+    };
+    ApiGetCategories(data)
       .then((res) => {
         if (res.isSuccess) {
           setCategories(res.data);
@@ -34,7 +38,7 @@ function Category() {
       .catch((err) => {
         console.error("Error fetching categories:", err);
       });
-  }, []);
+  }, [searchTerm, selectedFilter]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -122,35 +126,35 @@ function Category() {
               <div
                 data-testid="filter-all-button"
                 className="px-20 flex cursor-pointer dark:text-CFFFFFF mb-12"
-                onClick={() => setSelectedFilter("ALL")} // Update selected filter
+                onClick={() => setSelectedFilter("all")} // Update selected filter
               >
                 <input
-                  id="ALL"
+                  id="all"
                   type="radio"
                   className="mr-10 form-radio custom-radio-button"
-                  value="ALL"
-                  checked={selectedFilter === "ALL"}
+                  value="all"
+                  checked={selectedFilter === "all"}
                   readOnly
                 />
-                <label htmlFor="ALL" className="text-14 w-full cursor-pointer">
+                <label htmlFor="all" className="text-14 w-full cursor-pointer">
                   All
                 </label>
               </div>
               <div
                 data-testid="filter-liked-button"
                 className="px-20 flex cursor-pointer dark:text-CFFFFFF mb-12"
-                onClick={() => setSelectedFilter("LIKED_TOPICS")} // Update selected filter
+                onClick={() => setSelectedFilter("liked")} // Update selected filter
               >
                 <input
-                  id="LIKED_TOPICS"
+                  id="liked"
                   type="radio"
                   className="mr-10 form-radio custom-radio-button"
-                  value="LIKED_TOPICS"
-                  checked={selectedFilter === "LIKED_TOPICS"}
+                  value="liked"
+                  checked={selectedFilter === "liked"}
                   readOnly
                 />
                 <label
-                  htmlFor="LIKED_TOPICS"
+                  htmlFor="liked"
                   className="text-14 w-full cursor-pointer"
                 >
                   Liked Topics
@@ -159,18 +163,18 @@ function Category() {
               <div
                 data-testid="filter-other-button"
                 className="px-20 flex cursor-pointer dark:text-CFFFFFF"
-                onClick={() => setSelectedFilter("OTHER_TOPICS")} // Update selected filter
+                onClick={() => setSelectedFilter("other")} // Update selected filter
               >
                 <input
-                  id="OTHER_TOPICS"
+                  id="other"
                   type="radio"
                   className="mr-10 form-radio custom-radio-button"
-                  value="OTHER_TOPICS"
-                  checked={selectedFilter === "OTHER_TOPICS"}
+                  value="other"
+                  checked={selectedFilter === "other"}
                   readOnly
                 />
                 <label
-                  htmlFor="OTHER_TOPICS"
+                  htmlFor="other"
                   className="text-14 w-full cursor-pointer"
                 >
                   Other Topics
