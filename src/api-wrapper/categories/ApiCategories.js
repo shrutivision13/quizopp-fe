@@ -36,4 +36,11 @@ const ApiGetInitialCategory = () => {
     .catch((response) => response?.data);
 };
 
-export { ApiGetCategories, ApiGetActiveContent, ApiGetInitialCategory };
+const ApiGetAllCategoryDetails = (categoryId) => {
+  return axios
+    .get(`${api}/category/getAllCategoryDetails/${categoryId}`)
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+};
+
+export { ApiGetCategories, ApiGetActiveContent, ApiGetInitialCategory, ApiGetAllCategoryDetails };
