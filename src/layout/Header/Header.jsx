@@ -10,14 +10,32 @@ import bellGif from "../../assets/images/bell-new.gif";
 import menuIcon from "../../assets/images/icons8-menu.svg";
 import freeCoins from "../../assets/images/free-coins.gif";
 import useCookie from "../../hooks/useCookie";
+import { ApiGetWalletBalance } from "../../api-wrapper/user/ApiUser";
+import { useLoader } from "../../context/LoaderContext";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { categoryName } = useParams();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [wallet, setWallet] = useState([]);
+  const { setLoading } = useLoader();
 
   const path = location.pathname;
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   ApiGetWalletBalance()
+  //     .then((res) => {
+  //       if (res.isSuccess) {
+  //         setWallet(res.data);
+  //         setLoading(false);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   const isBackHeader =
     [
@@ -26,20 +44,27 @@ const Header = () => {
       "/category",
       `/${categoryName}/category`,
       "/contests",
-    ].includes(path) || path.includes("/join-contest") || path.includes("/contest-rank") ;
+      "/mini-quiz-category-selection",
+      "/order-history",
+    ].includes(path) ||
+    path.includes("/join-contest") ||
+    path.includes("/contest-rank");
   const isHiddenHeader = [`/${categoryName}/play-contest`];
   const isMainHeader = !isBackHeader && !isHiddenHeader.includes(path);
-  const initHeader = ["/get-started" ].includes(path);
+  const initHeader = ["/get-started", "/start-quiz"].includes(path);
 
   const { getCookie } = useCookie();
   const [userToken, setUserToken] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    const userData = localStorage.getItem("userData");
     const token = getCookie("authToken");
     setUserToken(token);
+    setUserData(userData);
   }, [getCookie]);
 
-  if (isHiddenHeader.includes(path) ) return null;
+  if (isHiddenHeader.includes(path)) return null;
 
   if (isMenuVisible) {
     return <MenuPage closeMenu={() => setIsMenuVisible(false)} />;
@@ -62,7 +87,9 @@ const Header = () => {
             </div>
             <div className="py-10">
               <h1 className="text-14 font-bold dark:text-CFFFFFF">
-                {path === "/contests" || path.includes("/join-contest") || path.includes("/contest-rank") ? ( // Updated condition
+                {path === "/contests" ||
+                path.includes("/join-contest") ||
+                path.includes("/contest-rank") ? ( // Updated condition
                   <img src={logo} alt="Quizzop" width="100" height="18" />
                 ) : path.includes("/category") && !categoryName ? (
                   "Quiz Topics"
@@ -70,12 +97,44 @@ const Header = () => {
                   categoryName.replace(/-/g, " ")
                 ) : path.includes("/mini-quiz-category-selection") ? (
                   "Quiz Bites"
-                ) : (
+                ) : path.includes("/order-history") ? (
+                  "Coin History"
+                ) : path.includes("/login") ? (
+                  ""
+                ):(
                   "Back"
                 )}
               </h1>
             </div>
           </div>
+
+          {userData?.isRegister && (
+            <a className="link-anchor" href="/order-history">
+              <div className="flex flex-row justify-center items-center border px-8 rounded-6 bg-C191A32 cursor-pointer border-C191A32">
+                <span className="h-14">
+                  <img
+                    alt="coin"
+                    src={coin}
+                    style={{
+                      width: "14px",
+                      height: "14px",
+                      display: "inline-block",
+                      marginBottom: "2px",
+                    }}
+                  />
+                </span>
+                <span className="ml-8 uppercase">
+                  <div className="text-10 relative top-2 font-medium text-C6063AF">
+                    Coins
+                  </div>
+                  <div className="text-12 font-black text-CFFFFFF">
+                    {wallet?.walletBalance}
+                  </div>
+                </span>
+              </div>
+            </a>
+          )}
+
           <div className="ml-20 cursor-pointer" data-testid="bell-icon">
             <img
               alt="bell"
@@ -128,7 +187,7 @@ const Header = () => {
             <img src={logo} alt="logo" className="h-30" />
           </div>
           <div className="flex items-center">
-            {userToken ? (
+            {userData?.isRegister ? (
               <a className="link-anchor" href="/order-history">
                 <div className="flex flex-row justify-center items-center border px-8 rounded-6 bg-C191A32 cursor-pointer border-C191A32">
                   <span className="h-14">
@@ -147,12 +206,19 @@ const Header = () => {
                     <div className="text-10 relative top-2 font-medium text-C6063AF">
                       Coins
                     </div>
-                    <div className="text-12 font-black text-CFFFFFF">1,170</div>
+                    <div className="text-12 font-black text-CFFFFFF">
+                      {wallet?.walletBalance}
+                    </div>
                   </span>
                 </div>
               </a>
             ) : (
-              <button className="items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-3 font-bold text-CFFFFFF uppercase text-center inline-block py-5 px-20 rounded-3 text-14 bg-C0DB25B">
+              <button
+                onClick={() => {
+                  navigate("/login");
+                }}
+                className="items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-3 font-bold text-CFFFFFF uppercase text-center inline-block py-5 px-20 rounded-3 text-14 bg-C0DB25B"
+              >
                 LOGIN
               </button>
             )}

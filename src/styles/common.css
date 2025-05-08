@@ -5300,15 +5300,31 @@ p.text.off {
   display: none; /* Chrome, Safari */
 }
 
-
 @keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .animate-shake {
   animation: shake 0.5s ease-in-out;
+}
+
+.spinwheel-backdrop {
+  background-image: url(https://static.quizzop.com/newton/assets/spinwheel-bg.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

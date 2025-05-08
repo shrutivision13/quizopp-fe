@@ -6,6 +6,7 @@ const CategoryCard = ({
   handleLikeCategory,
   handleDislikeCategory,
   removeHeader,
+  removeheart
 }) => {
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -87,6 +88,7 @@ const CategoryCard = ({
           </div>
         </>
       ) : (
+        !removeheart && (
         <div
           data-testid={`category-${category?.categoryName?.toLowerCase()}-like-icon`}
           className="absolute top-[4px] right-[4px] cursor-pointer"
@@ -114,6 +116,7 @@ const CategoryCard = ({
             />
           </svg>
         </div>
+        )
       )}
       <div
         className="rounded-12 h-140 flex flex-col items-center justify-center"
@@ -126,7 +129,7 @@ const CategoryCard = ({
             width="70"
             height="70"
             style={{ color: "transparent" }}
-            src={`http://132.148.0.110:3000/images/category/${category?.categoryIcon}`}
+            src={category.categoryIcon ? `http://132.148.0.110:3000/images/category/${category?.categoryIcon}` : category?.imgsrc}
           />
         </div>
         <div className="z-10 w-full flex justify-center px-10">

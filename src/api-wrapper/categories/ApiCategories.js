@@ -8,7 +8,6 @@ const getCookie = (name) => {
 };
 const api = `${import.meta.env.VITE_API_BASE_URL}/api`;
 
-
 const ApiGetCategories = () => {
   const token = getCookie("authToken");
 
@@ -25,9 +24,16 @@ const ApiGetCategories = () => {
 
 const ApiGetActiveContent = (categoryId) => {
   return axios
-    .get(`${api}contest/getActiveContests?categoryId=${categoryId}`)
+    .get(`${api}/contest/getActiveContests?categoryId=${categoryId}`)
     .then((response) => response?.data)
     .catch((response) => response?.data);
 };
 
-export { ApiGetCategories , ApiGetActiveContent };
+const ApiGetInitialCategory = () => {
+  return axios
+    .get(`${api}/category/getInitialCategory`)
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+};
+
+export { ApiGetCategories, ApiGetActiveContent, ApiGetInitialCategory };

@@ -3,6 +3,20 @@ import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import AdSlot from "../../components/AdSense/AdSlot";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 
+const allTopics = 
+  {
+    _id: "6809c8051b04c23b60asdsds7",
+    isActive: true,
+    categoryName: "All Topics",
+    sideMenuIcon: null,
+    backgroundColor: "#E4CDAE",
+    categorySlug: "contests",
+    bannerImage: null,
+    uiKey: "DEFAULT",
+    isPopular: false,
+    imgsrc: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fcategory%2Fall_categories.png&w=96&q=75"
+  }
+
 function Category() {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -169,7 +183,13 @@ function Category() {
       <section className="px-20 mt-8">
         <div className="flex justify-between items-center mb-14"></div>
         <div className="grid grid-cols-3 gap-14">
-          {categories?.slice(0, 6).map((category) => (
+          <CategoryCard
+            key={allTopics._id}
+            category={allTopics}
+            removeHeader={true}
+            removeheart={true}
+          />
+          {categories?.slice(0, 5).map((category) => (
             <CategoryCard
               key={category?._id}
               category={category}
@@ -188,7 +208,7 @@ function Category() {
       </div>
       <section className="px-20 mt-8">
         <div className="grid grid-cols-3 gap-14 mt-14">
-          {categories?.slice(6).map((category) => (
+          {categories?.slice(5).map((category) => (
             <CategoryCard
               key={category?._id}
               category={category}
