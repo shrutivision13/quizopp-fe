@@ -7,12 +7,21 @@ const CategoryCard = ({
   handleDislikeCategory,
   removeHeader,
   removeheart,
-  height = ''
+  height = '',
+  imgHeight = '70',
+  imgWidth = '70',
+  marignBottom = 'mb-14',
+  captionFontSize = 'text-12',
+  quizRoute = ''
 }) => {
   const navigate = useNavigate(); // Initialize useNavigate
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL
   const handleCardClick = () => {
-    navigate(category?.categorySlug, { state: category }); // Pass the entire category object in state
+    if(quizRoute){
+      navigate(`/${category?.categorySlug}/${quizRoute}`);
+    }else{
+      navigate(`/${category?.categorySlug}/category`, { state: category });
+    }
   };
 
   return (
@@ -122,18 +131,18 @@ const CategoryCard = ({
         className={`rounded-12 flex flex-col items-center justify-center cursor-pointer ${height ? height : 'h-140'}`}
         style={{ backgroundColor: category?.backgroundColor }}
       >
-        <div className="flex justify-center mb-14">
+        <div className={`flex justify-center ${marignBottom}`}>
           <img
             alt={category?.categoryName}
             loading="lazy"
-            width="70"
-            height="70"
+            width={imgWidth}
+            height={imgHeight}
             style={{ color: "transparent" }}
             src={category?.categoryIcon ? `${IMAGEURL}/images/category/${category?.categoryIcon}` : category?.imgsrc}
           />
         </div>
         <div className="z-10 w-full flex justify-center px-10">
-          <p className="text-12 text-C000000 font-bold text-center">
+          <p className={`${captionFontSize} text-C000000 font-bold text-center`}>
             {category?.categoryName}
           </p>
         </div>

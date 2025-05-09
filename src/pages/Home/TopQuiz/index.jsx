@@ -90,6 +90,7 @@ const TopQuiz = ({ removeHeader }) => {
             category={category}
             handleLikeCategory={handleLikeCategory}
             handleDislikeCategory={handleDislikeCategory}
+            quizRoute="begin-quiz"
           />
         ))}
       </div>

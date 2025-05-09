@@ -7,37 +7,6 @@ import ContestsCard from "../../components/ContestsCard/ContestsCard";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import ArticlesCarousel from "../../components/ArticlesCarousel/ArticlesCarousel";
 
-const articlesCarousel = [
-  {
-    title: "Dhanteras 2024: Significance, Traditions, and Items to Buy for Prosperity",
-    date: "28 Oct, 2024",
-    views: 8862,
-    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F10%2Fh-25.webp&w=1920&q=75",
-    link: "/blogs//indian-mythology/dhanteras-2024-significance-traditions-and-items-to-buy-for-prosperity-671f1d01bdccdd0001d32b7d?access=full",
-  },
-  {
-    title: "Diwali 2024: Celebrations, Origins, and Auspicious Timings",
-    date: "25 Oct, 2024",
-    views: 6949,
-    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F10%2Fh-35.jpg&w=1920&q=75",
-    link: "/blogs/indian-mythology/diwali-2024-celebrations-origins-and-auspicious-timings-671ba790bdccdd0001d32b0a?access=full",
-  },
-  {
-    title: "Navratri 2024: How Indian States Celebrate the Festival",
-    date: "3 Oct, 2024",
-    views: 4795,
-    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F10%2Fh.webp&w=1920&q=75",
-    link: "/blogs/indian-mythology/navratri-2024-how-indian-states-celebrate-the-festival-66fe4b76bdccdd0001d31bf5?access=full",
-  },
-  {
-    title: "Top 10 Must-Read Hindu Mythology Books",
-    date: "21 May, 2024",
-    views: 5401,
-    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F05%2F1-26.jpeg&w=1920&q=75",
-    link: "/blogs/indian-mythology/top-10-must-read-hindu-mythology-books-664c9112bdccdd0001d2ef50?access=full",
-  },
-];
-
 function CategoryDetails() {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
   const location = useLocation();
@@ -225,7 +194,6 @@ function CategoryDetails() {
                     <ArticlesCarousel
                       isShowSectionHeader
                       sectionTitle={`Articles on ${categoryDetails?.category?.categoryName}`}
-                      articlesCarousel={articlesCarousel}
                       isArticalContent
                       articles={categoryDetails?.articles}
                     />

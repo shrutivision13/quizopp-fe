@@ -27,7 +27,7 @@ const ContestsCard = ({ quizContest }) => {
         <div className="w-120 mr-20 flex">
           <div
             style={{ background: quizContest?.categoryId?.backgroundColor }}
-            className="flex flex-col justify-center items-center rounded-10 w-[90px]"
+            className="flex flex-col justify-center items-center cursor-pointer rounded-10 w-[90px]"
           >
             <img
               alt="Bollywood"

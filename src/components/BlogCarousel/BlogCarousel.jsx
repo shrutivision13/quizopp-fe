@@ -1,34 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
+import { formatDate } from "../../utils/formateDate";
 
-const blogData = [
-  {
-    title: "5 Reasons Why Coldplay Concerts Are So Famous",
-    category: "Music",
-    date: "10 Jan, 2025",
-    views: 34829,
-    image: "https://ghost.quizzop.com/content/images/2025/01/h-7.webp",
-    link: "/blogs/music/5-reasons-why-coldplay-concerts-are-so-famous-67810c11bdccdd0001d364d1?access=full",
-  },
-  {
-    title: "Best Stargazing Spots Around the World",
-    category: "General Knowledge",
-    date: "31 Mar, 2025",
-    views: 10155,
-    image: "https://ghost.quizzop.com/content/images/2025/03/h-21.jpg",
-    link: "/blogs/general-knowledge/best-stargazing-spots-around-the-world-67eaa4b2bdccdd0001d37d11?access=full",
-  },
-  {
-    title: "Weird and Fascinating Facts About Human Biology",
-    category: "General Knowledge",
-    date: "31 Mar, 2025",
-    views: 9575,
-    image: "https://ghost.quizzop.com/content/images/2025/03/h-3.jpeg",
-    link: "/blogs/general-knowledge/weird-and-fascinating-facts-about-human-biology-67eaa153bdccdd0001d37cd2?access=full",
-  },
-];
-
-const BlogCarousel = () => {
+const BlogCarousel = ({ blogCarouselData, imagePath = 'article' }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -37,17 +12,18 @@ const BlogCarousel = () => {
     slidesToScroll: 1,
     arrows: false,
   };
+  const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
 
   return (
     <div
-      className="blog-carousel-section"
+      className="article-carousel-section"
       style={{ width: "100%", margin: "0 auto" }}
     >
       <Slider {...settings}>
-        {blogData.map((item, index) => (
+        {blogCarouselData?.map((item, index) => (
           <div key={index} className="blog-slide">
-            <a
-              href={item.link}
+            <Link
+              to={`/blogs/${item?._id}`}
               className="link-anchor"
               style={{ textDecoration: "none", color: "inherit" }}
             >
@@ -59,8 +35,8 @@ const BlogCarousel = () => {
                 }}
               >
                 <img
-                  src={item.image}
-                  alt={item.title}
+                  src={`${IMAGEURL}/images/${imagePath}/${item?.thumbnail}`}
+                  alt={item?.title}
                   style={{
                     position: "absolute",
                     top: 0,
@@ -83,25 +59,14 @@ const BlogCarousel = () => {
                   }}
                   className="blog-carousal-card pb-14 pt-120"
                 >
-                  <h3 style={{ marginBottom: "10px" }} className="font-medium text-16 leading-24 mb-12 text-CFAFAFA" >{item.title}</h3>
+                  <h3 style={{ marginBottom: "10px" }} className="font-medium text-16 leading-24 mb-12 text-CFAFAFA" >{item?.title}</h3>
                   <p className="text-10 text-C8789C3 leading-14">
-                    {item.category} • {item.date} •{" "}
+                    {item?.categoryId?.categoryName} • {formatDate(item?.publishedAt)} •{" "}
                     {item.views.toLocaleString()} Views
                   </p>
                 </div>
-                <ul style={{ display: "" }} className="slick-dots">
-                  <li className="slick-active">
-                    <button>1</button>
-                  </li>
-                  <li className="">
-                    <button>2</button>
-                  </li>
-                  <li className="">
-                    <button>3</button>
-                  </li>
-                </ul>
               </div>
-            </a>
+            </Link>
           </div>
         ))}
       </Slider>

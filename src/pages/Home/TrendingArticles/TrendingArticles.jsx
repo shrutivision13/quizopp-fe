@@ -29,10 +29,10 @@ const TrendingArticles = () => {
         <SectionHeading title={"Trending Articles"} button={"See all"} />
       </div>
       <div className="w-full max-w-maxW">
-        <BlogCarousel />
+        <BlogCarousel blogCarouselData={articles?.slice(0, 3)} />
       </div>
       <div>
-        {articles?.slice(0, 3)?.map((article, index) => (
+        {articles?.slice(3, 7)?.map((article, index) => (
           <div key={article.id || index}>
             <ArticleCard article={article} />
             {index < 2 && <hr className="h-2 border-C404380" />}

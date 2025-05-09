@@ -1,25 +1,19 @@
 import React from "react";
+import { formatDate } from "../../utils/formateDate";
+import { Link } from "react-router-dom";
 
 const ArticleCard = ({
   article,
   imagePath = 'category',
   isShowCategoryName = true
 }) => {
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString("en-US", { month: "short" });
-    const year = date.getFullYear();
-    return `${day} ${month}, ${year}`;
-  }
-
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
 
   return (
     <div key={article?._id}>
-      <a
+      <Link
         className="link-anchor"
-        href="/blogs/general-knowledge/girl-scout-cookie-season-2025-history-and-innovation-677e713dbdccdd0001d36464"
+        to={`/blogs/${article?._id}`}
       >
         <div className="bg-C191A32 w-full px-20 pt-14 pb-20 text-14 flex cursor-pointer justify-between">
           <div className="max-w-4/5 mr-20 flex flex-col align-center justify-center">
@@ -57,7 +51,7 @@ const ArticleCard = ({
             />
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };

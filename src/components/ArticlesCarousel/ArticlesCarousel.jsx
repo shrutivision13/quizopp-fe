@@ -2,16 +2,20 @@ import React from 'react';
 import Slider from 'react-slick';
 import { SectionHeading } from '../Ui/SectionHeading';
 import ArticleCard from '../ArticleCard/ArticleCard';
+import { formatDate } from '../../utils/formateDate';
+import { Link } from 'react-router-dom';
 
 const ArticlesCarousel = ({
-    articlesCarousel = [],
     articles = [],
     sectionTitle = '',
     buttonName = 'see all',
     routePath = '',
     isArticalContent = false,
     isShowSectionHeader = false,
+    imagePath = 'article'
 }) => {
+    const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
+
     const settings = {
         dots: true,
         infinite: true,
@@ -41,10 +45,10 @@ const ArticlesCarousel = ({
                     style={{ width: "100%", margin: "0 auto" }}
                 >
                     <Slider {...settings}>
-                        {(articlesCarousel ?? [])?.map((item, index) => (
-                            <div key={index} className="blog-slide">
-                                <a
-                                    href={item.link}
+                        {(articles ?? [])?.slice(0,3)?.map((item) => (
+                            <div key={item?._id} className="blog-slide">
+                                <Link
+                                     to={`/blogs/${item?._id}`}
                                     className="link-anchor"
                                     style={{ textDecoration: "none", color: "inherit" }}
                                 >
@@ -56,8 +60,8 @@ const ArticlesCarousel = ({
                                         }}
                                     >
                                         <img
-                                            src={item.image}
-                                            alt={item.title}
+                                            src={`${IMAGEURL}/images/${imagePath}/${item?.thumbnail}`}
+                                            alt={item?.title}
                                             style={{
                                                 position: "absolute",
                                                 top: 0,
@@ -81,25 +85,14 @@ const ArticlesCarousel = ({
                                             }}
                                             className="blog-carousal-card pb-14 pt-120"
                                         >
-                                            <h3 style={{ marginBottom: "10px" }} className="font-medium text-16 leading-24 mb-12 text-CFAFAFA" >{item.title}</h3>
+                                            <h3 style={{ marginBottom: "10px" }} className="font-medium text-16 leading-24 mb-12 text-CFAFAFA" >{item?.title}</h3>
                                             <p className="text-10 text-C8789C3 leading-14">
-                                                {item.date} •{" "}
+                                                {formatDate(item?.publishedAt)} •{" "}
                                                 {item.views.toLocaleString()} Views
                                             </p>
                                         </div>
-                                        {/* <ul style={{ display: "" }} className="slick-dots">
-                                            <li className="slick-active">
-                                                <button>1</button>
-                                            </li>
-                                            <li className="">
-                                                <button>2</button>
-                                            </li>
-                                            <li className="">
-                                                <button>3</button>
-                                            </li>
-                                        </ul> */}
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         ))}
                     </Slider>
@@ -110,15 +103,15 @@ const ArticlesCarousel = ({
                 isArticalContent &&
                 <div>
                     {
-                        articles?.slice(0, 3)?.map((article, index) => (
-                            <div key={article.id || index}>
-                                <ArticleCard
-                                    article={article}
-                                    imagePath={'article'}
-                                    isShowCategoryName={false}
-                                />
-                                {index < 2 && <hr className="h-2 border-C404380" />}
-                            </div>
+                        articles?.slice(3, 6)?.map((article, index) => (
+                        <div key={article.id || index}>
+                            <ArticleCard
+                                article={article}
+                                imagePath={'article'}
+                                isShowCategoryName={false}
+                            />
+                            {index < 2 && <hr className="h-2 border-C404380" />}
+                        </div>
                         ))
                     }
                 </div>

@@ -3,6 +3,7 @@ import AdSlot from "../../../components/AdSense/AdSlot";
 import { useLocation, useNavigate } from "react-router-dom";
 import useCookie from "../../../hooks/useCookie";
 import { ApiPlayContest } from "../../../api-wrapper/contest/ApiGetcontest";
+import { toast } from "react-toastify";
 
 function JoinContest() {
   const [expanded, setExpanded] = useState(false);
@@ -15,15 +16,25 @@ function JoinContest() {
   const navigate = useNavigate();
 
   const handlePlayContest = () => {
-    ApiPlayContest(participantId, authToken).then(() => {
-      navigate(
-        `/${quizContest?.categoryId?.categoryName
-          .toLowerCase()
-          .replace(/\s+/g, "-")}/play-contest?contestId=${
-          quizContest?._id
-        }&int-nav=undefined`,
-        { state: { participantId, categoryName: quizContest?.categoryId?.categoryName } } // Pass categoryName in state
-      );
+    ApiPlayContest(participantId, authToken).then((res) => {
+      if (res?.isSuccess) {
+        navigate(
+          `/${quizContest?.categoryId?.categoryName
+            .toLowerCase()
+            .replace(/\s+/g, "-")}/play-contest?contestId=${quizContest?._id
+          }`,
+          { state: { participantId, categoryName: quizContest?.categoryId?.categoryName, categoryId: quizContest?.categoryId?._id } } // Pass categoryName in state
+        );
+      }
+      else {
+        toast.error(res.message, {
+          position: 'bottom-center',
+        });
+      }
+    }).catch((error) => {
+      toast.error(error?.message, {
+        position: 'bottom-center',
+      });
     });
   };
 
@@ -167,11 +178,10 @@ function JoinContest() {
                     ]?.map((item, index) => (
                       <tr
                         key={index}
-                        className={`text-12 tr flex ${
-                          index % 2 === 0
-                            ? "bg-CFFFFFF dark:bg-C272D52"
-                            : "bg-C20213F dark:bg-C20213F"
-                        }`}
+                        className={`text-12 tr flex ${index % 2 === 0
+                          ? "bg-CFFFFFF dark:bg-C272D52"
+                          : "bg-C20213F dark:bg-C20213F"
+                          }`}
                       >
                         <td className="px-20 py-10 flex-1 dark:text-CFFFFFF">
                           {item.rank}
