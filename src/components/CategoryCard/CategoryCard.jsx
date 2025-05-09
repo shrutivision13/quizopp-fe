@@ -120,7 +120,7 @@ const CategoryCard = ({
         )
       )}
       <div
-        className={`rounded-12 flex flex-col items-center justify-center ${height ? height : 'h-140'}`}
+        className={`rounded-12 flex flex-col items-center justify-center cursor-pointer ${height ? height : 'h-140'}`}
         style={{ backgroundColor: category?.backgroundColor }}
       >
         <div className="flex justify-center mb-14">

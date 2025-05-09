@@ -1,6 +1,10 @@
 import React from "react";
 
-const ArticleCard = ({ article }) => {
+const ArticleCard = ({
+  article,
+  imagePath = 'category',
+  isShowCategoryName = true
+}) => {
   function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -8,6 +12,8 @@ const ArticleCard = ({ article }) => {
     const year = date.getFullYear();
     return `${day} ${month}, ${year}`;
   }
+
+  const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
 
   return (
     <div key={article?._id}>
@@ -27,9 +33,12 @@ const ArticleCard = ({ article }) => {
               className="text-10 text-C8789C3 leading-14"
               data-testid="article-card-meta"
             >
-              <span className="whitespace-nowrap">
-                {article?.categoryId.categoryName} •{" "}
-              </span>
+              {
+                isShowCategoryName &&
+                <span className="whitespace-nowrap">
+                  {article?.categoryId?.categoryName} •{" "}
+                </span>
+              }
               <span> {formatDate(article?.publishedAt)} • </span>
               <span className="whitespace-nowrap">{article?.views} Views</span>
             </p>
@@ -44,7 +53,7 @@ const ArticleCard = ({ article }) => {
               data-nimg="1"
               className="scaled-image shimmer-dark"
               style={{ color: "transparent" }}
-              src={`http://132.148.0.110:3000/images/category/${article?.thumbnail}`}
+              src={`${IMAGEURL}/images/${imagePath}/${article?.thumbnail}`}
             />
           </div>
         </div>
