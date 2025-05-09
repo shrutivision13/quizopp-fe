@@ -1,66 +1,53 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import React, { useState, useEffect, Fragment } from "react";
+import { useLocation } from "react-router-dom";
+
 import AdSlot from "../../components/AdSense/AdSlot";
-import { ApiGetActiveContent, ApiGetAllCategoryDetails } from "../../api-wrapper/categories/ApiCategories";
-import CountdownTimer from "../../components/CountdownTimer/CountdownTimer";
+import { ApiGetAllCategoryDetails } from "../../api-wrapper/categories/ApiCategories";
 import ContestsCard from "../../components/ContestsCard/ContestsCard";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
-import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import ArticlesCarousel from "../../components/ArticlesCarousel/ArticlesCarousel";
-import { SectionHeading } from "../../components/Ui/SectionHeading";
 
-const articles = [
+const articlesCarousel = [
   {
-    title: "5 Reasons Why Coldplay Concerts Are So Famous",
-    category: "Music",
-    date: "10 Jan, 2025",
-    views: 34829,
-    image: "https://ghost.quizzop.com/content/images/2025/01/h-7.webp",
-    link: "/blogs/music/5-reasons-why-coldplay-concerts-are-so-famous-67810c11bdccdd0001d364d1?access=full",
+    title: "Dhanteras 2024: Significance, Traditions, and Items to Buy for Prosperity",
+    date: "28 Oct, 2024",
+    views: 8862,
+    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F10%2Fh-25.webp&w=1920&q=75",
+    link: "/blogs//indian-mythology/dhanteras-2024-significance-traditions-and-items-to-buy-for-prosperity-671f1d01bdccdd0001d32b7d?access=full",
   },
   {
-    title: "Best Stargazing Spots Around the World",
-    category: "General Knowledge",
-    date: "31 Mar, 2025",
-    views: 10155,
-    image: "https://ghost.quizzop.com/content/images/2025/03/h-21.jpg",
-    link: "/blogs/general-knowledge/best-stargazing-spots-around-the-world-67eaa4b2bdccdd0001d37d11?access=full",
+    title: "Diwali 2024: Celebrations, Origins, and Auspicious Timings",
+    date: "25 Oct, 2024",
+    views: 6949,
+    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F10%2Fh-35.jpg&w=1920&q=75",
+    link: "/blogs/indian-mythology/diwali-2024-celebrations-origins-and-auspicious-timings-671ba790bdccdd0001d32b0a?access=full",
   },
   {
-    title: "Weird and Fascinating Facts About Human Biology",
-    category: "General Knowledge",
-    date: "31 Mar, 2025",
-    views: 9575,
-    image: "https://ghost.quizzop.com/content/images/2025/03/h-3.jpeg",
-    link: "/blogs/general-knowledge/weird-and-fascinating-facts-about-human-biology-67eaa153bdccdd0001d37cd2?access=full",
+    title: "Navratri 2024: How Indian States Celebrate the Festival",
+    date: "3 Oct, 2024",
+    views: 4795,
+    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F10%2Fh.webp&w=1920&q=75",
+    link: "/blogs/indian-mythology/navratri-2024-how-indian-states-celebrate-the-festival-66fe4b76bdccdd0001d31bf5?access=full",
+  },
+  {
+    title: "Top 10 Must-Read Hindu Mythology Books",
+    date: "21 May, 2024",
+    views: 5401,
+    image: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fghost.quizzop.com%2Fcontent%2Fimages%2F2024%2F05%2F1-26.jpeg&w=1920&q=75",
+    link: "/blogs/indian-mythology/top-10-must-read-hindu-mythology-books-664c9112bdccdd0001d2ef50?access=full",
   },
 ];
 
-
 function CategoryDetails() {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
-
-  const { categoryName: categoryPath } = useParams();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [activeContests, setActiveContests] = useState([]);
   const [categoryDetails, setCategoriesDetails] = useState([])
-  console.log("🚀 ~ CategoryDetails ~ categoryDetails:", categoryDetails)
 
   const categoryData = location.state;
 
   useEffect(() => {
     if (categoryData?._id) {
-      ApiGetActiveContent(categoryData?._id)
-        .then((data) => {
-          if (data?.isSuccess) {
-            setActiveContests(data?.data);
-          }
-        })
-        .catch((error) =>
-          console.error("Error fetching active contests:", error)
-        );
-
       ApiGetAllCategoryDetails(categoryData?._id).then((data) => {
         if (data?.isSuccess) {
           setCategoriesDetails(data?.data);
@@ -74,14 +61,14 @@ function CategoryDetails() {
     }
   }, [categoryData?._id]);
 
-  const truncatedDescription = categoryDetails?.category?.description.slice(0, 300) + "…";
+  const truncatedDescription = categoryDetails?.category?.description && categoryDetails?.category?.description?.slice(0, 300) + "…";
 
   return (
     <div className="bg-CFFFFFF dark:bg-C15162E hide-scroll-bar">
       <main className="font-sans">
         <div className="flex justify-center">
           <div className="max-w-[500px] w-full h-dynamic-screen relative overflow-x-hidden bg-CFFFFFF dark:bg-C191A32 hide-scroll-bar">
-            <div className="">
+            <div className="mb-20">
               {/* About Section */}
               <div className="px-20 my-14">
                 <h2 className="mb-14 text-18 font-bold dark:text-CFAFAFA">
@@ -91,7 +78,7 @@ function CategoryDetails() {
                   {/* Float layout instead of flex */}
                   <div className="relative">
                     {/* Image Box */}
-                    <div className="float-left mr-20 mb-4 w-[97px]">
+                    <div className={`${categoryDetails?.category?.description  && 'float-left'} mr-20 mb-4 w-[97px]`}>
                       <CategoryCard
                         category={categoryDetails?.category}
                         removeHeader={true}
@@ -101,18 +88,21 @@ function CategoryDetails() {
                     </div>
 
                     {/* Description */}
-                    <div className="text-justify">
-                      <p className="whitespace-pre-line text-12 text-C2C2C2C dark:text-C8789C3">
-                        {isExpanded ? categoryDetails?.category?.description : truncatedDescription}
-                        <span
-                          datatype="view-more-description-button"
-                          className={`text-12 text-CBAC8FF font-medium cursor-pointer ${isExpanded && 'block'}`}
-                          onClick={() => setIsExpanded(!isExpanded)}
-                        >
-                          {isExpanded ? "View Less" : "View More"}
-                        </span>
-                      </p>
-                    </div>
+                    {
+                      categoryDetails?.category?.description &&
+                      <div className="text-justify">
+                        <p className="whitespace-pre-line text-12 text-C2C2C2C dark:text-C8789C3">
+                          {isExpanded ? categoryDetails?.category?.description : truncatedDescription}
+                          <span
+                            datatype="view-more-description-button"
+                            className={`text-12 text-CBAC8FF font-medium cursor-pointer ${isExpanded && 'block'}`}
+                            onClick={() => setIsExpanded(!isExpanded)}
+                          >
+                            {isExpanded ? "View Less" : "View More"}
+                          </span>
+                        </p>
+                      </div>
+                    }
                   </div>
                 </div>
               </div>
@@ -126,7 +116,7 @@ function CategoryDetails() {
                   <a
                     rel=""
                     className="anchor-link"
-                    href={`/${categoryPath?.toLowerCase()}/begin-quiz`}
+                    href={`/${categoryDetails?.category?.categorySlug?.toLowerCase()}/begin-quiz`}
                   >
                     <div className="border border-CFFCC5B mx-20 px-20 mb-14 py-10 relative rounded-10 overflow-hidden">
                       <div className="relative z-[10] flex justify-between items-center">
@@ -187,57 +177,66 @@ function CategoryDetails() {
               />
 
               {/* Contests Section */}
-              <div className="pt-14">
-                <div className="px-20 mb-20">
-                  <div className="flex justify-between items-center">
-                    <h2 className="text-18 font-black dark:text-CFFFFFF">
-                      Contests in {categoryDetails?.category?.categoryName}
-                    </h2>
+              {
+                categoryDetails?.contest?.length !== 0 &&
+                <Fragment>
+                  <div className="pt-14">
+                    <div className="px-20 mb-20">
+                      <div className="flex justify-between items-center">
+                        <h2 className="text-18 font-black dark:text-CFFFFFF">
+                          Contests in {categoryDetails?.category?.categoryName}
+                        </h2>
+                      </div>
+                      <div>
+                        {categoryDetails?.contest?.map((contest) => (
+                          <ContestsCard
+                            key={contest._id}
+                            quizContest={{
+                              categoryId: {
+                                categoryName: categoryDetails?.category?.categoryName,
+                                categoryIcon: categoryDetails?.category?.categoryIcon,
+                                backgroundColor: categoryDetails?.category?.backgroundColor
+                              },
+                              _id: contest?._id,
+                              prize: contest?.prize,
+                              endTime: contest?.endTime,
+                              participation: contest?.participation,
+                              entryFee: contest?.entryFee,
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    {categoryDetails?.contest?.map((contest) => (
-                      <ContestsCard
-                        key={contest._id}
-                        quizContest={{
-                          categoryId: {
-                            categoryName: categoryDetails?.category?.categoryName,
-                            categoryIcon: categoryDetails?.category?.categoryIcon,
-                            backgroundColor: categoryDetails?.category?.backgroundColor
-                          },
-                          _id: contest?._id,
-                          prize: contest?.prize,
-                          endTime: contest?.endTime,
-                          participation: contest?.participation,
-                          entryFee: contest?.entryFee,
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
+                  <AdSlot
+                    slotId="ad-slot-1"
+                    adUnitPath="/123456/ad-unit"
+                    sizes={[728, 80]}
+                  />
+                </Fragment>
+              }
 
-              <AdSlot
-                slotId="ad-slot-1"
-                adUnitPath="/123456/ad-unit"
-                sizes={[728, 80]}
-              />
 
               {/* Articles Section */}
-              <div className="pt-14">
-                <div className="px-20 mb-20">
-                  <SectionHeading
-                    title={`Articles on Indian Mythology`}
-                    button={"See all"}
-                    route="/category"
+              {
+                categoryDetails?.articles?.length !== 0 &&
+                <Fragment>
+                  <div className="pt-14">
+                    <ArticlesCarousel
+                      isShowSectionHeader
+                      sectionTitle={`Articles on ${categoryDetails?.category?.categoryName}`}
+                      articlesCarousel={articlesCarousel}
+                      isArticalContent
+                      articles={categoryDetails?.articles}
+                    />
+                  </div>
+                  <AdSlot
+                    slotId="ad-slot-1"
+                    adUnitPath="/123456/ad-unit"
+                    sizes={[728, 80]}
                   />
-                </div>
-                <ArticlesCarousel articles={articles} />
-              </div>
-              {/* {
-                categoryDetails?.articles?.map((article) => (
-                  <ArticleCard key={article?._id} article={article} />
-                ))
-              } */}
+                </Fragment>
+              }
             </div>
           </div>
         </div>
