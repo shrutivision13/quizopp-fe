@@ -1,37 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { ApiGetCategories } from "../../../api-wrapper/categories/ApiCategories";
 import CategoryCard from "../../../components/CategoryCard/CategoryCard";
-import { useLoader } from "../../../context/LoaderContext";
 import { SectionHeading } from "../../../components/Ui/SectionHeading";
 import {
   ApiDislikeCategory,
   ApiLikeCategory,
 } from "../../../api-wrapper/user/ApiUser";
 
-const TopQuiz = ({ removeHeader }) => {
+const TopQuiz = ({ removeHeader, quizBites, handleRemove, handleAdd }) => {
   const [categories, setCategories] = useState([]);
-  console.log("🚀 ~ TopQuiz ~ categories:", categories)
-  const { setLoading } = useLoader();
 
-  const displayedCategories = removeHeader
+  const displayedCategories = !removeHeader
     ? categories
     : categories?.slice(0, 6) || [];
 
+  const selectedCategoryIds = new Set(quizBites?.map((item) => item?._id));
+
   const fetchCategories = async () => {
-    setLoading(true);
     try {
       const res = await ApiGetCategories();
       if (res.isSuccess) {
         setCategories(res.data);
-        setLoading(false);
       } else {
         console.error("Error fetching categories:", res.message);
       }
     } catch (error) {
       console.error("Error fetching categories:", error);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   useEffect(() => {
@@ -46,13 +41,11 @@ const TopQuiz = ({ removeHeader }) => {
       .then((res) => {
         if (res.isSuccess) {
           fetchCategories();
-          setLoading(false);
         } else {
           console.error("Error liking category:", res.message);
         }
       })
       .catch((err) => {
-        setLoading(false);
       });
   };
 
@@ -64,18 +57,16 @@ const TopQuiz = ({ removeHeader }) => {
       .then((res) => {
         if (res.isSuccess) {
           fetchCategories();
-          setLoading(false);
         } else {
           console.error("Error disliking category:", res.message);
         }
       })
       .catch((err) => {
-        setLoading(false);
       });
   };
   return (
     <div className="px-20 mt-24">
-      {!removeHeader && (
+      {removeHeader && (
         <SectionHeading
           title={"Top Quizzes"}
           button={"See all"}
@@ -83,14 +74,17 @@ const TopQuiz = ({ removeHeader }) => {
         />
       )}
       <div className="grid grid-cols-3 gap-14">
-        {displayedCategories.map((category) => (
+        {displayedCategories?.map((category) => (
           <CategoryCard
-            removeHeader={true}
+            removeHeader={removeHeader}
             key={category?._id}
             category={category}
             handleLikeCategory={handleLikeCategory}
             handleDislikeCategory={handleDislikeCategory}
             quizRoute="begin-quiz"
+            isSelected={selectedCategoryIds.has(category?._id)}
+            handleRemove={handleRemove}
+            handleAdd={handleAdd}
           />
         ))}
       </div>

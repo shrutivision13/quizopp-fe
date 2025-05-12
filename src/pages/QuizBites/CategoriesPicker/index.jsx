@@ -1,7 +1,9 @@
 import React from "react";
 import PickCategories from "../../../components/PickCategories/PickCategories";
 
-const CategoriesPicker = () => {
+
+const CategoriesPicker = ({quizBites, handleRemove}) => {
+
   return (
     <section className="px-20 mt-20">
       <div className="mb-14">
@@ -11,7 +13,12 @@ const CategoriesPicker = () => {
           </h2>
         </div>
       </div>
-      <PickCategories quizBites={true} button={{ name: "Play" }}  />
+      <PickCategories
+        quizBites={true}
+        button={{ name: "Play" }}
+        quizBitesData={quizBites?.slice(0, 3)}
+        handleRemove={handleRemove}
+      />
     </section>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import TopQuiz from "../../Home/TopQuiz";
 
-const QuizTopics = () => {
+const QuizTopics = ({ removeHeader, quizBites, handleRemove, handleAdd }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const contentRef = useRef(null);
   const [height, setHeight] = useState("60px");
@@ -12,7 +12,7 @@ const QuizTopics = () => {
 
   useEffect(() => {
     if (isExpanded && contentRef.current) {
-      setHeight(`${contentRef.current.scrollHeight + 555}px`);
+      setHeight(`${contentRef.current.scrollHeight + 525}px`);
     } else {
       setHeight("60px");
     }
@@ -20,7 +20,7 @@ const QuizTopics = () => {
 
   return (
     <aside
-      className="z-20 bottom-sheet_fadeInUp__X6_5w fixed w-full bottom-0 transition-all duration-300 ease-in-out"
+      className="z-20 bottom-sheet_fadeInUp__X6_5w fixed w-full bottom-0 transition-all duration-300 ease-in-out "
       style={{ height }}
     >
       <div className="shadow-contestCard text-CFFFFFF rounded-t-20 max-w-maxW w-full bg-C20213F transition-all duration-300 ease-in-out">
@@ -28,7 +28,7 @@ const QuizTopics = () => {
           {/* Header */}
           <div className="py-20 px-20 text-2C2C2C text-14 font-medium flex justify-between">
             <div className="flex items-center">
-              <div className="w-30 h-30 bg-C26284C rounded-full flex items-center justify-center">
+              <div className="w-40 h-30 bg-C26284C rounded-full flex items-center justify-center">
                 <img
                   alt="drawer icon"
                   loading="lazy"
@@ -44,8 +44,8 @@ const QuizTopics = () => {
             </div>
             <div
               onClick={toggleExpand}
-              className="cursor-pointer rounded-full h-30 w-30 bg-C26284C flex items-center justify-center"
-            >   
+              className="cursor-pointer rounded-full h-30 w-40 bg-C26284C flex items-center justify-center"
+            >
               <div className="h-24 w-24">
                 {isExpanded ? (
                   <svg
@@ -79,11 +79,12 @@ const QuizTopics = () => {
           <div
             ref={contentRef}
             className="transition-all duration-300 ease-in-out overflow-y-auto hide-scrollbar"
+            style={{ height: height, overflowY: "scroll" }}
           >
             {isExpanded && (
               <>
                 <hr className="h-2 border border-C404380" />
-                <TopQuiz removeHeader={true} />
+                <TopQuiz handleRemove={handleRemove} handleAdd={handleAdd} quizBites={quizBites} removeHeader={removeHeader} />
               </>
             )}
           </div>

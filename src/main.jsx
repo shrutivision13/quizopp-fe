@@ -9,7 +9,20 @@ createRoot(document.getElementById("root")).render(
   <LoaderProvider>
     <BrowserRouter>
       <App />
-      <ToastContainer />
+      <ToastContainer 
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar
+        closeOnClick={false}
+        pauseOnHover
+        draggable={false}
+        theme="dark"
+        style={{
+          width: "25%",
+          margin: "0 auto",
+          zIndex: 9999,
+        }}
+      />
     </BrowserRouter>
   </LoaderProvider>
 );
