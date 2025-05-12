@@ -8,7 +8,7 @@ const Footer = ({ gameStarted }) => {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation(); // Initialize useLocation
 
-    const hiddenFooterPaths = ["/login", "/login/phone", "/category" , "/contest-rules" ]; // Paths where footer should be hidden
+    const hiddenFooterPaths = ["/login", "/login/phone", "/category" , "/contest-rules", "/spin-wheel" ]; // Paths where footer should be hidden
     const path = location.pathname;
 
     if (hiddenFooterPaths.includes(path) || path.includes("/join-contest") || path.includes("/play-contest") || path.includes("/contest-rank") ) return null; // Hide footer for specific paths

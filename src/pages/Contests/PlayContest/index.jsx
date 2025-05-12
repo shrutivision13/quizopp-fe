@@ -9,7 +9,7 @@ function PlayContest() {
   const navigate = useNavigate(); // Initialize the navigate function
   const searchParams = new URLSearchParams(location.search);
   const contestId = searchParams.get("contestId");
-  const participantId = location.state?.participantId; 
+  const participantId = location.state?.participantId;
   const [questions, setQuestions] = React.useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
   const [score, setScore] = React.useState(0);
@@ -60,14 +60,13 @@ function PlayContest() {
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 || currentQuestionIndex === questions.length) {
       const payload = {
-        totalQuestions: questions.length, // Total number of questions
-        correctAnswers: score / 20, // Assuming each correct answer gives 20 points
+        totalQuestions: questions.length,
+        score: score, 
       }; // Prepare the payload
       ApiSubmitContest(participantId, payload)
         .then((response) => {
-          console.log(response?.data)
           if (response?.isSuccess) {
-            navigate(`/${categoryName}/contest-rank` , { state: {result : response?.data} }); // Navigate to the rank page
+            navigate(`/${categoryName}/contest-rank`, { state: { result: response?.data, participantId: participantId, categoryId: location?.state?.categoryId } }); // Navigate to the rank page
           }
         })
         .catch((error) => {
@@ -80,32 +79,35 @@ function PlayContest() {
     setSelectedOption(selectedOption);
     const currentQuestion = questions[currentQuestionIndex];
     const correctAnswer = currentQuestion?.options[0];
-    if (selectedOption === correctAnswer) {
-      setScore((prevScore) => prevScore + 20);
-    } else {
-      setScore((prevScore) => prevScore - 10);
+    setScore(prevScore => {
+      const newScore = selectedOption === correctAnswer ? prevScore + 20 : prevScore - 10;
+
+      setTimeout(() => {
+        if (currentQuestionIndex < questions.length - 1) {
+          setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        } else {
+          const payload = {
+            totalQuestions: questions.length,
+            score: newScore,  // Use the newScore we just calculated
+          };
+          ApiSubmitContest(participantId, payload)
+            .then((response) => {
+              if (response?.isSuccess) {
+                navigate(`/${categoryName}/contest-rank`, { state: { result: response?.data, participantId, categoryId: location?.state?.categoryId } });
+              }
+            })
+            .catch((error) => {
+              console.error("Error submitting contest:", error);
+            });
+        }
+      }, 1000);
+
+      return newScore;
+    });
+
+    if (selectedOption !== correctAnswer) {
       setShakeOptionIndex(index);
     }
-    setTimeout(() => {
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      } else {
-        // Trigger API call and navigation when all questions are completed
-        const payload = {
-          totalQuestions: questions.length,
-          score: score,
-        };
-        ApiSubmitContest(participantId, payload)
-          .then((response) => {
-            if (response?.isSuccess) {
-              navigate(`/${categoryName}/contest-rank`, { state: {result : response?.data} });
-            }
-          })
-          .catch((error) => {
-            console.error("Error submitting contest:", error);
-          });
-      }
-    }, 1000);
   };
 
   const toggleMute = () => {
@@ -206,16 +208,15 @@ function PlayContest() {
                 {shuffledOptions?.map((option, index) => (
                   <div
                     key={index}
-                    className={`justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none opacity-100 ${
-                      shakeOptionIndex === index ? "animate-shake" : ""
-                    }`}
+                    className={`justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none opacity-100 ${shakeOptionIndex === index ? "animate-shake" : ""
+                      }`}
                     style={{
                       backgroundColor: selectedOption
                         ? option === questions[currentQuestionIndex]?.options[0]
                           ? "#74C465"
                           : option === selectedOption
-                          ? "#EF353D"
-                          : ""
+                            ? "#EF353D"
+                            : ""
                         : "",
                     }}
                     onClick={() =>
@@ -261,12 +262,11 @@ function PlayContest() {
 
               {/* Lifeline Dropdown */}
               <div
-                className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                  lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"
-                }`}
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"
+                  }`}
               >
 
-<div className="z-10 animate__playContest_fadeInUp">
+                <div className="z-10 animate__playContest_fadeInUp">
                   <div className="lifeline-card-container dark:text-CFFFFFF bg-CFFFFFF dark:bg-C20213F max-w-maxW animate__animated bottomsheet_animated lifeline-box-container w-full">
                     <div className="px-20 flex w-full gap-30 justify-between transition-all ease-in duration-[250ms] overflow-hidden h-[120px] max-h-[120px] pt-14">
                       <div
@@ -389,7 +389,7 @@ function PlayContest() {
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -402,11 +402,10 @@ function PlayContest() {
 
           {/* Report UI */}
           <div
-            className={`animate__animated bottomsheet_animated ${
-              showReportUI
-                ? "animate__slideInUp h-auto opacity-100"
-                : "animate__slideOutDown h-0 opacity-0"
-            } bg-CFFFFFF w-full rounded-t-10 text-center py-20 px-20 transition-all duration-300 ease-in-out max-w-maxW dark:bg-C20213F dark:border-C404380 dark:border-1 z-100`}
+            className={`animate__animated bottomsheet_animated ${showReportUI
+              ? "animate__slideInUp h-auto opacity-100"
+              : "animate__slideOutDown h-0 opacity-0"
+              } bg-CFFFFFF w-full rounded-t-10 text-center py-20 px-20 transition-all duration-300 ease-in-out max-w-maxW dark:bg-C20213F dark:border-C404380 dark:border-1 z-100`}
             style={{
               overflow: showReportUI ? "visible" : "hidden",
             }}

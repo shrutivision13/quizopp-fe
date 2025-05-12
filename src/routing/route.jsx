@@ -14,6 +14,9 @@ import ContestRules from "../pages/Contests/ContestRules";
 import PlayContest from "../pages/Contests/PlayContest";
 import ContestResult from "../pages/Contests/ContestResult";
 import Games from "../pages/Games";
+import SpinWheel from "../pages/SpinWheel";
+import QuizBattles from "../pages/QuizBattles/QuizBattles";
+import BeginQuiz from "../pages/BeginQuiz/BeginQuiz";
 
 export const routes = [
   {
@@ -75,5 +78,17 @@ export const routes = [
   {
     path: "/begin-quiz",
     element: <Games />,
+  },
+  {
+    path: "/spin-wheel",
+    element: <SpinWheel />,
+  },
+  {
+    path: "/:categoryName/end-quiz",
+    element: <QuizBattles />,
+  },
+  {
+    path: "/:categoryName/begin-quiz",
+    element: <BeginQuiz />,
   },
 ];

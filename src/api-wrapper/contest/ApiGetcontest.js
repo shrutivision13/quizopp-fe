@@ -1,11 +1,18 @@
 import axios from "axios";
+import { getCookie } from "../categories/ApiCategories";
 
 const api = `${import.meta.env.VITE_API_BASE_URL}/api/`;
 
 
 const ApiGetContests = () => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
   return axios
-    .get(`${api}contest/getActiveContests`)
+    .get(`${api}contest/getActiveContests`, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
 };
@@ -35,19 +42,48 @@ const ApiJoinContest = (contestId, authToken) => {
 
 
 const ApiPlayContest = (participantId) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
   return axios
     .put(
-      `${api}participant/play?participantId=${participantId}`)
+      `${api}participant/play?participantId=${participantId}`, {}, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
 };
 
-const ApiSubmitContest = (participantId , payload ) => {
+const ApiSubmitContest = (participantId, payload) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
   return axios
     .put(
-      `${api}participant/submit?participantId=${participantId}` , payload)
+      `${api}participant/submit?participantId=${participantId}`, payload, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
 };
 
-export { ApiGetContests, ApiGetContestQuestions, ApiJoinContest , ApiPlayContest , ApiSubmitContest};
+const ApiGetScore = (contestId) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios
+    .get(
+      `${api}participant/score?id=${contestId}`, { headers })
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+};
+
+export { ApiGetContests, ApiGetContestQuestions, ApiJoinContest, ApiPlayContest, ApiSubmitContest, ApiGetScore };

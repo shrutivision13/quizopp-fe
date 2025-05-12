@@ -11,4 +11,10 @@ const ApiGetArticle = (data) => {
     .catch((res) => res.data);
 };
 
-export { ApiGetArticle };
+const ApiGetTrendingArticles = () => {
+  return axios.get(`${api}getTrendingArticles`)
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+}
+
+export { ApiGetArticle, ApiGetTrendingArticles };

@@ -10,6 +10,7 @@ import {
 
 const TopQuiz = ({ removeHeader }) => {
   const [categories, setCategories] = useState([]);
+  console.log("🚀 ~ TopQuiz ~ categories:", categories)
   const { setLoading } = useLoader();
 
   const displayedCategories = removeHeader
@@ -82,13 +83,14 @@ const TopQuiz = ({ removeHeader }) => {
         />
       )}
       <div className="grid grid-cols-3 gap-14">
-        {displayedCategories.slice(6, 20).map((category) => (
+        {displayedCategories.map((category) => (
           <CategoryCard
             removeHeader={true}
             key={category?._id}
             category={category}
             handleLikeCategory={handleLikeCategory}
             handleDislikeCategory={handleDislikeCategory}
+            quizRoute="begin-quiz"
           />
         ))}
       </div>
