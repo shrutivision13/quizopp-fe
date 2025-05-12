@@ -45,8 +45,15 @@ const ApiGetInitialCategory = () => {
 };
 
 const ApiGetAllCategoryDetails = (categoryId) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
   return axios
-    .get(`${api}/category/getAllCategoryDetails/${categoryId}`)
+    .get(`${api}/category/getAllCategoryDetails/${categoryId}`, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
 };

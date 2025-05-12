@@ -1,20 +1,61 @@
 import axios from "axios";
+import { getCookie } from "../categories/ApiCategories";
 
 const api = `${import.meta.env.VITE_API_BASE_URL}/api/article/`;
 // const authToken = localStorage.getItem('sellerToken')
 // const headers = { Authorization: `Bearer ${authToken}`, 'Content-Type': 'application/json' };
 
-const ApiGetArticle = (data) => {
+const ApiGetArticle = () => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
   return axios
-    .get(`${api}getAll`, data)
+    .get(`${api}getAll`, { headers })
     .then((res) => res.data)
     .catch((res) => res.data);
 };
 
 const ApiGetTrendingArticles = () => {
-  return axios.get(`${api}getTrendingArticles`)
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios.get(`${api}getTrendingArticles`, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
 }
 
-export { ApiGetArticle, ApiGetTrendingArticles };
+const ApiGetArticleCategoryWise = (categoryId) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios.get(`${api}getArticleCategoryWise?categoryId=${categoryId}`, { headers })
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+}
+
+const ApiGetArticleContent = (articleId) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios.get(`${api}get/${articleId}`, { headers })
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+}
+
+export { ApiGetArticle, ApiGetTrendingArticles, ApiGetArticleCategoryWise, ApiGetArticleContent };

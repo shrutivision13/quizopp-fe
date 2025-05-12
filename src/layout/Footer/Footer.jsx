@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation, useParams } from 'react-router-dom'; // Import useLocation
 import '../../styles/components/footer/footer.css';
 import arrow from '../../assets/images/arrow.svg';
 import logo from '../../assets/images/quizzop-logo-dark.svg';
 
 const Footer = ({ gameStarted }) => {
+     const { categoryName } = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation(); // Initialize useLocation
 
-    const hiddenFooterPaths = ["/login", "/login/phone", "/category" , "/contest-rules", "/spin-wheel" ]; // Paths where footer should be hidden
+    const hiddenFooterPaths = ["/login", "/login/phone", "/category" , "/contest-rules", "/spin-wheel",`/${categoryName}/begin-quiz` ]; // Paths where footer should be hidden
     const path = location.pathname;
 
     if (hiddenFooterPaths.includes(path) || path.includes("/join-contest") || path.includes("/play-contest") || path.includes("/contest-rank") ) return null; // Hide footer for specific paths

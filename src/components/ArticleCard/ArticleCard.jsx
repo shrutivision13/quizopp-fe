@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const ArticleCard = ({
   article,
   imagePath = 'category',
-  isShowCategoryName = true
+  isShowCategoryName = true,
 }) => {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -13,7 +13,7 @@ const ArticleCard = ({
     <div key={article?._id}>
       <Link
         className="link-anchor"
-        to={`/blogs/${article?._id}`}
+        to={`/blogs-details/${article?._id}`}
       >
         <div className="bg-C191A32 w-full px-20 pt-14 pb-20 text-14 flex cursor-pointer justify-between">
           <div className="max-w-4/5 mr-20 flex flex-col align-center justify-center">

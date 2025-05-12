@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, Fragment } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MenuPage from "../../pages/MenuPage";
 import "../../styles/components/header/header.css";
@@ -15,7 +15,7 @@ import { useLoader } from "../../context/LoaderContext";
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { categoryName } = useParams();
+  const { categoryName, articleId } = useParams();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [wallet, setWallet] = useState({});
   const { setLoading } = useLoader();
@@ -35,12 +35,17 @@ const Header = () => {
       "/contests",
       "/mini-quiz-category-selection",
       "/order-history",
+      `/${categoryName}/end-quiz`,
+      `/blogs/${categoryName}`,
+      `/blogs-details/${articleId}`,
     ];
     return backPaths.includes(path) || path.includes("/join-contest") || path.includes("/contest-rank");
   }, [path, categoryName]);
 
   // Helper function to check if the current path is a hidden header
   const isHiddenHeader = useMemo(() => [`/${categoryName}/play-contest`], [categoryName]);
+
+  const isHideFreeCoins = useMemo(() => [`/${categoryName}/begin-quiz`], [categoryName]);
 
   // Helper function to check if it's a main header
   const isMainHeader = useMemo(() => !isBackHeader && !isHiddenHeader.includes(path), [isBackHeader, isHiddenHeader, path]);
@@ -68,6 +73,7 @@ const Header = () => {
   }, [getCookie, setLoading]);
 
   const handleGoBack = () => navigate(-1);
+  const handlePlayQuiz = () => navigate('/');
 
   if (isHiddenHeader.includes(path)) return null;
 
@@ -95,6 +101,14 @@ const Header = () => {
                   "Quiz Bites"
                 ) : path.includes("/order-history") ? (
                   "Coin History"
+                ) : path.includes(`/${categoryName}/end-quiz`) ? (
+                  "Quiz Battles"
+                ) : path.includes(`/blogs/${categoryName}`) ? (
+                  <span className="capitalize">{categoryName?.replace(/-/g, " ")} Articles</span>
+                ) : path.includes(`/blogs-details/${articleId}`) ? (
+                  <div className="mr-10 h-30 flex flex-auto items-center justify-start">
+                    <img src={logo} alt="logo" className="h-30" />
+                  </div>
                 ) : path.includes("/login") ? (
                   ""
                 ) : (
@@ -114,9 +128,16 @@ const Header = () => {
               </div>
             </a>
           )}
-          <div className="ml-20 cursor-pointer" data-testid="bell-icon">
-            <img alt="bell" loading="lazy" width="32" height="32" src={bellGif} />
-          </div>
+          {
+            (path.includes(`/blogs/${categoryName}`) || path.includes(`/blogs-details/${articleId}`)) &&
+            <button onClick={handlePlayQuiz} className="bg-C0DB25B  text-white rounded-3 py-5 px-20 text-14 font-bold text-CFFFFFF uppercase text-center inline-block   cursor-pointer flex items-center flex-col select-none opacity-100">Play Quiz</button>
+          }
+          {
+            !path.includes(`/${categoryName}/end-quiz`) &&
+            <div className="ml-20 cursor-pointer" data-testid="bell-icon">
+              <img alt="bell" loading="lazy" width="32" height="32" src={bellGif} />
+            </div>
+          }
         </div>
       </nav>
     );
@@ -134,7 +155,7 @@ const Header = () => {
     );
   }
 
-  if (isMainHeader ) {
+  if (isMainHeader) {
     return (
       <header className="h-60 fixed z-99 max-w-maxW top-0 w-full duration-350 bg-C26284C !mt-0">
         <div className="flex flex-row justify-between items-center h-full px-20">
@@ -160,9 +181,12 @@ const Header = () => {
                 LOGIN
               </button>
             )}
-            <div className="ml-10 cursor-pointer" data-testid="free-coins-button">
-              <img alt="free coins" loading="lazy" width="34" height="34" src={freeCoins} />
-            </div>
+            {
+              !isHideFreeCoins &&
+              <div className="ml-10 cursor-pointer" data-testid="free-coins-button">
+                <img alt="free coins" loading="lazy" width="34" height="34" src={freeCoins} />
+              </div>
+            }
           </div>
         </div>
       </header>

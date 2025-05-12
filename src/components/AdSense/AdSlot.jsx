@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 const adSlotCache = new Map(); // Maps slotId to slot reference
 
-const AdSlot = ({ slotId, adUnitPath, sizes }) => {
+const AdSlot = ({ slotId, adUnitPath, sizes, marginTop = '' }) => {
   const retryCount = useRef(0);
   const maxRetries = 50;
   const retryInterval = 3000;
@@ -55,7 +55,7 @@ const AdSlot = ({ slotId, adUnitPath, sizes }) => {
   }, [slotId, adUnitPath, sizes]);
 
   return (
-    <div className="mt-20">
+    <div className={`${marginTop ? marginTop : "mt-20"}`}>
       <div className="flex justify-center border-y border-y-C8789C3 py-8 bg-C0C0D26 displayad-wrapper">
         <div
           className="style-module_gam_container__9KUaZ"

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "../../../components/Slider/Slider";
 import { ApiGetTrendingArticles } from "../../../api-wrapper/article/ApiArticle";
 import { Link } from "react-router-dom";
 
-function TrendingArticles() {
+function TrendingArticles({ closeMenu }) {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
   const [trendingArticles, setTrendingArticles] = useState([]);
 
@@ -19,7 +19,7 @@ function TrendingArticles() {
       console.error("Error fetching get all treding Articles:", error)
     );
   }, [])
-   
+
   return (
     <div
       style={{
@@ -64,7 +64,7 @@ function TrendingArticles() {
                     className="snap-center relative rounded-20 mr-10 flex flex-col items-center justify-center min-w-[70px] first:ml-0 last:mr-0 pr-[0px]"
                     data-testid={`quiz-category-icon-${article._id}`}
                   >
-                    <Link to={`/blogs/${article?.categorySlug}`}>
+                    <Link to={`/blogs/${article?.categorySlug}`} onClick={closeMenu} state={{ categoryId: article?._id }}>
                       <div
                         className="whitespace-nowrap text-18 font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-CFFDEE5 cursor-pointer relative flex justify-center items-center h-[70px] w-[70px] rounded-[12px]"
                         style={{ backgroundColor: article?.backgroundColor }}
