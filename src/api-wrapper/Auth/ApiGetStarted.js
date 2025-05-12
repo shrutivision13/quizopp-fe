@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = `${import.meta.env.VITE_API_BASE_URL}/api`;
 
-export const ApiGetSatrted = (payload) => {
+export const ApiGetStarted = (payload) => {
   return axios
     .post(`${api}/auth/addUser`, payload, {
       headers: {

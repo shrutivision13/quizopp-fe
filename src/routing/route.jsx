@@ -13,6 +13,7 @@ import JoinContest from "../pages/Contests/JoinContest";
 import ContestRules from "../pages/Contests/ContestRules";
 import PlayContest from "../pages/Contests/PlayContest";
 import ContestResult from "../pages/Contests/ContestResult";
+import Games from "../pages/Games";
 
 export const routes = [
   {
@@ -70,5 +71,9 @@ export const routes = [
   {
     path: "/:categoryName/contest-rank",
     element: <ContestResult />,
+  },
+  {
+    path: "/begin-quiz",
+    element: <Games />,
   },
 ];

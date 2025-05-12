@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { ApiGetSatrted } from '../../api-wrapper/getStarted/ApiGetStarted';
 import { ApiGetCategories } from '../../api-wrapper/categories/ApiCategories';
+import useCookie from '../../hooks/useCookie';
+import { ApiGetStarted } from '../../api-wrapper/Auth/ApiGetStarted';
 
 const InitialPage = () => {
     const [categories, setCategories] = useState([]); // State for categories from API
     const [selectedTopics, setSelectedTopics] = useState([]);
     const navigate = useNavigate();
+    const { setCookie } = useCookie();
 
     useEffect(() => {
         ApiGetCategories()
@@ -32,13 +34,13 @@ const InitialPage = () => {
     };
 
     const handleProceed = () => {
-        ApiGetSatrted({
+        ApiGetStarted({
             favouriteCategories: selectedTopics, // Send selected category IDs
         })
             .then((res) => {
                 if (res?.isSuccess) {
-                    document.cookie = `authToken=${res.data.authToken}; path=/; max-age=${7 * 24 * 60 * 60}`; // Store authToken in cookies
-                    document.cookie = `userData=${encodeURIComponent(JSON.stringify(res.data))}; path=/; max-age=${7 * 24 * 60 * 60}`; // Store userData in cookies
+                    setCookie('authToken', res.data.authToken);
+                    setCookie('userData', JSON.stringify(res.data));
 
                     if (selectedTopics.length > 0) {
                         navigate('/start-quiz');

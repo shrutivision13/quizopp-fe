@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ApiVerifyOtp } from '../../../api-wrapper/Auth/ApiRegisterWithPhone'; // Adjust the import path as necessary
+import { ApiResendOTP, ApiVerifyOtp } from '../../../api-wrapper/Auth/ApiRegisterWithPhone'; // Adjust the import path as necessary
+import useCookie from '../../../hooks/useCookie';
 
 const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
-    const [timer, setTimer] = useState(30);
+    const [showResendButton, setShowResendButton] = useState(false);
+    const [timer, setTimer] = useState(20);
     const inputRefs = useRef([]);
+    const { setCookie } = useCookie();
 
     const handleChange = (e, index) => {
         const value = e.target.value.replace(/\D/, '')
@@ -14,7 +17,6 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
         newOtp[index] = value;
         setOtp(newOtp);
 
-        // Move to next input only if a digit was typed
         if (value && index < 3) {
             inputRefs.current[index + 1].focus();
         }
@@ -34,7 +36,10 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
     }, [otp]);
 
     useEffect(() => {
-        if (timer <= 0) return;
+        if (timer <= 0) {
+            setShowResendButton(true);
+            return;
+        }
         const interval = setInterval(() => setTimer(prev => prev - 1), 1000);
         return () => clearInterval(interval);
     }, [timer]);
@@ -48,9 +53,9 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
 
         ApiVerifyOtp(payload)
             .then((response) => {
-                if (response?.isSuccess === 200) {
-                    console.log('OTP verified successfully:', response?.data);
-        
+                if (response?.isSuccess) {
+                    setCookie('authToken', response.data.authToken);
+
                 } else {
                     console.error('Failed to verify OTP:', response?.message);
                 }
@@ -62,10 +67,26 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
 
     const handleResend = () => {
         setOtp(['', '', '', '']);
-        setTimer(30);
+        setTimer(20);
+        setShowResendButton(false);
         inputRefs.current[0].focus();
-        // Trigger resend API here
+    
+        const payload = { phoneNumber };
+    
+        ApiResendOTP(payload)
+            .then((response) => {
+                console.log("🚀 ~ .then ~ response:", response)
+                if (response?.isSuccess) {
+                    console.log('OTP resent successfully:', response?.data);
+                } else {
+                    console.error('Failed to resend OTP:', response?.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error during OTP resend:', error);
+            });
     };
+    
 
     return (
         <div className="flex flex-col h-dynamic-screen flex flex-col justify-between pb-20">
@@ -101,11 +122,20 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
                 >
                     Submit OTP
                 </button>
-                <div
-                    data-testid="phone-login-otp-resend-timer"
-                    className="mt-20 text-center text-C2C2C2C dark:text-CFFFFFF text-12 uppercase cursor-pointer"
-                >
-                    Resend OTP in {timer} seconds
+                <div className="mt-20 text-center text-C2C2C2C dark:text-CFFFFFF text-12 uppercase">
+                    {showResendButton ? (
+                        <span
+                            className="cursor-pointer font-bold"
+                            onClick={handleResend}
+                            data-testid="phone-login-otp-resend-button"
+                        >
+                            Resend OTP
+                        </span>
+                    ) : (
+                        <span data-testid="phone-login-otp-resend-timer">
+                            Resend OTP in {timer} seconds
+                        </span>
+                    )}
                 </div>
             </div>
             <div className="w-screen text-center max-w-maxW">

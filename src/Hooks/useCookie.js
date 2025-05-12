@@ -12,7 +12,11 @@ const useCookie = () => {
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }, []);
 
-    return { getCookie, deleteCookie };
+    const setCookie = useCallback((name, value, maxAgeInSeconds = 7 * 24 * 60 * 60) => {
+        document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAgeInSeconds}`;
+    }, []);
+
+    return { getCookie, deleteCookie, setCookie };
 };
 
 export default useCookie;
