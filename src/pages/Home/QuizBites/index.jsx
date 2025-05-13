@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PickCategories from "../../../components/PickCategories/PickCategories";
+import { useLoader } from "../../../context/LoaderContext";
+import { ApiGetQuizBites } from "../../../api-wrapper/categories/ApiCategories";
 
 const QuizBites = () => {
+  const [quizBites, setQuizBites] = useState([]);
+  const { setLoading } = useLoader();
+
+  useEffect(() => {
+    setLoading(true);
+    ApiGetQuizBites()
+      .then((res) => {
+        if (res.isSuccess) {
+          setQuizBites(res.data);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <section className="px-20 mt-24">
       <div className="mb-14">
@@ -17,6 +36,7 @@ const QuizBites = () => {
         title={"Pick Upto 3 Categories"}
         button={{ name: "CREATE QUIZ" }}
         quizBites={false}
+        quizBitesData={quizBites?.slice(0, 3)}
       />
     </section>
   );

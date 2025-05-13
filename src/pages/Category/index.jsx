@@ -2,6 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import AdSlot from "../../components/AdSense/AdSlot";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
+import { useLoader } from "../../context/LoaderContext";
+import {
+  ApiDislikeCategory,
+  ApiLikeCategory,
+} from "../../api-wrapper/user/ApiUser";
 
 const allTopics = {
   _id: "6809c8051b04c23b60asdsds7",
@@ -23,21 +28,29 @@ function Category() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const filterRef = useRef(null);
+  const { setLoading } = useLoader();
 
-  useEffect(() => {
+  const fetchCategories = () => {
     const data = {
       search: searchTerm,
       filter: selectedFilter,
     };
+    setLoading(true);
     ApiGetCategories(data)
       .then((res) => {
         if (res.isSuccess) {
           setCategories(res.data);
+          setLoading(false);
         }
       })
       .catch((err) => {
         console.error("Error fetching categories:", err);
+        setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchCategories()
   }, [searchTerm, selectedFilter]);
 
   useEffect(() => {
@@ -52,6 +65,42 @@ function Category() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleLikeCategory = (categoryId) => {
+    const payload = {
+      categoryId: categoryId,
+    };
+    ApiLikeCategory(payload)
+      .then((res) => {
+        if (res.isSuccess) {
+          fetchCategories();
+          setLoading(false);
+        } else {
+          console.error("Error liking category:", res.message);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
+  const handleDislikeCategory = (categoryId) => {
+    const payload = {
+      categoryId: categoryId,
+    };
+    ApiDislikeCategory(payload)
+      .then((res) => {
+        if (res.isSuccess) {
+          fetchCategories();
+          setLoading(false);
+        } else {
+          console.error("Error disliking category:", res.message);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
 
   return (
     <>
@@ -198,6 +247,8 @@ function Category() {
               key={category?._id}
               category={category}
               removeHeader={true}
+              handleLikeCategory={handleLikeCategory}
+              handleDislikeCategory={handleDislikeCategory}
             />
           ))}
         </div>
@@ -217,6 +268,8 @@ function Category() {
               key={category?._id}
               category={category}
               removeHeader={true}
+              handleLikeCategory={handleLikeCategory}
+              handleDislikeCategory={handleDislikeCategory}
             />
           ))}
         </div>

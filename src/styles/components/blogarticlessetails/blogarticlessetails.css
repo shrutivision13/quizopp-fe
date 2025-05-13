@@ -1,0 +1,356 @@
+:root {
+    --text-color: #fff;
+    --heading-color: #ffcc5b;
+    --link-color: #8789c3;
+    --figcaption-color: #959595;
+    --table-text-color: #fff;
+    --table-background-color: #121226;
+    --button-text-color: #fff;
+    --disabled-button-background-color: #545572;
+    --disabled-button-boxshadow-color: #cbccea;
+}
+
+
+.blog-content blockquote {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 10px 20px
+}
+
+.blog-content figure {
+    padding: 0 0 14px
+}
+
+figure.twitter-tweet.twitter-tweet-rendered {
+    margin-bottom: 0
+}
+
+.blog-content figure img {
+    width: 100%
+}
+
+.blog-content iframe {
+    height: 300px;
+    width: 100%
+}
+
+.blog-content a {
+    text-decoration: underline
+}
+
+.dark .blog-content a {
+    color: #bac8ff
+}
+
+.light .blog-content a {
+    color: #4782f4
+}
+
+.blog-content .kg-gallery-row {
+    margin: 20px
+}
+
+.blog-content .kg-gallery-image {
+    padding: 10px 0 0
+}
+
+.blog-content hr {
+    border-radius: 1px;
+    display: none;
+    margin: 20px 0
+}
+
+.blog-content pre {
+    padding: 0 20px
+}
+
+.blog-content ol, .blog-content ul {
+    padding: 10px 20px 0
+}
+
+.blog-content ol li, .blog-content ul li {
+    color: #fafafa;
+    list-style-type: circle;
+    margin: 0 20px 0 30px
+}
+
+.blog-content p {
+    color: var(--text-color);
+    padding: 0 20px 14px
+}
+
+.blog-content h4 {
+    font-size: 18px
+}
+
+.blog-content h3, .blog-content h4 {
+    font-weight: 700;
+    padding-bottom: 14px;
+    padding-top: 10px
+}
+
+.blog-content h3 {
+    font-size: 1.8rem
+}
+
+.blog-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 14px;
+    padding-top: 14px
+}
+
+.blog-content h1 {
+    font-size: 2.3rem;
+    padding-top: 18px
+}
+
+.blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6 {
+    color: var(--heading-color);
+    font-weight: 700;
+    padding: 0 20px
+}
+
+.blog-content figcaption {
+    color: var(--figcaption-color);
+    font-size: 12px;
+    font-weight: 400;
+    padding-top: 2px;
+    text-align: center;
+    width: 100%
+}
+
+.blog-content .kg-bookmark-container {
+    flex-direction: column;
+    text-decoration: none
+}
+
+.blog-content .kg-bookmark-card {
+    border-color: var(--text-color);
+    border-style: solid;
+    border-width: 1px;
+    margin: 10px 5px;
+    padding: 10px
+}
+
+.blog-content .kg-bookmark-metadata {
+    display: flex
+}
+
+.blog-content .kg-bookmark-title {
+    color: var(--text-color);
+    text-decoration: underline
+}
+
+.blog-content .kg-bookmark-container {
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 2px
+}
+
+.blog-content .kg-bookmark-content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0
+}
+
+.blog-content .kg-bookmark-icon {
+    height: 20px;
+    width: 20px
+}
+
+.blog-content .kg-bookmark-thumbnail {
+    align-items: center;
+    display: flex;
+    justify-content: center
+}
+
+.text-6 {
+    font-size: .6em
+}
+
+.light #blog_content a {
+    color: #4782f4
+}
+
+.dark #blog_content a {
+    color: #bac8ff
+}
+
+.blog-content table {
+    color: var(--table-text-color);
+    font-size: 10px;
+    margin: 0 0 14px;
+    width: 100%
+}
+
+.blog-content tbody {
+    width: auto
+}
+
+.blog-content table th {
+    font-weight: 900;
+    padding: 14px 0;
+    text-align: left
+}
+
+.blog-content table td {
+    padding: 14px 0
+}
+
+.blog-content tr:nth-child(2n) {
+    background: var(--table-background-color)
+}
+
+.blog-content tr th {
+    text-align: center;
+    width: auto
+}
+
+.blog-content tr th:first-child {
+    padding-left: 20px;
+    text-align: left
+}
+
+.blog-content tr th:last-child {
+    padding-right: 20px
+}
+
+.blog-content tr td {
+    font-size: 12px;
+    text-align: center
+}
+
+.blog-content tr td:first-child {
+    font-size: 10px;
+    padding-left: 20px;
+    text-align: left
+}
+
+.blog-content tr td:last-child {
+    padding-right: 20px
+}
+
+.starFill, .starLine, .starRing, .starStroke {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out
+}
+
+.starFill, .starLine, .starRing {
+    stroke: #f4a825
+}
+
+.starFill {
+    fill: #f4a825;
+    transform: scale(0);
+    transition: fill .3s ease-in-out, transform .3s ease-in-out
+}
+
+.starLine {
+    stroke-dasharray: 12 13;
+    stroke-dashoffset: -13
+}
+
+.starStroke {
+    stroke: #c7cad1;
+    transition: stroke .3s
+}
+
+.ratingInput {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute
+}
+
+.ratingInput1:checked~.ratingLabel:first-of-type .starRing, .ratingInput2:checked~.ratingLabel:nth-of-type(-n+2) .starRing, .ratingInput3:checked~.ratingLabel:nth-of-type(-n+3) .starRing, .ratingInput4:checked~.ratingLabel:nth-of-type(-n+4) .starRing, .ratingInput5:checked~.ratingLabel:nth-of-type(-n+5) .starRing {
+    animation-name: starRing
+}
+
+.ratingInput1:checked~.ratingLabel:first-of-type .starStroke, .ratingInput2:checked~.ratingLabel:nth-of-type(-n+2) .starStroke, .ratingInput3:checked~.ratingLabel:nth-of-type(-n+3) .starStroke, .ratingInput4:checked~.ratingLabel:nth-of-type(-n+4) .starStroke, .ratingInput5:checked~.ratingLabel:nth-of-type(-n+5) .starStroke {
+    animation-name: starStroke
+}
+
+.ratingInput1:checked~.ratingLabel:first-of-type .starLine, .ratingInput2:checked~.ratingLabel:nth-of-type(-n+2) .starLine, .ratingInput3:checked~.ratingLabel:nth-of-type(-n+3) .starLine, .ratingInput4:checked~.ratingLabel:nth-of-type(-n+4) .starLine, .ratingInput5:checked~.ratingLabel:nth-of-type(-n+5) .starLine {
+    animation-name: starLine
+}
+
+.ratingInput1:checked~.ratingLabel:first-of-type .starFill, .ratingInput2:checked~.ratingLabel:nth-of-type(-n+2) .starFill, .ratingInput3:checked~.ratingLabel:nth-of-type(-n+3) .starFill, .ratingInput4:checked~.ratingLabel:nth-of-type(-n+4) .starFill, .ratingInput5:checked~.ratingLabel:nth-of-type(-n+5) .starFill {
+    animation-name: starFill
+}
+
+.starFill, .starLine, .starRing, .starStroke {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out
+}
+
+@keyframes starRing {
+    0%, 20% {
+        animation-timing-function: ease-in;
+        opacity: 1;
+        r: 8px;
+        stroke-width: 16px;
+        transform: scale(0)
+    }
+
+    35% {
+        animation-timing-function: ease-out;
+        opacity: .5;
+        r: 8px;
+        stroke-width: 16px;
+        transform: scale(1)
+    }
+
+    50%, to {
+        opacity: 0;
+        r: 16px;
+        stroke-width: 0;
+        transform: scale(1)
+    }
+}
+
+@keyframes starFill {
+    0%, 40% {
+        animation-timing-function: ease-out;
+        transform: scale(0)
+    }
+
+    60% {
+        animation-timing-function: ease-in-out;
+        transform: scale(1.2)
+    }
+
+    80% {
+        transform: scale(.9)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+@keyframes starStroke {
+    0% {
+        transform: scale(1)
+    }
+
+    20%,to {
+        transform: scale(0)
+    }
+}
+
+@keyframes starLine {
+    0%,40% {
+        animation-timing-function: ease-out;
+        stroke-dasharray: 1 23;
+        stroke-dashoffset: 1
+    }
+
+    60%,to {
+        stroke-dasharray: 12 13;
+        stroke-dashoffset: -13
+    }
+}

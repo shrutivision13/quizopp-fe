@@ -1,233 +1,37 @@
-// import React from 'react'
-
-// const QuizBattles = () => {
-//     return (
-//         <div class="hide-scroll-bar">
-//             <div class="style_background__W3FcZ">
-//                 <div class="style_foreground__jJqg2 hide-scroll-bar" id="shell">
-//                     <main>
-//                         <header class="h-60 fixed z-99 max-w-maxW top-0 w-full duration-350 bg-C26284C !mt-0">
-//                             <div class="flex flex-row justify-between items-center h-full px-20">
-//                                 <div class="flex items-center justify-center text-14 text-CFAFAFA font-bold">
-//                                     <div data-testid="top-back-nav-button" class="py-14 pr-4 flex justify-center cursor-pointer">
-//                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="fill-current text-C676767 dark:text-CBBBDDD">
-//                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M6.11977 11.9416L12.4675 5.59392C12.6081 5.45327 12.6871 5.2625 12.6871 5.06359C12.6871 4.86468 12.6081 4.67391 12.4675 4.53326C12.3268 4.39261 12.136 4.31359 11.9371 4.31359C11.7382 4.31359 11.5475 4.39261 11.4068 4.53326L4.52948 11.4106C4.38926 11.5512 4.31052 11.7416 4.31052 11.9402C4.31052 12.1388 4.38926 12.3292 4.52948 12.4698L11.4068 19.3471C11.5475 19.4878 11.7382 19.5668 11.9371 19.5668C12.136 19.5668 12.3268 19.4878 12.4675 19.3471C12.6081 19.2065 12.6871 19.0157 12.6871 18.8168C12.6871 18.6179 12.6081 18.4271 12.4675 18.2865L6.11977 11.9416Z"></path>
-//                                         </svg>
-//                                     </div>
-//                                     Quiz Battles
-//                                 </div>
-//                                 <template id="B:1"></template>
-//                                 <div class="h-32 w-128 rounded-6 shimmer-animation"></div>
-//                             </div>
-//                         </header>
-//                         <div class="mb-14 mt-80">
-//                             <div class="px-20 font-black mt-24 flex flex-col items-center justify-center text-CE63737">
-//                                 <p class="text-[18px] mb-4 text-C8789C3 uppercase font-bold">Brain Teasers</p>
-//                                 <p class="text-10 text-C8789C3">Calculating Result...</p>
-//                             </div>
-//                             <div class="flex flex-col item-center justify-center">
-//                                 <div class="mt-14 px-20 w-full flex items-center justify-between">
-//                                     <div class="flex flex-col mb-10">
-//                                         <div class="relative">
-//                                             <div class="relative flex items-center justify-center mb-10 opacity-60">
-//                                                 <img alt="player image" loading="lazy" width="80" height="80" decoding="async" data-nimg="1" class="rounded-[50%]" style="color:transparent" srcSet="/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fbattles%2Fplayer-0.png&amp;w=96&amp;q=75 1x, /_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fbattles%2Fplayer-0.png&amp;w=256&amp;q=75 2x" src="/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fbattles%2Fplayer-0.png&amp;w=256&amp;q=75" />
-//                                                 <div class="absolute loader z-10"></div>
-//                                                 <div id="emoji-animation" class="relative"></div>
-//                                             </div>
-//                                         </div>
-//                                         <p class="text-center text-14 text-CFFCC5B">
-//                                             You
-//                                             <br />
-//                                             <span class="font-bold">--
-//                                                 /
-//                                                 0</span>
-//                                         </p>
-//                                     </div>
-//                                     <div>
-//                                         <img alt="versus" loading="lazy" width="35" height="50" decoding="async" data-nimg="1" style="color:transparent" srcSet="/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2FVersus.png&amp;w=48&amp;q=75 1x, /_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2FVersus.png&amp;w=96&amp;q=75 2x" src="/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2FVersus.png&amp;w=96&amp;q=75" />
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                             <div class="relative bg-C20213F flex items-center justify-between px-20 w-full gap-18 pt-36 mb-18 mt-14 animate__animated animate__slideInUp">
-//                                 <div class="absolute bg-C20213F rounded-full py-4 px-16 mb-4 top-[-6%] left-p35 button-shadow">
-//                                     <p class="text-14 text-center text-CFFCC5B uppercase font-black">・Game Stats・</p>
-//                                 </div>
-//                                 <div class="flex flex-col gap-20 w-full pb-20">
-//                                     <div class="shimmer-animation rounded-6 h-31 w-full"></div>
-//                                     <div class="shimmer-animation rounded-6 h-31 w-full"></div>
-//                                     <div class="shimmer-animation rounded-6 h-31 w-full"></div>
-//                                 </div>
-//                                 <div class="flex flex-col gap-20 self-baseline">
-//                                     <div class="shimmer-animation rounded-6 h-32 w-32"></div>
-//                                     <div class="shimmer-animation rounded-6 h-32 w-32"></div>
-//                                     <div class="shimmer-animation rounded-6 h-32 w-32"></div>
-//                                 </div>
-//                                 <div class="flex flex-col gap-20 w-full pb-20">
-//                                     <div class="shimmer-animation rounded-6 h-31 w-full"></div>
-//                                     <div class="shimmer-animation rounded-6 h-31 w-full"></div>
-//                                     <div class="shimmer-animation rounded-6 h-31 w-full"></div>
-//                                 </div>
-//                             </div>
-//                             <div class="mx-30 mb-20">
-//                                 <button class="inline-flex items-center justify-center whitespace-nowrap text-18 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary primary-button disabled:primary-button-disabled box-shadow text-primary-foreground hover:bg-primary/90 font-bold rounded-6 py-12 px-48 w-full uppercase shine-animation mb-14">PLAY AGAIN</button>
-//                             </div>
-//                             <template data-dgst="BAILOUT_TO_CLIENT_SIDE_RENDERING"></template>
-//                             <div class="flex justify-center border-y border-y-C8789C3 py-8 bg-C0C0D26 displayad-wrapper">
-//                                 <template id="B:2"></template>
-//                                 <div style="width:300px;height:250px" class="style-module_shimmer_placeholder__OPdgP"></div>
-//                             </div>
-//                         </div>
-//                         <div class="bg-skin-footer-dark footer-container" data-testid="footer-text">
-//                             <div class="h-1 w-full bg-C404380"></div>
-//                             <div class="px-20 py-12 text-10 font-medium flex justify-between items-center text-C8789C3 cursor-pointer">
-//                                 <div class="mr-10 h-30 flex items-center gap-10">
-//                                     <img alt="Quizzop" fetchPriority="high" width="100" height="21" decoding="async" data-nimg="1" style="color:transparent" src="https://static.quizzop.com/newton/assets/quizzop-logo-dark.svg" />
-//                                     <p class="text-C8789C3 flex items-center">
-//                                         <span class="text-18 mx-10 text-C262749">|</span>
-//                                         <span class="text-12">Terms, Privacy, &amp;other links</span>
-//                                     </p>
-//                                 </div>
-//                                 <div class="transform rotate-0">
-//                                     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" class="fill-current text-C8789C3">
-//                                         <path d="M10.8461 13.827L15.6741 9C15.7849 8.88852 15.8471 8.7377 15.8471 8.5805C15.8471 8.4233 15.7849 8.27248 15.6741 8.161L15.3191 7.805C15.2077 7.69392 15.0569 7.63154 14.8996 7.63154C14.7423 7.63154 14.5914 7.69392 14.4801 7.805L10.4251 11.859L6.36707 7.8C6.25559 7.68917 6.10477 7.62695 5.94757 7.62695C5.79037 7.62695 5.63955 7.68917 5.52807 7.8L5.17207 8.156C5.06124 8.26748 4.99902 8.4183 4.99902 8.5755C4.99902 8.7327 5.06124 8.88352 5.17207 8.995L10.0041 13.827C10.1163 13.9375 10.2675 13.9995 10.4251 13.9995C10.5826 13.9995 10.7338 13.9375 10.8461 13.827Z"></path>
-//                                     </svg>
-//                                 </div>
-//                             </div>
-//                             <div class="hidden">
-//                                 <div class="mb-12 h-1 mx-auto bg-gradient-to-r from-C40438000 via-C404380 to-C40438000"></div>
-//                                 <div>
-//                                     <div class="transition px-20 flex gap-x-20 text-12 flex-wrap mx-auto w-250 justify-center">
-//                                         <a target="_blank" class="mb-20 text-12 text-CFFFFFF underline" href="https://static.quizzop.com/legal/terms-of-use/?utm_source=qzp_footer">Terms of Use</a>
-//                                         <a target="_blank" class="mb-20 text-12 text-CFFFFFF underline" href="https://static.quizzop.com/legal/privacy/?utm_source=qzp_footer">Privacy Policy</a>
-//                                         <a target="_blank" class="mb-20 text-12 text-CFFFFFF underline" href="https://business.gamezop.com/about-us?utm_source=qzp_footer">About</a>
-//                                         <a target="_blank" class="mb-20 text-12 text-CFFFFFF underline" href="https://careers.gamezop.com/?utm_source=qzp_footer">Jobs</a>
-//                                         <a target="_blank" class="mb-20 text-12 text-CFFFFFF underline" href="https://business.gamezop.com/?utm_source=qzp_footer">Partner With Us</a>
-//                                     </div>
-//                                     <div class="text-center text-10 pb-20 text-C8789C3 mx-auto w-3/4 sm:w-p60">© 2025 Advergame Technologies Pvt. Ltd. ("ATPL"). Gamezop ® & Quizzop ® are registered trademarks of ATPL.</div>
-//                                 </div>
-//                             </div>
-//                             <div class="hidden">
-//                                 <div class="h-1 w-full bg-C404380"></div>
-//                                 <div class="px-20 pb-20 text-10 text-C8789C3 footer-about-text">
-//                                     <div style="margin-top:20px;">
-//                                         <p>Quizzop is a plug-and-play quizzing platform that any app or website can integrate to bring trivia for its users. Quizzop is affiliated with Gamezop, a gaming platform, that digital products can add as a gaming section. </p>
-//                                     </div>
-//                                     <div style="margin-top:20px;">
-//                                         <p>Over 5,000 products from more than 70 countries have integrated Quizzop and Gamezop. These include Amazon, Samsung Internet, Snap, Tata Play, AccuWeather, Paytm, Gulf News, and Branch. Trivia and games increase user engagement significantly within all kinds of apps and websites, besides opening a new stream of advertising revenue. Gamezop and Quizzop take 30 minutes to integrate and can be used for free: both by the products integrating them and end users.</p>
-//                                     </div>
-//                                     <div style="margin-top:20px;"></div>
-//                                     <div style="margin-top:20px;">
-//                                         <p>
-//                                             Increase ad revenue and engagement on your app / website with games, quizzes, astrology, and cricket content. Visit: <a href="https://business.gamezop.com">business.gamezop.com</a>
-//                                         </p>
-//                                     </div>
-//                                 </div>
-//                                 <div class="h-1 w-full bg-C404380"></div>
-//                                 <p data-nosnippet="true" class="px-20 py-20 text-10 text-left text-C8789C3">Property ID:
-//                                     4239</p>
-//                             </div>
-//                         </div>
-//                     </main>
-//                 </div>
-//             </div>
-
-//             <div hidden id="S:0"></div>
-//             <div hidden id="S:2">
-//                 <div class="style-module_gam_container__9KUaZ" style="min-height:250px;width:300px">
-//                     <div class="text-10 font-medium text-center uppercase text-C6063AF pb-8">Advertisement</div>
-//                     <div style="min-height:250px;width:300px" class="style-module_gam_ad__AjmDM">
-//                         <div id="quizzopBattlesEndQuiz" style="min-height:250px;width:300px" class="style-module_gam_inner_ad__gg6Nt style-module_ad_loader__vmANM"></div>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             <div hidden id="S:1">
-//                 <div class="flex items-center">
-//                     <a class="link-anchor" href="/order-history">
-//                         <div data-testid="top-bar-coin-balance" class="flex flex-row justify-center items-center border px-8 rounded-6 bg-C191A32 cursor-pointer border-C191A32">
-//                             <span class="h-14">
-//                                 <img alt="coin" src="https://static.quizzop.com/newton/assets/coin.png" style="width:14px; height:14px; display:inline-block; margin-bottom:2px;" />
-//                             </span>
-//                             <span class="ml-8 uppercase">
-//                                 <div class="text-10 relative top-2 font-medium text-C6063AF">Coins</div>
-//                                 <div class="text-12 font-black text-CFFFFFF">3,950</div>
-//                             </span>
-//                         </div>
-//                     </a>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default QuizBattles
-
-import React from 'react';
+import { useNavigate } from "react-router-dom";
+import '../../styles/components/quizbattles/quizbattles.css';
+import AdSlot from "../../components/AdSense/AdSlot";
+import GameStats from "../../components/GameStats/GameStats";
+import GameStateSkeleton from "../../components/GameStateSkeleton/GameStateSkeleton";
+import QuizBattlesOpponentStat from "../../components/QuizBattlesOpponent/QuizBattlesOpponent";
 
 const QuizBattlesEndQuiz = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="hide-scroll-bar">
             <div className="style_background__W3FcZ">
                 <div className="style_foreground__jJqg2 hide-scroll-bar" id="shell">
-                    <main>
-                        <header className="h-60 fixed z-99 max-w-maxW top-0 w-full duration-350 bg-C26284C !mt-0">
-                            <div className="flex flex-row justify-between items-center h-full px-20">
-                                <div className="flex items-center justify-center text-14 text-CFAFAFA font-bold">
-                                    <div data-testid="top-back-nav-button" className="py-14 pr-4 flex justify-center cursor-pointer">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="fill-current text-C676767 dark:text-CBBBDDD">
-                                            <path fillRule="evenodd" clipRule="evenodd" d="M6.11977 11.9416L12.4675 5.59392C12.6081 5.45327 12.6871 5.2625 12.6871 5.06359C12.6871 4.86468 12.6081 4.67391 12.4675 4.53326C12.3268 4.39261 12.136 4.31359 11.9371 4.31359C11.7382 4.31359 11.5475 4.39261 11.4068 4.53326L4.52948 11.4106C4.38926 11.5512 4.31052 11.7416 4.31052 11.9402C4.31052 12.1388 4.38926 12.3292 4.52948 12.4698L11.4068 19.3471C11.5475 19.4878 11.7382 19.5668 11.9371 19.5668C12.136 19.5668 12.3268 19.4878 12.4675 19.3471C12.6081 19.2065 12.6871 19.0157 12.6871 18.8168C12.6871 18.6179 12.6081 18.4271 12.4675 18.2865L6.11977 11.9416Z"></path>
-                                        </svg>
-                                    </div>
-                                    Quiz Battles
-                                </div>
-                                <div className="flex items-center">
-                                    <a className="link-anchor" href="/order-history">
-                                        <div data-testid="top-bar-coin-balance" className="flex flex-row justify-center items-center border px-8 rounded-6 bg-C191A32 cursor-pointer border-C191A32">
-                                            <span className="h-14">
-                                                <img alt="coin" src="https://static.quizzop.com/newton/assets/coin.png" style={{ width: '14px', height: '14px', display: 'inline-block', marginBottom: '2px' }} />
-                                            </span>
-                                            <span className="ml-8 uppercase">
-                                                <div className="text-10 relative top-2 font-medium text-C6063AF">Coins</div>
-                                                <div className="text-12 font-black text-CFFFFFF">3,950</div>
-                                            </span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </header>
-
+                    <div>
                         <div className="mb-14">
-                            <div className="px-20 font-black mt-24 flex flex-col items-center justify-center text-CE63737">
+                            {/* Skeleton for Calculating result*/}
+                            {/* <div className="px-20 font-black mt-24 flex flex-col items-center justify-center text-CE63737">
                                 <p className="text-[18px] mb-4 text-C8789C3 uppercase font-bold">Brain Teasers</p>
                                 <p className="text-10 text-C8789C3">Calculating Result...</p>
+                            </div> */}
+                            <div class="px-20 font-black mt-24 flex flex-col items-center justify-center text-CE63737">
+                                <p class="mb-4 uppercase font-bold text-[24px] style_enlarge_text__0eTO9">You lose</p>
+                                <p class="text-C8789C3 uppercase font-bold style_shrink_text__1kxLI">Brain Teasers</p>
                             </div>
 
                             <div className="flex flex-col item-center justify-center">
                                 <div className="mt-14 px-20 w-full flex items-center justify-between">
-                                    <div className="flex flex-col mb-10">
-                                        <div className="relative">
-                                            <div className="relative flex items-center justify-center mb-10 opacity-60">
-                                                <img
-                                                    alt="player image"
-                                                    loading="lazy"
-                                                    width="80"
-                                                    height="80"
-                                                    decoding="async"
-                                                    className="rounded-[50%]"
-                                                    style={{ color: 'transparent' }}
-                                                    src="https://www.quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fbattles%2Fplayer-0.png&w=96&q=75"
-                                                />
-                                                <div className="absolute loader z-10"></div>
-                                                <div id="emoji-animation" className="relative"></div>
-                                            </div>
-                                        </div>
-                                        <p className="text-center text-14 text-CFFCC5B">
-                                            You
-                                            <br />
-                                            <span className="font-bold">-- / 0</span>
-                                        </p>
-                                    </div>
-
+                                    <QuizBattlesOpponentStat
+                                        score={20}
+                                        opponentImage="https://www.quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fbattles%2Fplayer-0.png&w=96&q=75"
+                                        opponentName="You"
+                                        // isLoading={true}
+                                    />
                                     <div>
                                         <img
                                             alt="versus"
@@ -239,6 +43,14 @@ const QuizBattlesEndQuiz = () => {
                                             src="http://quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2FVersus.png&w=48&q=75"
                                         />
                                     </div>
+                                    <QuizBattlesOpponentStat
+                                        score={70}
+                                        opponentImage="https://www.quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fbattles%2Fplayer-1.png&w=96&q=75"
+                                        opponentName="TitanGuard"
+                                        statColor="text-CA96DFF"
+                                        isWinner={true}
+                                        // isLoading={true}
+                                    />
                                 </div>
                             </div>
 
@@ -246,39 +58,58 @@ const QuizBattlesEndQuiz = () => {
                                 <div className="absolute bg-C20213F rounded-full py-4 px-16 mb-4 top-[-6%] left-p35 button-shadow">
                                     <p className="text-14 text-center text-CFFCC5B uppercase font-black">・Game Stats・</p>
                                 </div>
-                                <div className="flex flex-col gap-20 w-full pb-20">
-                                    <div className="shimmer-animation rounded-6 h-31 w-full"></div>
-                                    <div className="shimmer-animation rounded-6 h-31 w-full"></div>
-                                    <div className="shimmer-animation rounded-6 h-31 w-full"></div>
+                                <GameStats
+                                    accuracy={2}
+                                    accuracyPercentage="40%"
+                                    speed={21}
+                                    speedPercentage="42%"
+                                    lifelinesUsed={2}
+                                    lifelinesUsedPercentage="50%"
+                                />
+                                <div className="flex flex-col gap-20 self-baseline">
+                                    <div className="h-32 w-32 bg-C12132A rounded-6 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.95 11.45L12.2375 6.1625L11.1875 5.1125L6.95 9.35L4.8125 7.2125L3.7625 8.2625L6.95 11.45ZM8 15.5C6.9625 15.5 5.9875 15.3031 5.075 14.9094C4.1625 14.5156 3.36875 13.9813 2.69375 13.3063C2.01875 12.6313 1.48438 11.8375 1.09063 10.925C0.696875 10.0125 0.5 9.0375 0.5 8C0.5 6.9625 0.696875 5.9875 1.09063 5.075C1.48438 4.1625 2.01875 3.36875 2.69375 2.69375C3.36875 2.01875 4.1625 1.48438 5.075 1.09063C5.9875 0.696875 6.9625 0.5 8 0.5C9.0375 0.5 10.0125 0.696875 10.925 1.09063C11.8375 1.48438 12.6313 2.01875 13.3063 2.69375C13.9813 3.36875 14.5156 4.1625 14.9094 5.075C15.3031 5.9875 15.5 6.9625 15.5 8C15.5 9.0375 15.3031 10.0125 14.9094 10.925C14.5156 11.8375 13.9813 12.6313 13.3063 13.3063C12.6313 13.9813 11.8375 14.5156 10.925 14.9094C10.0125 15.3031 9.0375 15.5 8 15.5Z" fill="#BBBDDD"></path></svg>
+                                    </div>
+                                    <div className="h-32 w-32 bg-C12132A rounded-6 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M8.125 12.7916L12.8333 8.08325L11.6458 6.89575L8.125 10.4166L6.35417 8.64575L5.16667 9.83325L8.125 12.7916ZM9 17.3333C7.95833 17.3333 6.98264 17.1353 6.07292 16.7395C5.16319 16.3437 4.37153 15.8089 3.69792 15.1353C3.02431 14.4617 2.48958 13.6701 2.09375 12.7603C1.69792 11.8506 1.5 10.8749 1.5 9.83325C1.5 8.79159 1.69792 7.81589 2.09375 6.90617C2.48958 5.99645 3.02431 5.20478 3.69792 4.53117C4.37153 3.85756 5.16319 3.32284 6.07292 2.927C6.98264 2.53117 7.95833 2.33325 9 2.33325C10.0417 2.33325 11.0174 2.53117 11.9271 2.927C12.8368 3.32284 13.6285 3.85756 14.3021 4.53117C14.9757 5.20478 15.5104 5.99645 15.9063 6.90617C16.3021 7.81589 16.5 8.79159 16.5 9.83325C16.5 10.8749 16.3021 11.8506 15.9063 12.7603C15.5104 13.6701 14.9757 14.4617 14.3021 15.1353C13.6285 15.8089 12.8368 16.3437 11.9271 16.7395C11.0174 17.1353 10.0417 17.3333 9 17.3333ZM3.66667 0.958252L4.83333 2.12492L1.29167 5.66659L0.125 4.49992L3.66667 0.958252ZM14.3333 0.958252L17.875 4.49992L16.7083 5.66659L13.1667 2.12492L14.3333 0.958252Z" fill="#BBBDDD"></path></svg>
+                                    </div>
+                                    <div className="h-32 w-32 bg-C12132A rounded-6 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M11.0938 0.25C12.3438 0.25 13.3906 0.7125 14.2344 1.6375C15.0781 2.5625 15.5 3.6625 15.5 4.9375C15.5 5.1625 15.4875 5.38438 15.4625 5.60313C15.4375 5.82188 15.3938 6.0375 15.3312 6.25H10.6438L9.36875 4.3375C9.30625 4.2375 9.21875 4.15625 9.10625 4.09375C8.99375 4.03125 8.875 4 8.75 4C8.5875 4 8.44063 4.05 8.30938 4.15C8.17813 4.25 8.0875 4.375 8.0375 4.525L7.025 7.5625L6.36875 6.5875C6.30625 6.4875 6.21875 6.40625 6.10625 6.34375C5.99375 6.28125 5.875 6.25 5.75 6.25H0.66875C0.60625 6.0375 0.5625 5.82188 0.5375 5.60313C0.5125 5.38438 0.5 5.16875 0.5 4.95625C0.5 3.66875 0.91875 2.5625 1.75625 1.6375C2.59375 0.7125 3.6375 0.25 4.8875 0.25C5.4875 0.25 6.05312 0.36875 6.58438 0.60625C7.11563 0.84375 7.5875 1.175 8 1.6C8.4 1.175 8.86563 0.84375 9.39688 0.60625C9.92813 0.36875 10.4937 0.25 11.0938 0.25ZM8 13.75C7.775 13.75 7.55937 13.7094 7.35312 13.6281C7.14687 13.5469 6.9625 13.425 6.8 13.2625L1.775 8.21875C1.7 8.14375 1.63125 8.06875 1.56875 7.99375C1.50625 7.91875 1.44375 7.8375 1.38125 7.75H5.3375L6.6125 9.6625C6.675 9.7625 6.7625 9.84375 6.875 9.90625C6.9875 9.96875 7.10625 10 7.23125 10C7.39375 10 7.54375 9.95 7.68125 9.85C7.81875 9.75 7.9125 9.625 7.9625 9.475L8.975 6.4375L9.6125 7.4125C9.6875 7.5125 9.78125 7.59375 9.89375 7.65625C10.0063 7.71875 10.125 7.75 10.25 7.75H14.6L14.225 8.2L9.18125 13.2625C9.01875 13.425 8.8375 13.5469 8.6375 13.6281C8.4375 13.7094 8.225 13.75 8 13.75Z" fill="#BBBDDD"></path></svg>
+                                    </div>
                                 </div>
+                                <GameStats
+                                    accuracy={3}
+                                    accuracyPercentage="60%"
+                                    speed={21}
+                                    speedPercentage="42%"
+                                    lifelinesUsed={2}
+                                    lifelinesUsedPercentage="50%"
+                                />
+
+                                {/* Skeleton */}
+                                {/* <GameStateSkeleton />
                                 <div className="flex flex-col gap-20 self-baseline">
                                     <div className="shimmer-animation rounded-6 h-32 w-32"></div>
                                     <div className="shimmer-animation rounded-6 h-32 w-32"></div>
                                     <div className="shimmer-animation rounded-6 h-32 w-32"></div>
                                 </div>
-                                <div className="flex flex-col gap-20 w-full pb-20">
-                                    <div className="shimmer-animation rounded-6 h-31 w-full"></div>
-                                    <div className="shimmer-animation rounded-6 h-31 w-full"></div>
-                                    <div className="shimmer-animation rounded-6 h-31 w-full"></div>
-                                </div>
+                                <GameStateSkeleton />
+                                 */}
                             </div>
 
                             <div className="mx-30 mb-20">
-                                <button className="inline-flex items-center justify-center whitespace-nowrap text-18 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary primary-button disabled:primary-button-disabled box-shadow text-primary-foreground hover:bg-primary/90 font-bold rounded-6 py-12 px-48 w-full uppercase shine-animation mb-14">
+                                <button onClick={() => navigate('/')} className="inline-flex items-center justify-center whitespace-nowrap text-18 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary primary-button disabled:primary-button-disabled box-shadow text-primary-foreground hover:bg-primary/90 font-bold rounded-6 py-12 px-48 w-full uppercase shine-animation mb-14">
                                     PLAY AGAIN
                                 </button>
                             </div>
 
-                            <div className="flex justify-center border-y border-y-C8789C3 py-8 bg-C0C0D26 displayad-wrapper">
-                                <div className="style-module_gam_container__9KUaZ" style={{ minHeight: '250px', width: '300px' }}>
-                                    <div className="text-10 font-medium text-center uppercase text-C6063AF pb-8">Advertisement</div>
-                                    <div style={{ minHeight: '250px', width: '300px' }} className="style-module_gam_ad__AjmDM">
-                                        <div id="quizzopBattlesEndQuiz" style={{ minHeight: '250px', width: '300px' }} className="style-module_gam_inner_ad__gg6Nt style-module_ad_loader__vmANM"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <AdSlot
+                                slotId="ad-slot-1"
+                                adUnitPath="/123456/ad-unit"
+                                sizes={[728, 80]}
+                            />
                         </div>
-                    </main>
+                    </div>
                 </div>
             </div>
         </div>

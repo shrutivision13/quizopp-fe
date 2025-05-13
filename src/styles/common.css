@@ -5382,3 +5382,7 @@ p.text.off {
 .animate-slideInUp {
   animation: slideInUp 0.3s ease-out forwards;
 }
+
+.w-95{
+  width: 95px ;
+}

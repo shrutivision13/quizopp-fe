@@ -27,14 +27,10 @@ function JoinContest() {
         );
       }
       else {
-        toast.error(res.message, {
-          position: 'bottom-center',
-        });
+        toast.error(res.message);
       }
     }).catch((error) => {
-      toast.error(error?.message, {
-        position: 'bottom-center',
-      });
+      toast.error(error?.message);
     });
   };
 

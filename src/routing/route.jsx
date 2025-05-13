@@ -17,11 +17,18 @@ import Games from "../pages/Games";
 import SpinWheel from "../pages/SpinWheel";
 import QuizBattles from "../pages/QuizBattles/QuizBattles";
 import BeginQuiz from "../pages/BeginQuiz/BeginQuiz";
+import BlogArticles from "../pages/BlogArticles/BlogArticles";
+import BlogArticlesDetails from "../pages/BlogArticlesDetails/BlogArticlesDetails";
+import { AuthProtectedRoute } from "../components/AuthProtectedRoute/AuthProtectedRoute";
 
 export const routes = [
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <AuthProtectedRoute>
+        <Home />
+      </AuthProtectedRoute>
+    ),
   },
   {
     path: "/get-started",
@@ -90,5 +97,13 @@ export const routes = [
   {
     path: "/:categoryName/begin-quiz",
     element: <BeginQuiz />,
+  },
+  {
+    path: "/blogs/:categoryName",
+    element: <BlogArticles />,
+  },
+  {
+    path: "/blogs-details/:articleId",
+    element: <BlogArticlesDetails />,
   },
 ];

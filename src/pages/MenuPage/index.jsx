@@ -94,7 +94,7 @@ function MenuPage({ closeMenu }) {
         </div>
         <div style={{ backgroundColor: "#191A32" }}>
           <PopularQuizTopics />
-          <TrendingArticles />
+          <TrendingArticles closeMenu={closeMenu} />
         </div>
         <div className="flex h-full justify-between flex-col bg-C191A32">
           <div className="bg-C191A32">

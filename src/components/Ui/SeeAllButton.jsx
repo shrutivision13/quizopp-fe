@@ -1,4 +1,3 @@
-import React from "react";
 import arrow from "../../assets/images/next-arrow-yellow.svg";
 
 export const SeeAllButton = ({ route, name }) => (
