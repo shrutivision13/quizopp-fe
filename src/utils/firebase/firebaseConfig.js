@@ -2,17 +2,18 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDTziE-oiuvmqeyKf2Mz38Y_YLjKusO56k",
-    authDomain: "quizzop-1.firebaseapp.com",
-    projectId: "quizzop-1",
-    storageBucket: "quizzop-1.firebasestorage.app",
-    messagingSenderId: "115548247770",
-    appId: "1:115548247770:web:818d3867e4c831ea5eb7e3",
-    measurementId: "G-EX4RSTPYE9"
-};
+    apiKey: "AIzaSyA1Wr6yb4fYi28dqwmxDS6tU9ZN8FVIacs",
+    authDomain: "quizzop-f5728.firebaseapp.com",
+    projectId: "quizzop-f5728",
+    storageBucket: "quizzop-f5728.appspot.com",
+    messagingSenderId: "121946656226",
+    appId: "1:121946656226:web:0d769277842b4e9903fdbb",
+    measurementId: "G-GZ2TNRZHZZ"
+  };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+console.log("🚀 ~ auth:", auth)
 const provider = new GoogleAuthProvider();
 
 export { auth, provider };

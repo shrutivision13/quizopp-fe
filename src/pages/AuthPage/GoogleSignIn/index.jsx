@@ -1,6 +1,42 @@
+import { signInWithPopup } from 'firebase/auth'
 import React from 'react'
+import { auth, provider } from '../../../utils/firebase/firebaseConfig'
+import { ApiRegisterWithGoogle } from '../../../api-wrapper/Auth/ApiRegisterWithPhone'
+import useCookie from '../../../hooks/useCookie'
 
-const GoogleSignIn = ({ handleSignIn }) => {
+const GoogleSignIn = () => {
+    const { getCookie, setCookie } = useCookie();
+    const authToken = getCookie("authToken");
+
+    const handleSignIn = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+
+            const user = result.user;
+            const idToken = await user.getIdToken(true);
+
+            if (!idToken) {
+                console.error("No ID token found.");
+                return;
+            }
+
+            ApiRegisterWithGoogle(authToken, { idToken })
+                .then((response) => {
+                    if (response?.isSuccess) {
+                        setCookie('authToken', response.data.authToken);
+                    } else {
+                        console.error("Failed to register with Google:", response?.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error during Google registration:", error);
+                });
+
+        } catch (error) {
+            console.error("Error during sign-in with popup:", error);
+        }
+    }
+
     return (
         <button
             data-testid="login-google-button"
@@ -8,7 +44,6 @@ const GoogleSignIn = ({ handleSignIn }) => {
             onClick={handleSignIn}
         >
             <div className="w-full max-w-360">
-                {/* <a href="https://account.platform.quizzop.com/v1/google-login/implicit-flow?pubId=4239&origin=www.quizzop.com%2Flogin%3Fint-nav%3Dundefined%26session-start-screen%3Dundefined%26force_init%3Dtrue"> */}
                 <div className="w-full h-48 flex items-center border rounded-5 px-12 py-8 border-CDADCE0 dark:border-CDADCE0 bg-CFFFFFF hover:bg-CD2E3FC text-C000000DE">
                     <svg
                         width="25"
@@ -28,10 +63,9 @@ const GoogleSignIn = ({ handleSignIn }) => {
                         </p>
                     </div>
                 </div>
-                {/* </a> */}
             </div>
         </button>
-    )
-}
+    );
+};
 
-export default GoogleSignIn
+export default GoogleSignIn;

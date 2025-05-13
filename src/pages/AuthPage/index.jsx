@@ -1,22 +1,10 @@
 import React from 'react';
 import logo from '../../assets/images/quizzop-logo-dark.svg';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../../utils/firebase/firebaseConfig';
 import { NavLink } from 'react-router-dom';
 import GoogleSignIn from './GoogleSignIn/index';
 
 const AuthPage = () => {
-  const handleSignIn = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const idToken = await user.getIdToken(); // 🔐 This is the ID token
 
-      // TODO: Send `idToken` to your backend for verification/authentication
-    } catch (error) {
-      console.error('Error during sign-in:', error);
-    }
-  };
   return (
     <main className="jsx-3226730067 __variable_d4952a font-sans">
       <div className="flex justify-center">
@@ -43,7 +31,7 @@ const AuthPage = () => {
                 </div>
 
                 {/* --- Google Sign-In Button --- */}
-                <GoogleSignIn handleSignIn={() => handleSignIn()} />
+                <GoogleSignIn />
 
                 {/* --- OR Divider --- */}
                 <div className="uppercase text-C676767 dark:text-CFAFAFA font-bold text-14 mt-24">

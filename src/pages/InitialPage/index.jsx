@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import PrimaryButton from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
-import { ApiGetSatrted } from "../../api-wrapper/getStarted/ApiGetStarted";
-import { ApiGetInitialCategory } from "../../api-wrapper/categories/ApiCategories";
-import { useLoader } from "../../context/LoaderContext";
-import AdSlot from "../../components/AdSense/AdSlot";
+import React, { useEffect, useState } from 'react';
+import PrimaryButton from '../../components/Button/Button';
+import { useNavigate } from 'react-router-dom';
+import { ApiGetCategories } from '../../api-wrapper/categories/ApiCategories';
+import useCookie from '../../hooks/useCookie';
+import { ApiGetStarted } from '../../api-wrapper/Auth/ApiGetStarted';
 
 const InitialPage = () => {
-  const [categories, setCategories] = useState([]); // State for categories from API
-  const [selectedTopics, setSelectedTopics] = useState([]);
-  const navigate = useNavigate();
-  const { setLoading } = useLoader();
+    const [categories, setCategories] = useState([]); // State for categories from API
+    const [selectedTopics, setSelectedTopics] = useState([]);
+    const navigate = useNavigate();
+    const { setCookie } = useCookie();
 
   useEffect(() => {
     setLoading(true);
@@ -36,15 +35,14 @@ const InitialPage = () => {
     });
   };
 
-  const handleProceed = () => {
-    ApiGetSatrted({
-      favouriteCategories: selectedTopics, // Send selected category IDs
-    })
-      .then((res) => {
-        if (res?.isSuccess) {
-          document.cookie = `authToken=${res.data.authToken}; path=/; max-age=${
-            7 * 24 * 60 * 60
-          }`
+    const handleProceed = () => {
+        ApiGetStarted({
+            favouriteCategories: selectedTopics, // Send selected category IDs
+        })
+            .then((res) => {
+                if (res?.isSuccess) {
+                    setCookie('authToken', res.data.authToken);
+                    setCookie('userData', JSON.stringify(res.data));
 
           localStorage.setItem("userData", JSON.stringify(res.data));
 

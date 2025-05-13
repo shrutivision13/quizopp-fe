@@ -26,8 +26,8 @@ const PhoneLogin = () => {
   const inputBorderClass = showError
     ? "border-CF85B6D"
     : isFocused
-    ? "border-CFFCC5B"
-    : "border-CC7C7C7 dark:border-C404380";
+      ? "border-CFFCC5B"
+      : "border-CC7C7C7 dark:border-C404380";
 
   const labelPositionClass = labelFloating
     ? "top-n14 text-12 left-0 text-C959595"
@@ -35,7 +35,7 @@ const PhoneLogin = () => {
 
   const handleContinue = async () => {
     if (isValid) {
-      ApiRegisterWithPhone(authToken, { phoneNumber: `+91${mobile}` })
+      ApiRegisterWithPhone("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRiNTgzMmNlYWU0MGVjNDVhNWNkNiIsImRldmljZUlkIjoiOGM3YWY4NGQtYTNkYi00ZDEzLWExMzYtMGYzZjcyYzJiMmVlIiwiaXNSZWdpc3RlciI6ZmFsc2UsImlhdCI6MTc0NjE4NzY1MSwiZXhwIjoxNzQ2NzkyNDUxfQ.Yfb_mHEbOyTyM9_1uo8N7b4CfplWArNE0TpXROwOqHg", { phoneNumber: `+91${mobile}` })
         .then((response) => {
           if (response?.isSuccess) {
             setShowOtpScreen(true);
@@ -117,15 +117,14 @@ const PhoneLogin = () => {
                 ? "phone-login-button-active"
                 : "phone-login-button-inactive"
             }
-            className={`w-calc60 m-auto max-w-360 py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 cursor-pointer flex items-center flex-col select-none ${
-              isTouched
+            className={`w-calc60 m-auto max-w-360 py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 cursor-pointer flex items-center flex-col select-none ${isTouched
                 ? isValid
                   ? "opacity-100"
                   : "opacity-70"
                 : isFocused
-                ? "opacity-70"
-                : "opacity-100"
-            }`}
+                  ? "opacity-70"
+                  : "opacity-100"
+              }`}
           />
 
           {/* Divider */}
