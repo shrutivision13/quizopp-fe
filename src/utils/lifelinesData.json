@@ -3,24 +3,28 @@
         "id": 1,
         "name": "Use 50:50 Lifeline",
         "description": "Two of the wrong answers are removed, leaving one wrong answer and the correct one to choose from.",
-        "image": "https://example.com/50-50.png"
+        "image": "https://example.com/50-50.png",
+        "price": 20
     },
     {
         "id": 2,
         "name": "Use Audience Poll Lifeline",
         "description": "The audience will help you in identifying the correct answer among all the options present.",
-        "image": "https://example.com/ask-the-audience.png"
+        "image": "https://example.com/ask-the-audience.png",
+        "price": 30
     },
     {
         "id": 3,
         "name": "Use Freeze Timer Lifeline",
         "description": "The timer will be paused for 30 seconds to allow more time to answer the question.",
-        "image": "https://example.com/phone-a-friend.png"
+        "image": "https://example.com/phone-a-friend.png",
+        "price": 40
     },
     {
         "id": 4,
         "name": "Use Flip Question Lifeline",
         "description": "The current question will be interchanged with a new question.",
-        "image": "https://example.com/switch-question.png"
+        "image": "https://example.com/switch-question.png",
+        "price": 40
     }
 ]

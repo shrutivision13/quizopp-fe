@@ -5,12 +5,12 @@ import arrow from '../../assets/images/arrow.svg';
 import logo from '../../assets/images/quizzop-logo-dark.svg';
 
 const Footer = ({ gameStarted }) => {
-     const { categoryName } = useParams();
-    const [isOpen, setIsOpen] = useState(false);
-    const location = useLocation(); // Initialize useLocation
+  const { categoryName } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation(); // Initialize useLocation
 
-    const hiddenFooterPaths = ["/login", "/login/phone", "/category" , "/contest-rules", "/spin-wheel",`/${categoryName}/begin-quiz` ]; // Paths where footer should be hidden
-    const path = location.pathname;
+  const hiddenFooterPaths = ["/login", "/login/phone", "/category", "/contest-rules", "/spin-wheel", `/${categoryName}/begin-quiz`, "/play-quiz"]; // Paths where footer should be hidden
+  const path = location.pathname;
 
   if (
     hiddenFooterPaths.includes(path) ||
@@ -32,9 +32,8 @@ const Footer = ({ gameStarted }) => {
         onClick={toggleFooter}
       >
         <div
-          className={`mr-10 h-30 flex items-center gap-10 ${
-            isOpen ? "justify-center flex-1" : ""
-          }`}
+          className={`mr-10 h-30 flex items-center gap-10 ${isOpen ? "justify-center flex-1" : ""
+            }`}
         >
           <img
             alt="Quizzop"
@@ -53,9 +52,8 @@ const Footer = ({ gameStarted }) => {
           )}
         </div>
         <div
-          className={`transform ${
-            isOpen ? "rotate-180" : "rotate-0"
-          } transition-transform`}
+          className={`transform ${isOpen ? "rotate-180" : "rotate-0"
+            } transition-transform`}
         >
           <img src={arrow} alt="arrow" />
         </div>

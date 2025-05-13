@@ -1,0 +1,9 @@
+import React from 'react'
+
+const AdVideoIcon = () => {
+  return (
+    <svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-4"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.6724 1H16.3966H4.60345H1.32759C1.14676 1 1 1.1477 1 1.33043V4.96522V8.6V12.2348V15.8696C1 16.0523 1.14676 16.2 1.32759 16.2H4.60345H16.3966H19.6724C19.8532 16.2 20 16.0523 20 15.8696V12.2348V8.6V4.96522V1.33043C20 1.1477 19.8532 1 19.6724 1Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M13.0112 8.78994L8.97998 11.6399V5.93994L13.0112 8.78994Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.0002 1H16.2002V4.8H20.0002V1Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.8 1H1V4.8H4.8V1Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.0002 4.80005H16.2002V8.60005H20.0002V4.80005Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.8 4.80005H1V8.60005H4.8V4.80005Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.0002 8.6001H16.2002V12.4001H20.0002V8.6001Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.8 8.6001H1V12.4001H4.8V8.6001Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.0002 12.3999H16.2002V16.1999H20.0002V12.3999Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.8 12.3999H1V16.1999H4.8V12.3999Z" stroke="#FAFAFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  )
+}
+
+export default AdVideoIcon
