@@ -7,7 +7,7 @@ import {
   ApiLikeCategory,
 } from "../../../api-wrapper/user/ApiUser";
 
-const TopQuiz = ({ removeHeader, quizBites, handleRemove, handleAdd }) => {
+const TopQuiz = ({ removeHeader, quizBites, handleRemove, handleAdd, isNavigate = true }) => {
   const [categories, setCategories] = useState([]);
 
   const displayedCategories = !removeHeader
@@ -26,7 +26,7 @@ const TopQuiz = ({ removeHeader, quizBites, handleRemove, handleAdd }) => {
       }
     } catch (error) {
       console.error("Error fetching categories:", error);
-    } 
+    }
   };
 
   useEffect(() => {
@@ -82,6 +82,7 @@ const TopQuiz = ({ removeHeader, quizBites, handleRemove, handleAdd }) => {
             handleLikeCategory={handleLikeCategory}
             handleDislikeCategory={handleDislikeCategory}
             quizRoute="begin-quiz"
+            isNavigate={isNavigate}
             isSelected={selectedCategoryIds.has(category?._id)}
             handleRemove={handleRemove}
             handleAdd={handleAdd}

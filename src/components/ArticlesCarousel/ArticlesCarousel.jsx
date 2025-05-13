@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import Slider from 'react-slick';
 import { SectionHeading } from '../Ui/SectionHeading';
 import ArticleCard from '../ArticleCard/ArticleCard';
 import { formatDate } from '../../utils/formateDate';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AdSlot from '../AdSense/AdSlot';
 import coin from "../../assets/images/coin.png";
 
@@ -15,7 +15,9 @@ const ArticlesCarousel = ({
     isArticalContent = false,
     isShowSectionHeader = false,
     imagePath = 'article',
-    isShowThreeArticles = true
+    isShowThreeArticles = true,
+    isShowSectionButton = true,
+    isShowCategoryName = false
 }) => {
     const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
     const navigate = useNavigate();
@@ -42,7 +44,7 @@ const ArticlesCarousel = ({
                 <div className="px-20 mb-20">
                     <SectionHeading
                         title={sectionTitle}
-                        button={buttonName}
+                        button={isShowSectionButton ? buttonName : isShowSectionButton}
                         route={routePath}
                     />
                 </div>
@@ -57,7 +59,8 @@ const ArticlesCarousel = ({
                         {(articles ?? [])?.slice(0, 3)?.map((item) => (
                             <div key={item?._id} className="blog-slide">
                                 <Link
-                                    to={`/blogs/${item?._id}`}
+                                    to={`/blogs-details/${item?._id}`}
+                                    state={{ categoryId: item?.categoryId?._id }}
                                     className="link-anchor"
                                     style={{ textDecoration: "none", color: "inherit" }}
                                 >
@@ -153,7 +156,7 @@ const ArticlesCarousel = ({
                             <ArticleCard
                                 article={article}
                                 imagePath={'article'}
-                                isShowCategoryName={false}
+                                isShowCategoryName={isShowCategoryName}
                             />
 
                             {index < visibleArticles?.length - 1 && (

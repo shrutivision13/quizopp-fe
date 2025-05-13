@@ -37,6 +37,8 @@ const Header = () => {
       `/${categoryName}/end-quiz`,
       `/blogs/${categoryName}`,
       `/blogs-details/${articleId}`,
+      "/mini-quiz-play",
+      "/mini-quiz-over",
     ];
     return (
       backPaths.includes(path) ||
@@ -103,14 +105,14 @@ const Header = () => {
             <div className="py-10">
               <h1 className="text-14 font-bold dark:text-CFFFFFF">
                 {path === "/contests" ||
-                path.includes("/join-contest") ||
-                path.includes("/contest-rank") ? (
+                  path.includes("/join-contest") ||
+                  path.includes("/contest-rank") ? (
                   <img src={logo} alt="Quizzop" width="100" height="18" />
                 ) : path.includes("/category") && !categoryName ? (
                   "Quiz Topics"
                 ) : path.includes("/category") && categoryName ? (
                   categoryName.replace(/-/g, " ")
-                ) : path.includes("/mini-quiz-category-selection") ? (
+                ) : (path.includes("/mini-quiz-category-selection") || path.includes("/mini-quiz-play") || path.includes("/mini-quiz-over")) ? (
                   "Quiz Bites"
                 ) : path.includes("/order-history") ? (
                   "Coin History"
@@ -130,7 +132,7 @@ const Header = () => {
               </h1>
             </div>
           </div>
-          {userData?.isRegister && (
+          {userData?.isRegister ? (
             <a className="link-anchor" href="/order-history">
               <div className="flex flex-row justify-center items-center border px-8 rounded-6 bg-C191A32 cursor-pointer border-C191A32">
                 <img alt="coin" src={coin} className="h-14" />
@@ -144,13 +146,20 @@ const Header = () => {
                 </span>
               </div>
             </a>
-          )}
+          ) :
+            <button
+              onClick={() => navigate("/login")}
+              className="items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-3 font-bold text-CFFFFFF uppercase text-center inline-block py-5 px-20 rounded-3 text-14 bg-C0DB25B"
+            >
+              LOGIN
+            </button>
+          }
           {
             (path.includes(`/blogs/${categoryName}`) || path.includes(`/blogs-details/${articleId}`)) &&
             <button onClick={handlePlayQuiz} className="bg-C0DB25B  text-white rounded-3 py-5 px-20 text-14 font-bold text-CFFFFFF uppercase text-center inline-block   cursor-pointer flex items-center flex-col select-none opacity-100">Play Quiz</button>
           }
           {
-            !path.includes(`/${categoryName}/end-quiz`) &&
+            !(path.includes(`/${categoryName}/end-quiz`) || path.includes("/mini-quiz-play") || path.includes("/mini-quiz-over")) &&
             <div className="ml-20 cursor-pointer" data-testid="bell-icon">
               <img alt="bell" loading="lazy" width="32" height="32" src={bellGif} />
             </div>
@@ -176,19 +185,28 @@ const Header = () => {
     return (
       <header className="h-60 fixed z-99 max-w-maxW top-0 w-full duration-350 bg-C26284C !mt-0">
         <div className="flex flex-row justify-between items-center h-full px-20">
-          <div
-            data-testid="side-menu-button"
-            className="py-14 pr-8 flex justify-center cursor-pointer"
-            onClick={() => setIsMenuVisible(true)}
-          >
-            <img
-              alt="menu"
-              loading="lazy"
-              width="20"
-              height="20"
-              src={menuIcon}
-            />
-          </div>
+          {
+            path.includes(`/${categoryName}/begin-quiz`) ?
+              <div
+                className="py-14 pr-4 flex justify-center cursor-pointer"
+                onClick={handleGoBack}>
+                <img src={sidearrow} alt="Back" />
+              </div>
+              :
+              <div
+                data-testid="side-menu-button"
+                className="py-14 pr-8 flex justify-center cursor-pointer"
+                onClick={() => setIsMenuVisible(true)}
+              >
+                <img
+                  alt="menu"
+                  loading="lazy"
+                  width="20"
+                  height="20"
+                  src={menuIcon}
+                />
+              </div>
+          }
           <div className="mr-10 h-30 flex flex-auto items-center justify-start">
             <img src={logo} alt="logo" className="h-30" />
           </div>

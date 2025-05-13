@@ -16,14 +16,17 @@ const CategoryCard = ({
   isSelected,
   handleRemove,
   handleAdd,
+  isNavigate
 }) => {
   const navigate = useNavigate(); // Initialize useNavigate
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
   const handleCardClick = () => {
-    if (quizRoute) {
-      navigate(`/${category?.categorySlug}/${quizRoute}`);
-    } else {
-      navigate(`/${category?.categorySlug}/category`, { state: category });
+    if (isNavigate) {
+      if (quizRoute) {
+        navigate(`/${category?.categorySlug}/${quizRoute}`);
+      } else {
+        navigate(`/${category?.categorySlug}/category`, { state: category });
+      }
     }
   };
 
@@ -200,9 +203,8 @@ const CategoryCard = ({
         )
       )}
       <div
-        className={`rounded-12 flex flex-col items-center justify-center cursor-pointer ${
-          height ? height : "h-140"
-        }`}
+        className={`rounded-12 flex flex-col items-center justify-center cursor-pointer ${height ? height : "h-140"
+          }`}
         style={{ backgroundColor: category?.backgroundColor }}
       >
         <div className={`flex justify-center ${marignBottom}`}>

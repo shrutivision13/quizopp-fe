@@ -5,6 +5,7 @@ import ContestsCard from "../../../components/ContestsCard/ContestsCard";
 import AdSlot from "../../../components/AdSense/AdSlot";
 import { ApiGetScore } from "../../../api-wrapper/contest/ApiGetcontest";
 import { formattedTime } from "../../../utils/formateDate";
+import { toast } from "react-toastify";
 
 function ContestResult() {
   const location = useLocation(); // Use useLocation to access state
@@ -19,7 +20,7 @@ function ContestResult() {
         }
       })
       .catch((error) =>
-        console.error("Error fetching active contests:", error)
+        toast?.error(error?.message)
       );
 
     ApiGetScore(location?.state?.participantId).then((res) => {
@@ -29,7 +30,7 @@ function ContestResult() {
       else {
         setContenstDetails([]);
       }
-    }).catch((error) => console.log('Error Fetchig Score:', error))
+    }).catch((error) => toast?.error(error?.message))
   }, []);
 
   return (

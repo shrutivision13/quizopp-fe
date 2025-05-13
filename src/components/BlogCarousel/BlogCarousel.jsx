@@ -23,7 +23,7 @@ const BlogCarousel = ({ blogCarouselData, imagePath = 'article' }) => {
         {blogCarouselData?.map((item, index) => (
           <div key={index} className="blog-slide">
             <Link
-              to={`/blogs/${item?._id}`}
+              to={`/blogs-details/${item?._id}`}
               className="link-anchor"
               style={{ textDecoration: "none", color: "inherit" }}
             >

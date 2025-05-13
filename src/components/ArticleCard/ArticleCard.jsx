@@ -14,6 +14,7 @@ const ArticleCard = ({
       <Link
         className="link-anchor"
         to={`/blogs-details/${article?._id}`}
+         state={{ categoryId: article?.categoryId?._id }}
       >
         <div className="bg-C191A32 w-full px-20 pt-14 pb-20 text-14 flex cursor-pointer justify-between">
           <div className="max-w-4/5 mr-20 flex flex-col align-center justify-center">
