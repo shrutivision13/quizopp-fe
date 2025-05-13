@@ -16,6 +16,20 @@ const ApiGetGamesQuestions = (categoryId) => {
         .catch((response) => response?.data);
 };
 
+const ApiGetOneCategory = (categoryId) => {
+    const token = getCookie("authToken");
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    };
+    return axios
+        .get(`${api}category/getOneCategory/${categoryId}`, { headers })
+        .then((response) => response?.data)
+        .catch((response) => response?.data);
+};
+
 export {
     ApiGetGamesQuestions,
+    ApiGetOneCategory
 };

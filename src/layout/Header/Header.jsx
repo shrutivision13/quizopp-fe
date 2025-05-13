@@ -147,7 +147,8 @@ const Header = () => {
               </div>
             </a>
           ) :
-            <button
+            (path.includes("/mini-quiz-play") || path.includes("/mini-quiz-over") || path.includes("/mini-quiz-category-selection")) &&
+            <button button
               onClick={() => navigate("/login")}
               className="items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-3 font-bold text-CFFFFFF uppercase text-center inline-block py-5 px-20 rounded-3 text-14 bg-C0DB25B"
             >
@@ -159,13 +160,13 @@ const Header = () => {
             <button onClick={handlePlayQuiz} className="bg-C0DB25B  text-white rounded-3 py-5 px-20 text-14 font-bold text-CFFFFFF uppercase text-center inline-block   cursor-pointer flex items-center flex-col select-none opacity-100">Play Quiz</button>
           }
           {
-            !(path.includes(`/${categoryName}/end-quiz`) || path.includes("/mini-quiz-play") || path.includes("/mini-quiz-over")) &&
+            !(path.includes(`/${categoryName}/end-quiz`) || path.includes("/mini-quiz-play") || path.includes("/mini-quiz-over") || path.includes("/mini-quiz-category-selection")) &&
             <div className="ml-20 cursor-pointer" data-testid="bell-icon">
               <img alt="bell" loading="lazy" width="32" height="32" src={bellGif} />
             </div>
           }
         </div>
-      </nav>
+      </nav >
     );
   }
 
