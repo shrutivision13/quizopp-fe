@@ -1,4 +1,4 @@
-const RatingStar = () => {
+const RatingStar = ({ filled }) => {
     return (
         <svg
             className="cursor-pointer"
@@ -30,9 +30,9 @@ const RatingStar = () => {
                         fill="none"
                     />
                     <polygon
-                        className="starFill"
+                         className={`starFill ${filled ? 'filled' : 'not-filled'}`}
                         points="0,15 4.41,6.07 14.27,4.64 7.13,-2.32 8.82,-12.14 0,-7.5 -8.82,-12.14 -7.13,-2.32 -14.27,4.64 -4.41,6.07"
-                        fill="#000"
+                        fill="currentColor"
                     />
                 </g>
                 <g

@@ -58,4 +58,18 @@ const ApiGetArticleContent = (articleId) => {
     .catch((response) => response?.data);
 }
 
-export { ApiGetArticle, ApiGetTrendingArticles, ApiGetArticleCategoryWise, ApiGetArticleContent };
+const ApiUpdateArticleRating = (articleId, formData) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios.put(`${api}update/${articleId}`, formData, { headers })
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+}
+
+
+export { ApiGetArticle, ApiGetTrendingArticles, ApiGetArticleCategoryWise, ApiGetArticleContent, ApiUpdateArticleRating };

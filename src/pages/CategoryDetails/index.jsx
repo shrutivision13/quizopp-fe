@@ -6,6 +6,7 @@ import { ApiGetAllCategoryDetails } from "../../api-wrapper/categories/ApiCatego
 import ContestsCard from "../../components/ContestsCard/ContestsCard";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import ArticlesCarousel from "../../components/ArticlesCarousel/ArticlesCarousel";
+import { toast } from "react-toastify";
 
 function CategoryDetails() {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
@@ -25,7 +26,7 @@ function CategoryDetails() {
           setCategoriesDetails([]);
         }
       }).catch((error) =>
-        console.error("Error fetching get all category details:", error)
+        toast?.error(error?.message)
       );
     }
   }, [categoryData?._id]);
@@ -47,7 +48,7 @@ function CategoryDetails() {
                   {/* Float layout instead of flex */}
                   <div className="relative">
                     {/* Image Box */}
-                    <div className={`${categoryDetails?.category?.description  && 'float-left'} mr-20 mb-4 w-[97px]`}>
+                    <div className={`${categoryDetails?.category?.description && 'float-left'} mr-20 mb-4 w-[97px]`}>
                       <CategoryCard
                         category={categoryDetails?.category}
                         removeHeader={true}

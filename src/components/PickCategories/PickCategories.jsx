@@ -12,9 +12,8 @@ const PickCategories = ({
   const navigate = useNavigate();
   return (
     <div
-      className={`relative rounded-10 px-20 py-20 shadow-contestCard z-10 ${
-        quizBites ? "bg-C20213F" : ""
-      }`}
+      className={`relative rounded-10 px-20 py-20 shadow-contestCard z-10 ${quizBites ? "bg-C20213F" : ""
+        }`}
     >
       {!quizBites ? (
         <div
@@ -163,12 +162,17 @@ const PickCategories = ({
             if (button.name === "CREATE QUIZ") {
               navigate("/mini-quiz-category-selection");
             }
+
+            if (quizBites) {
+              navigate('/mini-quiz-play', { state: { categoryIds: quizBitesData?.map((item) => item._id) } });
+            }
           }}
         >
           {button.name}
         </button>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 

@@ -239,13 +239,20 @@ figure.twitter-tweet.twitter-tweet-rendered {
 }
 
 .starFill, .starLine, .starRing {
-    stroke: #f4a825
+    stroke: #c7cad1
 }
 
 .starFill {
+    transition: fill 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.starFill.filled {
     fill: #f4a825;
-    transform: scale(0);
-    transition: fill .3s ease-in-out, transform .3s ease-in-out
+    stroke: #f4a825;
+}
+
+.starFill.not-filled {
+    fill: none;
 }
 
 .starLine {
@@ -285,6 +292,20 @@ figure.twitter-tweet.twitter-tweet-rendered {
     animation-duration: 1s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in-out
+}
+
+.grow-up{
+    animation: grow-up-animation 1s;
+}
+
+@keyframes grow-up-animation {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes starRing {
@@ -337,19 +358,19 @@ figure.twitter-tweet.twitter-tweet-rendered {
         transform: scale(1)
     }
 
-    20%,to {
+    20%, to {
         transform: scale(0)
     }
 }
 
 @keyframes starLine {
-    0%,40% {
+    0%, 40% {
         animation-timing-function: ease-out;
         stroke-dasharray: 1 23;
         stroke-dashoffset: 1
     }
 
-    60%,to {
+    60%, to {
         stroke-dasharray: 12 13;
         stroke-dashoffset: -13
     }

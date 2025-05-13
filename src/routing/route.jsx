@@ -21,6 +21,8 @@ import BlogArticles from "../pages/BlogArticles/BlogArticles";
 import BlogArticlesDetails from "../pages/BlogArticlesDetails/BlogArticlesDetails";
 import { AuthProtectedRoute } from "../components/AuthProtectedRoute/AuthProtectedRoute";
 import FindOponent from "../pages/Games/FindOponent";
+import MiniQuizPlay from "../pages/QuizBites/MiniQuizPlay";
+import MiniQuizOver from "../pages/QuizBites/MiniQuizOver";
 
 export const routes = [
   {
@@ -110,5 +112,13 @@ export const routes = [
   {
     path: "/blogs-details/:articleId",
     element: <BlogArticlesDetails />,
+  },
+  {
+    path: "/mini-quiz-play",
+    element: <MiniQuizPlay />,
+  },
+  {
+    path: "/mini-quiz-over",
+    element: <MiniQuizOver />,
   },
 ];

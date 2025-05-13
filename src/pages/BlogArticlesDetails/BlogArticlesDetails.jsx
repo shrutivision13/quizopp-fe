@@ -1,43 +1,69 @@
 import { Fragment, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { ApiGetArticleContent } from "../../api-wrapper/article/ApiArticle";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { ApiGetArticleCategoryWise, ApiGetArticleContent, ApiUpdateArticleRating } from "../../api-wrapper/article/ApiArticle";
 import HomeIcon from "../../components/Icons/HomeIcon";
 import RightArrowIcon from "../../components/Icons/RightArrowIcon";
 import AdSlot from "../../components/AdSense/AdSlot";
 import Divided from "../../components/Divided/Divided";
 import { formatDate } from "../../utils/formateDate";
 import '../../styles/components/blogarticlessetails/blogarticlessetails.css'
-import RatingStar from "../../components/Icons/RatingStar";
 import RatingComponent from "../../components/RatingComponent/RatingComponent";
+import { toast } from "react-toastify";
+import ArticlesCarousel from "../../components/ArticlesCarousel/ArticlesCarousel";
+import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
 
-const shareOptions = [
-    {
-        id: 'whatsapp',
-        href: `https://api.whatsapp.com/send?&text=Unmissable%20Black%20Friday%202024%20Deals%20in%20India%20%E2%80%93%20Discounts%20on%20Top%20Brands%0ahttps%3A%2F%2Fwww.quizzop.com%2Fblogs%2Fgeneral-knowledge%2Funmissable-black-friday-2024-deals-in-india-discounts-on-top-brands-6748212dbdccdd0001d340e3%3Futm-source%3D4239%26utm-campaign%3Dblog-share%26utm-medium%3Dwhatsapp`,
-        imgSrc: 'https://static.quizzop.com/newton/assets/icons/whatsapp.png',
-        alt: 'whatsapp',
-        isButton: false,
-    },
-    {
-        id: 'x',
-        href: `https://x.com/intent/tweet?url=https%3A%2F%2Fwww.quizzop.com%2Fblogs%2Fgeneral-knowledge%2Funmissable-black-friday-2024-deals-in-india-discounts-on-top-brands-6748212dbdccdd0001d340e3%3Futm-source%3D4239%26utm-campaign%3Dblog-share%26utm-medium%3Dx&text=Unmissable%20Black%20Friday%202024%20Deals%20in%20India%20%E2%80%93%20Discounts%20on%20Top%20Brands`,
-        imgSrc: 'https://static.quizzop.com/newton/assets/icons/x.png',
-        alt: 'x',
-        isButton: false,
-    },
-    {
-        id: 'copy',
-        imgSrc: 'https://static.quizzop.com/newton/assets/icons/share.png',
-        alt: 'link',
-        isButton: true,
-    },
-];
+const shareData = {
+    title: 'Quizzop',
+    text: 'Check out this cool quiz platform!',
+    url: 'https://www.qizzop.com',
+};
 
 const BlogArticlesDetails = () => {
     const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
     const { articleId } = useParams();
+    const location = useLocation();
     const [articleContents, setArticleContents] = useState([]);
-    console.log("🚀 ~ BlogArticlesDetails ~ articleContents:", articleContents)
+    const [rating, setRating] = useState(0);
+    const [showThankYou, setShowThankYou] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [articles, setArticles] = useState([]);
+
+    const shareOptions = [
+        {
+            id: 'whatsapp',
+            href: `https://api.whatsapp.com/send?&text=Unmissable%20Black%20Friday%202024%20Deals%20in%20India%20%E2%80%93%20Discounts%20on%20Top%20Brands%0ahttps%3A%2F%2Fwww.quizzop.com%2Fblogs%2Fgeneral-knowledge%2Funmissable-black-friday-2024-deals-in-india-discounts-on-top-brands-6748212dbdccdd0001d340e3%3Futm-source%3D4239%26utm-campaign%3Dblog-share%26utm-medium%3Dwhatsapp`,
+            imgSrc: 'https://static.quizzop.com/newton/assets/icons/whatsapp.png',
+            alt: 'whatsapp',
+            isButton: false,
+        },
+        {
+            id: 'x',
+            href: `https://x.com/intent/tweet?url=https%3A%2F%2Fwww.quizzop.com%2Fblogs%2Fgeneral-knowledge%2Funmissable-black-friday-2024-deals-in-india-discounts-on-top-brands-6748212dbdccdd0001d340e3%3Futm-source%3D4239%26utm-campaign%3Dblog-share%26utm-medium%3Dx&text=Unmissable%20Black%20Friday%202024%20Deals%20in%20India%20%E2%80%93%20Discounts%20on%20Top%20Brands`,
+            imgSrc: 'https://static.quizzop.com/newton/assets/icons/x.png',
+            alt: 'x',
+            isButton: false,
+        },
+        {
+            id: 'copy',
+            imgSrc: 'https://static.quizzop.com/newton/assets/icons/share.png',
+            alt: 'link',
+            isButton: true,
+            onClick: () => handleNativeShare()
+        },
+    ];
+
+    // Handle Web Share API (for native OS sharing)
+    const handleNativeShare = async () => {
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                toast.error("Web Share API not supported in your browser.")
+            }
+        } catch (err) {
+             toast.error(err.message)
+        }
+    };
 
     const breadcrumbItems = [
         { href: '/', icon: HomeIcon, state: null },
@@ -60,18 +86,44 @@ const BlogArticlesDetails = () => {
                 toast.error(err?.message);
             })
         }
-    }, [articleId])
 
-    const [rating, setRating] = useState(0);
+        if (location?.state?.categoryId) {
+            ApiGetArticleCategoryWise(location?.state?.categoryId).then((res) => {
+                if (res?.isSuccess) {
+                    setArticles(res?.data);
+                }
+                else {
+                    setArticles([]);
+                    toast.error(res?.message);
+                }
+            }).catch((err) => {
+                toast.error(err?.message);
+            })
+        }
+    }, [articleId, location])
 
     const handleRatingChange = (value) => {
         setRating(value);
-        console.log('Rated:', value);
+        const formData = new FormData();
+        formData.append('rating', value)
+        ApiUpdateArticleRating(articleId, formData).then((res) => {
+            if (res.isSuccess) {
+                setShowThankYou(true);
+                setTimeout(() => {
+                    setShowThankYou(false);
+                    setIsVisible(false);
+                }, 1000); // 3 seconds
+            }
+            else {
+                toast.error(res.message)
+            }
+        }).catch((err) => toast.error(err.message))
     };
 
     return (
         <div>
-            <div class="flex flex-col w-full"><div class="w-full h-2 z-50"><div class="h-full bg-CFEDE34" style={{width:"10.14%"}}></div></div></div>
+            <button onClick={handleNativeShare}>More Options...</button>
+            <ScrollToTop />
             <ul className="flex justify-center item-center gap-5 py-5 px-10 bg-C20213F">
                 {breadcrumbItems?.map((item, index) => (
                     <Fragment key={index}>
@@ -130,6 +182,7 @@ const BlogArticlesDetails = () => {
                         item.isButton ? (
                             <button
                                 key={item.id}
+                                onClick={item.onClick}
                                 data-testid="article-copy-link-button"
                             >
                                 <img
@@ -202,11 +255,10 @@ const BlogArticlesDetails = () => {
                         {
                             articleContents?.articleContent?.map((item, index) => {
                                 return (
-                                    <div>
-                                        <div class="blog-content my-10"><h2>{item?.title}</h2></div>
+                                    <div key={index}>
+                                        <div className="blog-content my-10"><h2>{item?.title}</h2></div>
                                         <img src={`${IMAGEURL}/images/article/${item?.image}`} alt={item?.title} className="mb-20" />
                                         <div key={index} dangerouslySetInnerHTML={{ __html: item?.description }}>
-
                                         </div>
                                     </div>
                                 )
@@ -217,7 +269,7 @@ const BlogArticlesDetails = () => {
                             adUnitPath="/123456/ad-unit"
                             sizes={[728, 80]}
                         />
-                        <div class="blog-content mt-20"><h2>Conclusion</h2></div>
+                        <div className="blog-content mt-20"><h2>Conclusion</h2></div>
                         <div
                             dangerouslySetInnerHTML={{ __html: articleContents?.conclusion }}
                         />
@@ -240,6 +292,7 @@ const BlogArticlesDetails = () => {
                                 {
                                     articleContents?.relatedArticles?.map((item) => (
                                         <Link
+                                            key={item?._id}
                                             to={`/blogs/${item?.categorySlug}`}
                                             state={{ categoryId: item?._id }}
                                             className="font-medium w-auto inline-block cursor-pointer text-[#C7C7C7] bg-[#FFFFFF] dark:bg-[#20213F] border-[#E0E0E0] border-[#FFFFFF] py-[6px] px-[14px] rounded-[30px] text-[12px] border border-solid whitespace-nowrap"
@@ -250,43 +303,26 @@ const BlogArticlesDetails = () => {
                                 }
                             </div>
                         </div>
-                        <div class="h-10 w-full dark:bg-C262749"></div>
-                        {/* <div className="mt-24 flex items-center justify-center flex-col">
-                            <div className="font-black text-C676767 dark:text-CFAFAFA text-18 mb-14">
-                                <p data-testid="rate-this-article">Rate this article</p>
+                        {
+                            isVisible && <Fragment>
+                                <div className="h-10 w-full dark:bg-C262749"></div>
+                                <RatingComponent rating={rating} onChange={handleRatingChange} showThankYou={showThankYou} />
+                            </Fragment>
+                        }
+                        <div className="h-10 w-full dark:bg-C262749"></div>
+                        {
+                            articles?.length !== 0 &&
+                            <div className="py-20">
+                                <ArticlesCarousel
+                                    isShowSectionHeader={true}
+                                    isShowSectionButton={false}
+                                    sectionTitle="Other articles you may like"
+                                    isArticalContent
+                                    articles={articles}
+                                    isShowCategoryName={true}
+                                />
                             </div>
-                            <div className="flex items-center justify-center mb-24">
-                                <div className="flex">
-                                    <input type="radio" name="rating" id="rating-1" className="ratingInput ratingInput1" value="1" />
-                                    <input type="radio" name="rating" id="rating-2" className="ratingInput ratingInput2" value="2" />
-                                    <input type="radio" name="rating" id="rating-3" className="ratingInput ratingInput3" value="3" />
-                                    <input type="radio" name="rating" id="rating-4" className="ratingInput ratingInput4" value="4" />
-                                    <input type="radio" name="rating" id="rating-5" className="ratingInput ratingInput5" value="5" />
-
-                                    <label htmlFor="rating-1" className="ratingLabel mr-30 last:mr-0" data-testid="rate-article-star-1">
-                                        <RatingStar />
-                                    </label>
-
-                                    <label htmlFor="rating-2" className="ratingLabel mr-30 last:mr-0" data-testid="rate-article-star-2">
-                                        <RatingStar />
-                                    </label>
-
-                                    <label htmlFor="rating-3" className="ratingLabel mr-30 last:mr-0" data-testid="rate-article-star-3">
-                                        <RatingStar />
-                                    </label>
-
-                                    <label htmlFor="rating-4" className="ratingLabel mr-30 last:mr-0" data-testid="rate-article-star-4">
-                                        <RatingStar />
-                                    </label>
-
-                                    <label htmlFor="rating-5" className="ratingLabel mr-30 last:mr-0" data-testid="rate-article-star-5">
-                                        <RatingStar />
-                                    </label>
-                                </div>
-                            </div>
-                        </div> */}
-                        <RatingComponent rating={rating} onChange={handleRatingChange} />
-                        <div class="h-10 w-full dark:bg-C262749"></div>
+                        }
                     </div>
                 </div>
             </div>

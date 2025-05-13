@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import TopQuiz from "../../Home/TopQuiz";
 
 const QuizTopics = ({ removeHeader, quizBites, handleRemove, handleAdd }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const contentRef = useRef(null);
   const [height, setHeight] = useState("60px");
 
@@ -84,7 +84,7 @@ const QuizTopics = ({ removeHeader, quizBites, handleRemove, handleAdd }) => {
             {isExpanded && (
               <>
                 <hr className="h-2 border border-C404380" />
-                <TopQuiz handleRemove={handleRemove} handleAdd={handleAdd} quizBites={quizBites} removeHeader={removeHeader} />
+                <TopQuiz handleRemove={handleRemove} isNavigate={false} handleAdd={handleAdd} quizBites={quizBites} removeHeader={removeHeader} />
               </>
             )}
           </div>
