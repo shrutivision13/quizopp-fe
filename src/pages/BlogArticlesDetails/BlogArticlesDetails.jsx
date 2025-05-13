@@ -66,7 +66,6 @@ const BlogArticlesDetails = () => {
 
     const handleRatingChange = (value) => {
         setRating(value);
-        console.log('Rated:', value);
     };
 
     return (

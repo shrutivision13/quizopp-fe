@@ -27,7 +27,8 @@ const ApiGetTrendingArticles = () => {
     "Content-Type": "application/json",
   };
 
-  return axios.get(`${api}getTrendingArticles`, { headers })
+  return axios
+    .get(`${api}getTrendingArticles`, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
 };
@@ -40,10 +41,18 @@ const ApiGetArticleCategoryWise = (categoryId) => {
     "Content-Type": "application/json",
   };
 
-  return axios.get(`${api}getArticleCategoryWise?categoryId=${categoryId}`, { headers })
-    .then((response) => response?.data)
-    .catch((response) => response?.data);
-}
+  if (categoryId) {
+    return axios
+      .get(`${api}getArticleCategoryWise?categoryId=${categoryId}`, { headers })
+      .then((response) => response?.data)
+      .catch((response) => response?.data);
+  } else {
+    return axios
+      .get(`${api}getArticleCategoryWise`, { headers })
+      .then((response) => response?.data)
+      .catch((response) => response?.data);
+  }
+};
 
 const ApiGetArticleContent = (articleId) => {
   const token = getCookie("authToken");
@@ -53,9 +62,15 @@ const ApiGetArticleContent = (articleId) => {
     "Content-Type": "application/json",
   };
 
-  return axios.get(`${api}get/${articleId}`, { headers })
+  return axios
+    .get(`${api}get/${articleId}`, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
-}
+};
 
-export { ApiGetArticle, ApiGetTrendingArticles, ApiGetArticleCategoryWise, ApiGetArticleContent };
+export {
+  ApiGetArticle,
+  ApiGetTrendingArticles,
+  ApiGetArticleCategoryWise,
+  ApiGetArticleContent,
+};

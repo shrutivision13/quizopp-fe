@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ContestsCard from "../../components/ContestsCard/ContestsCard";
-import { ApiGetContests } from "../../api-wrapper/contest/ApiGetcontest";
+import {
+  ApiGetContests,
+  ApiGetContestsById,
+} from "../../api-wrapper/contest/ApiGetcontest";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 import { useLoader } from "../../context/LoaderContext";
 import AdSlot from "../../components/AdSense/AdSlot";
@@ -27,8 +30,7 @@ export const Contests = () => {
     },
   ];
 
-  useEffect(() => {
-    setLoading(true);
+  const handleFetchContest = () => {
     ApiGetContests()
       .then((res) => {
         if (res.isSuccess) {
@@ -37,23 +39,38 @@ export const Contests = () => {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    handleFetchContest();
 
     ApiGetCategories()
       .then((res) => {
         if (res.isSuccess) {
-          setCategories(res.data.slice(0, 5)); 
+          setCategories(res.data.slice(0, 5));
         }
       })
       .catch(() => {});
   }, []);
 
+  const handleChangeCategory = (category) => {
+    ApiGetContestsById(category?._id)
+      .then((res) => {
+        if (res.isSuccess) {
+          setContest(res.data);
+          setSelectedCategory(category);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  };
 
   return (
     <>
       <AdSlot
         slotId="ad-slot-1"
         adUnitPath="/123456/ad-unit"
-        sizes={[728, 80]}
+        sizes={[728, 5]}
       />
       <div className="flex ml-16 mt-30">
         <img
@@ -69,15 +86,22 @@ export const Contests = () => {
             <div
               key={category?._id}
               data-testid={`contest-topic-item-${category?._id}`}
-              style={{backgroundColor :`${selectedCategory === category?.categoryName ? "#3A56E1" : "transparent"}` }}
+              style={{
+                backgroundColor: `${
+                  selectedCategory.categoryName === category?.categoryName
+                    ? "#3A56E1"
+                    : "transparent"
+                }`,
+                cursor: "pointer",
+              }}
               className={`${
-                selectedCategory === category?.categoryName
+                selectedCategory.categoryName === category?.categoryName
                   ? "selected-tab font-bold text-CFFFFFF bg-CFFFFFF"
                   : "font-medium text-CC7C7C7 dark:text-C6063AF bg-CFFFFFF"
               } border-CE0E0E0 dark:bg-C20213F dark:border-C404380 px-[17px] mx-4 rounded-[30px] text-12 flex items-center justify-center border border-solid whitespace-nowrap`}
-              onClick={() => setSelectedCategory(category?.categoryName)}
+              onClick={() => handleChangeCategory(category)}
             >
-              {category.categoryName}
+              {category?.categoryName}
             </div>
           ))}
         </div>
@@ -109,7 +133,7 @@ export const Contests = () => {
       <AdSlot
         slotId="ad-slot-2"
         adUnitPath="/123456/ad-unit"
-        sizes={[728, 80]}
+        sizes={[728, 5]}
       />
       <section className="px-20">
         {contest?.slice(6)?.map((quizContest) => (

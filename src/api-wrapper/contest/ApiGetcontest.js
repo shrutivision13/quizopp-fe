@@ -17,6 +17,19 @@ const ApiGetContests = () => {
     .catch((response) => response?.data);
 };
 
+const ApiGetContestsById = (categoryId) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+  return axios
+    .get(`${api}contest/getActiveContests?categoryId=${categoryId}`, { headers })
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+};
+
 const ApiGetContestQuestions = (contestId) => {
   return axios
     .get(`${api}contest/getContestQuestions/${contestId}`)
@@ -86,4 +99,4 @@ const ApiGetScore = (contestId) => {
     .catch((response) => response?.data);
 };
 
-export { ApiGetContests, ApiGetContestQuestions, ApiJoinContest, ApiPlayContest, ApiSubmitContest, ApiGetScore };
+export { ApiGetContests, ApiGetContestQuestions, ApiJoinContest, ApiPlayContest, ApiSubmitContest, ApiGetScore, ApiGetContestsById };

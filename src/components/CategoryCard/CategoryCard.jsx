@@ -23,7 +23,11 @@ const CategoryCard = ({
     if (quizRoute) {
       navigate(`/${category?.categorySlug}/${quizRoute}`);
     } else {
-      navigate(`/${category?.categorySlug}/category`, { state: category });
+      if (category?.categorySlug == "contests") {
+        navigate("/contests");
+      } else {
+        navigate(`/${category?.categorySlug}/category`, { state: category });
+      }
     }
   };
 

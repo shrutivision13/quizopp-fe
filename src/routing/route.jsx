@@ -104,6 +104,10 @@ export const routes = [
     element: <BeginQuiz />,
   },
   {
+    path: "/blogs",
+    element: <BlogArticles />,
+  },
+  {
     path: "/blogs/:categoryName",
     element: <BlogArticles />,
   },

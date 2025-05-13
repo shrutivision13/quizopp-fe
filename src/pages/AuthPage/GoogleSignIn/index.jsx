@@ -1,71 +1,88 @@
-import { signInWithPopup } from 'firebase/auth'
-import React from 'react'
-import { auth, provider } from '../../../utils/firebase/firebaseConfig'
-import { ApiRegisterWithGoogle } from '../../../api-wrapper/Auth/ApiRegisterWithPhone'
-import useCookie from '../../../hooks/useCookie'
+import { signInWithPopup } from "firebase/auth";
+import React from "react";
+import { auth, provider } from "../../../utils/firebase/firebaseConfig";
+import { ApiRegisterWithGoogle } from "../../../api-wrapper/Auth/ApiRegisterWithPhone";
+import useCookie from "../../../hooks/useCookie";
+import { useNavigate } from "react-router-dom";
 
 const GoogleSignIn = () => {
-    const { getCookie, setCookie } = useCookie();
-    const authToken = getCookie("authToken");
+  const { getCookie, setCookie } = useCookie();
+  const authToken = getCookie("authToken");
+  const navigate = useNavigate();
 
-    const handleSignIn = async () => {
-        try {
-            const result = await signInWithPopup(auth, provider);
+  const handleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
 
-            const user = result.user;
-            const idToken = await user.getIdToken(true);
+      const user = result.user;
+      const idToken = await user.getIdToken(true);
 
-            if (!idToken) {
-                console.error("No ID token found.");
-                return;
+      if (!idToken) {
+        console.error("No ID token found.");
+        return;
+      }
+
+      ApiRegisterWithGoogle(authToken, { idToken })
+        .then((response) => {
+          if (response?.isSuccess) {
+            localStorage.setItem("userData", JSON.stringify(response?.data));
+            setCookie("authToken", response.data.authToken);
+            if (response?.data?.isRegister) {
+              navigate("/");
             }
-
-            ApiRegisterWithGoogle(authToken, { idToken })
-                .then((response) => {
-                    if (response?.isSuccess) {
-                        setCookie('authToken', response.data.authToken);
-                    } else {
-                        console.error("Failed to register with Google:", response?.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error during Google registration:", error);
-                });
-
-        } catch (error) {
-            console.error("Error during sign-in with popup:", error);
-        }
+          } else {
+            console.error("Failed to register with Google:", response?.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Error during Google registration:", error);
+        });
+    } catch (error) {
+      console.error("Error during sign-in with popup:", error);
     }
+  };
 
-    return (
-        <button
-            data-testid="login-google-button"
-            className="dark:text-CFFFFFF mt-20 w-full flex flex-col justify-center items-center cursor-pointer text-C000000DE dark:text-CFFFFFF"
-            onClick={handleSignIn}
-        >
-            <div className="w-full max-w-360">
-                <div className="w-full h-48 flex items-center border rounded-5 px-12 py-8 border-CDADCE0 dark:border-CDADCE0 bg-CFFFFFF hover:bg-CD2E3FC text-C000000DE">
-                    <svg
-                        width="25"
-                        height="25"
-                        viewBox="0 0 25 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M25 13.0455C25 12.1787 24.9297 11.3072 24.7798 10.4544H12.7518V15.3649H19.6397C19.3538 16.9486 18.4355 18.3496 17.0907 19.2399V22.4261H21.2C23.613 20.2051 25 16.9252 25 13.0455Z" fill="#4285F4" />
-                        <path d="M12.7518 25.5045C16.191 25.5045 19.0914 24.3753 21.2046 22.4261L17.0954 19.2399C15.9521 20.0177 14.4761 20.4582 12.7565 20.4582C9.42973 20.4582 6.609 18.2138 5.59691 15.1962H1.35645V18.4808C3.52119 22.7869 7.93034 25.5045 12.7518 25.5045Z" fill="#34A853" />
-                        <path d="M5.59226 15.1963C5.0581 13.6126 5.0581 11.8976 5.59226 10.3139V7.0293H1.35648C-0.45216 10.6325 -0.45216 14.8777 1.35648 18.4809L5.59226 15.1963Z" fill="#FBBC04" />
-                        <path d="M12.7518 5.04725C14.5698 5.01913 16.3269 5.70323 17.6436 6.95897L21.2843 3.31826C18.979 1.15352 15.9193 -0.0366254 12.7518 0.000859332C7.93034 0.000859332 3.52119 2.71851 1.35645 7.02925L5.59222 10.3139C6.59963 7.29165 9.42504 5.04725 12.7518 5.04725Z" fill="#EA4335" />
-                    </svg>
-                    <div className="w-full">
-                        <p className="font-sans text-16 py-10 font-medium text-center">
-                            Sign in with Google
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </button>
-    );
+  return (
+    <button
+      data-testid="login-google-button"
+      className="dark:text-CFFFFFF mt-20 w-full flex flex-col justify-center items-center cursor-pointer text-C000000DE dark:text-CFFFFFF"
+      onClick={handleSignIn}
+    >
+      <div className="w-full max-w-360">
+        <div className="w-full h-48 flex items-center border rounded-5 px-12 py-8 border-CDADCE0 dark:border-CDADCE0 bg-CFFFFFF hover:bg-CD2E3FC text-C000000DE">
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 25 26"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M25 13.0455C25 12.1787 24.9297 11.3072 24.7798 10.4544H12.7518V15.3649H19.6397C19.3538 16.9486 18.4355 18.3496 17.0907 19.2399V22.4261H21.2C23.613 20.2051 25 16.9252 25 13.0455Z"
+              fill="#4285F4"
+            />
+            <path
+              d="M12.7518 25.5045C16.191 25.5045 19.0914 24.3753 21.2046 22.4261L17.0954 19.2399C15.9521 20.0177 14.4761 20.4582 12.7565 20.4582C9.42973 20.4582 6.609 18.2138 5.59691 15.1962H1.35645V18.4808C3.52119 22.7869 7.93034 25.5045 12.7518 25.5045Z"
+              fill="#34A853"
+            />
+            <path
+              d="M5.59226 15.1963C5.0581 13.6126 5.0581 11.8976 5.59226 10.3139V7.0293H1.35648C-0.45216 10.6325 -0.45216 14.8777 1.35648 18.4809L5.59226 15.1963Z"
+              fill="#FBBC04"
+            />
+            <path
+              d="M12.7518 5.04725C14.5698 5.01913 16.3269 5.70323 17.6436 6.95897L21.2843 3.31826C18.979 1.15352 15.9193 -0.0366254 12.7518 0.000859332C7.93034 0.000859332 3.52119 2.71851 1.35645 7.02925L5.59222 10.3139C6.59963 7.29165 9.42504 5.04725 12.7518 5.04725Z"
+              fill="#EA4335"
+            />
+          </svg>
+          <div className="w-full">
+            <p className="font-sans text-16 py-10 font-medium text-center">
+              Sign in with Google
+            </p>
+          </div>
+        </div>
+      </div>
+    </button>
+  );
 };
 
 export default GoogleSignIn;

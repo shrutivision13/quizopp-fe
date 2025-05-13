@@ -75,7 +75,6 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
     
         ApiResendOTP(payload)
             .then((response) => {
-                console.log("🚀 ~ .then ~ response:", response)
                 if (response?.isSuccess) {
                     console.log('OTP resent successfully:', response?.data);
                 } else {
