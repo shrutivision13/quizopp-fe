@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import '../../styles/components/quizbattles/quizbattles.css';
-import AdSlot from "../../components/AdSense/AdSlot";
-import GameStats from "../../components/GameStats/GameStats";
-import GameStateSkeleton from "../../components/GameStateSkeleton/GameStateSkeleton";
-import QuizBattlesOpponentStat from "../../components/QuizBattlesOpponent/QuizBattlesOpponent";
+import '../../../styles/components/quizbattles/quizbattles.css';
+import AdSlot from "../../../components/AdSense/AdSlot";
+import GameStats from "../../../components/GameStats/GameStats";
+import GameStateSkeleton from "../../../components/GameStateSkeleton/GameStateSkeleton";
+import QuizBattlesOpponentStat from "../../../components/QuizBattlesOpponent/QuizBattlesOpponent";
 
 const QuizBattlesEndQuiz = () => {
     const navigate = useNavigate();

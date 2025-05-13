@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
-import playerYou from '../../assets/images/players/player-0.webp';
-import versusImage from '../../assets/images/players/Versus.webp';
-import logo from '../../assets/images/quizzop-logo-dark.svg';
-import useCookie from '../../hooks/useCookie';
+import playerYou from '../../../assets/images/players/player-0.webp';
+import versusImage from '../../../assets/images/players/Versus.webp';
+import logo from '../../../assets/images/quizzop-logo-dark.svg';
+import useCookie from '../../../hooks/useCookie';
 
-import player1 from '../../assets/images/players/player-1.webp';
-import player2 from '../../assets/images/players/player-2.webp';
-import player3 from '../../assets/images/players/player-3.webp';
-import player4 from '../../assets/images/players/player-4.webp';
-import player5 from '../../assets/images/players/player-5.webp';
-import player6 from '../../assets/images/players/player-6.webp';
-import player7 from '../../assets/images/players/player-7.png';
-import player8 from '../../assets/images/players/player-8.webp';
-import player9 from '../../assets/images/players/player-9.png';
-import player10 from '../../assets/images/players/player-10.webp';
-import player11 from '../../assets/images/players/player-11.webp';
-import player12 from '../../assets/images/players/player-12.webp';
-import player13 from '../../assets/images/players/player-13.webp';
-import player14 from '../../assets/images/players/player-14.webp';
-import player15 from '../../assets/images/players/player-15.webp';
-import player16 from '../../assets/images/players/player-16.webp';
+import player1 from '../../../assets/images/players/player-1.webp';
+import player2 from '../../../assets/images/players/player-2.webp';
+import player3 from '../../../assets/images/players/player-3.webp';
+import player4 from '../../../assets/images/players/player-4.webp';
+import player5 from '../../../assets/images/players/player-5.webp';
+import player6 from '../../../assets/images/players/player-6.webp';
+import player7 from '../../../assets/images/players/player-7.png';
+import player8 from '../../../assets/images/players/player-8.webp';
+import player9 from '../../../assets/images/players/player-9.png';
+import player10 from '../../../assets/images/players/player-10.webp';
+import player11 from '../../../assets/images/players/player-11.webp';
+import player12 from '../../../assets/images/players/player-12.webp';
+import player13 from '../../../assets/images/players/player-13.webp';
+import player14 from '../../../assets/images/players/player-14.webp';
+import player15 from '../../../assets/images/players/player-15.webp';
+import player16 from '../../../assets/images/players/player-16.webp';
 
 const opponentPlayers = [
     player8, player9, player5, player12, player15, player3, player13, player16,

@@ -15,11 +15,12 @@ import PlayContest from "../pages/Contests/PlayContest";
 import ContestResult from "../pages/Contests/ContestResult";
 import Games from "../pages/Games";
 import SpinWheel from "../pages/SpinWheel";
-import QuizBattles from "../pages/QuizBattles/QuizBattles";
-import BeginQuiz from "../pages/BeginQuiz/BeginQuiz";
+import QuizBattles from "../pages/Games/QuizBattles/QuizBattles";
+import BeginQuiz from "../pages/Games/BeginQuiz/BeginQuiz";
 import BlogArticles from "../pages/BlogArticles/BlogArticles";
 import BlogArticlesDetails from "../pages/BlogArticlesDetails/BlogArticlesDetails";
 import { AuthProtectedRoute } from "../components/AuthProtectedRoute/AuthProtectedRoute";
+import FindOponent from "../pages/Games/FindOponent";
 
 export const routes = [
   {
@@ -83,8 +84,12 @@ export const routes = [
     element: <ContestResult />,
   },
   {
-    path: "/begin-quiz",
+    path: "/play-quiz",
     element: <Games />,
+  },
+  {
+    path: "/:categoryName/join-quiz",
+    element: <FindOponent />,
   },
   {
     path: "/spin-wheel",

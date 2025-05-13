@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getCookie } from '../../api-wrapper/categories/ApiCategories';
-import AdSlot from '../../components/AdSense/AdSlot';
-import CategoryCard from '../../components/CategoryCard/CategoryCard';
+import { getCookie } from '../../../api-wrapper/categories/ApiCategories';
+import AdSlot from '../../../components/AdSense/AdSlot';
+import CategoryCard from '../../../components/CategoryCard/CategoryCard';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const category = {
