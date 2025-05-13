@@ -30,7 +30,7 @@ const ApiGetTrendingArticles = () => {
   return axios.get(`${api}getTrendingArticles`, { headers })
     .then((response) => response?.data)
     .catch((response) => response?.data);
-}
+};
 
 const ApiGetArticleCategoryWise = (categoryId) => {
   const token = getCookie("authToken");

@@ -18,11 +18,16 @@ import QuizBattles from "../pages/QuizBattles/QuizBattles";
 import BeginQuiz from "../pages/BeginQuiz/BeginQuiz";
 import BlogArticles from "../pages/BlogArticles/BlogArticles";
 import BlogArticlesDetails from "../pages/BlogArticlesDetails/BlogArticlesDetails";
+import { AuthProtectedRoute } from "../components/AuthProtectedRoute/AuthProtectedRoute";
 
 export const routes = [
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <AuthProtectedRoute>
+        <Home />
+      </AuthProtectedRoute>
+    ),
   },
   {
     path: "/get-started",

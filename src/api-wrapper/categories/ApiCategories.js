@@ -58,4 +58,46 @@ const ApiGetAllCategoryDetails = (categoryId) => {
     .catch((response) => response?.data);
 };
 
-export { ApiGetCategories, ApiGetActiveContent, ApiGetInitialCategory, ApiGetAllCategoryDetails };
+const ApiGetQuizBites = () => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios
+    .get(`${api}/quizBites`, { headers }) 
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+}
+
+const ApiAddQuizBites = (id) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios
+    .post(`${api}/quizBites/add`, {categoryId : id}, { headers }) 
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+}
+
+const ApiRemoveQuizBites = (id) => {
+  const token = getCookie("authToken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+
+  return axios
+    .delete(`${api}/quizBites/remove/${id}`, { headers })
+    .then((response) => response?.data)
+    .catch((response) => response?.data);
+}
+
+export { ApiGetCategories, ApiGetActiveContent, ApiGetInitialCategory, ApiGetAllCategoryDetails, ApiGetQuizBites, ApiAddQuizBites, ApiRemoveQuizBites };

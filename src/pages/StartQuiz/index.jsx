@@ -51,7 +51,7 @@ const StartQuiz = () => {
       <AdSlot
         slotId="div-gpt-ad-1745314508467-0"
         adUnitPath="/23289596447/adx6"
-        sizes={[336, 280]}
+        sizes={[336, 5]}
       />
     </>
   );

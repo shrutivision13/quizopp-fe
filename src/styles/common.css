@@ -5328,3 +5328,7 @@ p.text.off {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.w-95{
+  width: 95px ;
+}

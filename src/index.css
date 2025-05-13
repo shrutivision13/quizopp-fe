@@ -427,3 +427,26 @@ body {
   list-style: disc;
   margin: 20px 0 20px 15px;
 }
+
+/* Centered, wide red toast with rounded corners */
+.custom-error-toast {
+  background-color: #e53935; /* bright red */
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: none;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 16px;
+}
+
+.custom-error-toast-body {
+  margin: 0;
+  line-height: 20px;
+}
+

@@ -1,6 +1,7 @@
 import React from "react";
 
-const TrendingQuizCard = () => {
+const TrendingQuizCard = ({ category }) => {
+  const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
   return (
     <div
       className="snap-center min-w-97px relative rounded-20 mr-10 last:mr-20 flex flex-col items-center justify-center"
@@ -17,14 +18,16 @@ const TrendingQuizCard = () => {
             height="70"
             decoding="async"
             data-nimg="1"
-            src="/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fcategory%2Findia-new.png&amp;w=256&amp;q=75"
-            srcSet="/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fcategory%2Findia-new.png&amp;w=96&amp;q=75 1x,
-            /_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fcategory%2Findia-new.png&amp;w=256&amp;q=75 2x"
+            src={
+              category?.categoryIcon
+                ? `${IMAGEURL}/images/category/${category?.categoryIcon}`
+                : category?.imgsrc
+            }
             style={{ color: "transparent" }}
           />
           <div className="absolute z-10 w-full flex justify-center bottom-8 px-10">
             <p className="text-12 text-C2C2C2C font-bold text-center leading-[14px] line-clamp-2">
-              India
+              {category?.categoryName}
             </p>
           </div>
         </div>
