@@ -16,7 +16,7 @@ const CategoryCard = ({
   isSelected,
   handleRemove,
   handleAdd,
-  isNavigate
+  isNavigate = true
 }) => {
   const navigate = useNavigate(); // Initialize useNavigate
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;

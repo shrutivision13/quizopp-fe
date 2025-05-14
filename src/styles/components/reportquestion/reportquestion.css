@@ -1,0 +1,43 @@
+.animate__animated {
+    animation-duration: 0.3s;
+    animation-fill-mode: both
+}
+
+.animate__animated.bottomsheet_animated {
+    --animate-duration: 0.3s
+}
+
+.animate__slideInUp {
+    animation-name: slideInUp
+}
+
+.animate__slideOutDown {
+    animation-name: slideOutDown
+}
+
+.transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1)
+}
+
+@keyframes slideInUp {
+    0% {
+        transform: translate3d(0, 100%, 0);
+        visibility: visible
+    }
+
+    to {
+        transform: translateZ(0)
+    }
+}
+
+@keyframes slideOutDown {
+    0% {
+        transform: translateZ(0)
+    }
+
+    to {
+        transform: translate3d(0, 100%, 0);
+        visibility: hidden
+    }
+}

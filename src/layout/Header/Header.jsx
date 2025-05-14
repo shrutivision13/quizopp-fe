@@ -75,7 +75,14 @@ const Header = () => {
     }
   }, [getCookie, setLoading]);
 
-  const handleGoBack = () => navigate(-1);
+  const handleGoBack = () => {
+    if (path.includes('/mini-quiz-over')) {
+      navigate('/');
+    } else {
+      navigate(-1)
+    }
+  };
+
   const handlePlayQuiz = () => navigate("/");
 
   if (isHiddenHeader) return null;

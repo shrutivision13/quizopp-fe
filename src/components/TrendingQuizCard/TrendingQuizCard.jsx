@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const TrendingQuizCard = ({ category }) => {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
@@ -7,7 +8,7 @@ const TrendingQuizCard = ({ category }) => {
       className="snap-center min-w-97px relative rounded-20 mr-10 last:mr-20 flex flex-col items-center justify-center"
       data-testid="category-card-0"
     >
-      <a href="/india/category">
+      <Link to={`/${category?.categorySlug}/category`} state={{ _id: category?._id }}>
         <div
           className="whitespace-nowrap text-18 font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer relative flex justify-center items-center bg-CFFDEE5 h-[120px] w-[97px] rounded-[12px] pb-10"
           style={{ backgroundColor: "rgb(248, 215, 176)" }}
@@ -31,7 +32,7 @@ const TrendingQuizCard = ({ category }) => {
             </p>
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };
