@@ -41,7 +41,7 @@ const Header = () => {
       "/mini-quiz-play",
       "/mini-quiz-over",
     ],
-    hiddenPaths: [`/${categoryName}/play-contest`],
+    hiddenPaths: [`/${categoryName}/play-contest`, `/${categoryName}/join-quiz`, `/${categoryName}/play-quiz`],
     freeCoinsPaths: [`/${categoryName}/begin-quiz`, '/'],
     initHeaderPaths: ["/get-started", "/start-quiz"],
   });
@@ -76,9 +76,10 @@ const Header = () => {
   }, [location.pathname]);
 
   const handleGoBack = () => {
-    if (path.includes('/mini-quiz-over')) {
+    if (path.includes('/mini-quiz-over') || path.includes(`/${categoryName}/end-quiz`)) {
       navigate('/');
-    } else {
+    }
+    else {
       navigate(-1)
     }
   };

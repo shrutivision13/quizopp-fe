@@ -16,7 +16,9 @@ const Footer = ({ gameStarted }) => {
     hiddenFooterPaths.includes(path) ||
     path.includes("/join-contest") ||
     path.includes("/play-contest") ||
-    path.includes("/contest-rank")
+    path.includes("/contest-rank") ||
+    path.includes(`/${categoryName}/join-quiz`) ||
+    path.includes(`/${categoryName}/play-quiz`)
   )
     return null; // Hide footer for specific paths
 

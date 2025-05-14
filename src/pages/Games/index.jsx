@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useMemo, useCallback, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ApiGetGamesQuestions } from '../../api-wrapper/games/ApiGames';
+import { ApiGetGamesQuestions, ApiUpdateQuizParticipation } from '../../api-wrapper/games/ApiGames';
 import { ApiSubmitContest } from '../../api-wrapper/contest/ApiGetcontest';
 import lifelinesData from "../../utils/lifelinesData.json";
 
@@ -22,6 +22,8 @@ import CloseIcon from '../../components/Icons/CloseIcon';
 import ReportQuestion from './ReportQuestion';
 import { toast } from 'react-toastify';
 import EmojiDrawer from '../../components/EmojiDrawer/EmojiDrawer';
+import { io } from 'socket.io-client';
+import { getCookie } from '../../api-wrapper/categories/ApiCategories';
 
 
 // 1) reducer + initialState
@@ -197,7 +199,6 @@ function useCountdown(initial, paused, onExpire) {
     return { count, reset, setTime };
 }
 
-
 const generateRandomBotData = (botUpdateCount, setBotUpdateCount, setBotScore, setBotCorrectAnswers, setLifelinesUsed, setBotTotalSeconds) => {
     useEffect(() => {
         if (botUpdateCount < 5) {
@@ -231,8 +232,6 @@ const generateRandomBotData = (botUpdateCount, setBotUpdateCount, setBotScore, s
         }
     }, [botUpdateCount, setBotScore, setBotCorrectAnswers, setLifelinesUsed, setBotTotalSeconds]);
 };
-
-
 
 const Games = () => {
     const { categoryName } = useParams();
@@ -268,7 +267,7 @@ const Games = () => {
 
     // fetch once
     useEffect(() => {
-        ApiGetGamesQuestions("6809c8051b04c23b60a5fb37")
+        ApiGetGamesQuestions(location?.state?.categoryId)
             .then(res => {
                 if (res.isSuccess) {
                     dispatch({ type: 'SET_QUESTIONS', questions: res.data });
@@ -277,6 +276,39 @@ const Games = () => {
             })
             .catch(console.error);
     }, []);
+
+
+    // Fetch Oponent Score 
+    useEffect(() => {
+        const authToken = getCookie("authToken");
+        if (!authToken) {
+            return;
+        }
+
+        // if (!state?.isBot) {
+        //     console.log(score, "state?.isBot")
+        //     const socketConnection = io('ws://132.148.0.148:3000', {
+        //         extraHeaders: { Authorization: `Bearer ${authToken}` },
+        //         autoConnect: false
+        //     });
+
+        //     socketConnection.connect();
+        //     const payload = {
+        //         score: score,
+        //         category: location?.state?.categoryId,
+        //         opponentId: location?.state?.opponentParticipantId
+        //     }
+
+
+        //     socketConnection.emit('score', payload);
+        //     // setTimeout(() => {
+        //         socketConnection.on('score', (res) => {
+        //             console.log(res, "res")
+        //         })
+        //     // }, 1000)
+        // }
+
+    }, [state, score])
 
     const currentQuestion = questions[currentIndex] || { options: [], question: '' };
 
@@ -295,39 +327,37 @@ const Games = () => {
             dispatch({ type: 'NEXT_QUESTION' });
             resetTimer();
         } else {
-            dispatch({ type: 'INCREMENT_TOTAL_SECONDS' });
+            if (currentIndex === questions.length - 1) {
+                // if (state?.isBot) {
+                    dispatch({ type: 'INCREMENT_TOTAL_SECONDS' });
 
-            const payload = {
-                user: {
-                    score: score,
-                    totalSeconds: state.totalSeconds,
-                    lifelinesUsed: state.lifelinesUsed,
-                    correctAnswer: state.correctAnswer,
-                    coin: state.coinsSpent,
-                },
-                bot: {
-                    score: botScore,
-                    totalSeconds: botTotalSeconds,
-                    lifelinesUsed: botLifelinesUsed,
-                    correctAnswer: botCorrectAnswers,
-                },
-            };
+                    const payload = {
+                        user: {
+                            score: score,
+                            totalSeconds: state.totalSeconds,
+                            lifelinesUsed: state.lifelinesUsed,
+                            correctAnswer: state.correctAnswer,
+                            coin: state.coinsSpent,
+                        },
+                        bot: {
+                            score: botScore,
+                            totalSeconds: botTotalSeconds,
+                            lifelinesUsed: botLifelinesUsed,
+                            correctAnswer: botCorrectAnswers,
+                        },
+                    };
 
-            setTimeout(() => {
-                console.log("🚀 ~ goToNextOrSubmit ~ payload:", payload)
-
-                // navigate(`/${categoryName}/end-quiz`, { state: { result: payload } });
-                // ApiSubmitContest(participantId, payload)
-                //     .then(res => {
-                //         if (res.isSuccess) {
-                //             console.log("Payload submitted successfully", res.data);
-
-                //             // Navigate to the result page after successful submission
-                //             navigate(`/${categoryName}/end-quiz`, { state: { result: payload } });
-                //         }
-                //     })
-                //     .catch(console.error);
-            }, 200);
+                    setTimeout(() => {
+                        ApiUpdateQuizParticipation(participantId, payload)
+                            .then(res => {
+                                if (res.isSuccess) {
+                                    navigate(`/${categoryName}/end-quiz`, { state: { result: res.data, userImage: location?.state?.userImage } });
+                                }
+                            })
+                            .catch(console.error);
+                    }, 200);
+                // }/
+            }
         }
     }, [currentIndex, questions, score, participantId, navigate, categoryName]);
 
@@ -357,7 +387,6 @@ const Games = () => {
     useEffect(() => {
         setTimeout(() => {
             if (currentIndex === questions.length - 1) {
-                console.log("if")
                 goToNextOrSubmit();
                 // setTimeout(goToNextOrSubmit, 2000);
             } else {
@@ -499,7 +528,7 @@ const Games = () => {
 
                             <div className="flex">
                                 <div className="pr-10 flex flex-col text-10">
-                                    <div className="text-CFAFAFA uppercase">IronHunter</div>
+                                    <div className="text-CFAFAFA uppercase">{location?.state?.opponentUserName}</div>
                                     <div className="font-bold text-CA96DFF">Score: {botScore}</div>
                                 </div>
                                 <div className="relative">
