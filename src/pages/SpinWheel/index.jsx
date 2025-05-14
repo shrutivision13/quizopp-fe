@@ -1,84 +1,140 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from 'react';
+import spinbtn from "../../assets/images/spinwheel_pointer.png";
+import sliceImage from "../../assets/images/coin.png";  // Add your image for the slice
+import emoji from "../../assets/images/emoji.png";  // Add your image for the slice
 
-const SpinWheel = () => {
+const WheelCanvas = () => {
   const canvasRef = useRef(null);
-  const [spinning, setSpinning] = useState(false);
+  const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
-  const segments = [
-    { id: 7, amount: 50, image: "https://static.quizzop.com/newton/assets/spinwheel-coins-white.png" },
-    { id: 6, amount: 0, image: "https://static.quizzop.com/newton/assets/spinwheel-emoji-yellow.png" },
-    { id: 5, amount: 100, image: "https://static.quizzop.com/newton/assets/spinwheel-coins-purple.png" },
-    { id: 4, amount: 250, image: "https://static.quizzop.com/newton/assets/spinwheel-coins-white.png" },
-    { id: 3, amount: 0, image: "https://static.quizzop.com/newton/assets/spinwheel-emoji-yellow.png" },
-    { id: 2, amount: 500, image: "https://static.quizzop.com/newton/assets/spinwheel-coins-white.png" },
-    { id: 1, amount: 20, image: "https://static.quizzop.com/newton/assets/spinwheel-coins-purple.png" },
+  const wheelData = [
+    { label: '100', color1: '#561DB0', color2: '#8747ec', image: sliceImage, textColor: '#FFFFFF' },
+    { label: '25', color1: '#FFFF', color2: '#F3F3F3', image: sliceImage, textColor: '#000000' },
+    { label: '', color1: '#E0BE0B', color2: '#fcdc31', image: emoji, textColor: '#FFFFFF' },
+    { label: '500', color1: '#FFFF', color2: '#F3F3F3', image: sliceImage, textColor: '#000000' },
+    { label: '20', color1: '#561DB0', color2: '#8747ec', image: sliceImage, textColor: '#FFFFFF' },
+    { label: '50', color1: '#FFFF', color2: '#F3F3F3', image: sliceImage, textColor: '#000000' },
+    { label: '', color1: '#E0BE0B', color2: '#fcdc31', image: emoji, textColor: '#FFFFFF' },
   ];
 
-  const drawWheel = (ctx, size) => {
-    const center = size / 2;
-    const anglePerSegment = (2 * Math.PI) / segments.length;
 
-    // Clear previous drawings
-    ctx.clearRect(0, 0, size, size);
 
-    segments.forEach((segment, i) => {
-      const startAngle = anglePerSegment * i;
-      const endAngle = anglePerSegment * (i + 1);
-      const midAngle = (startAngle + endAngle) / 2;
-
-      // Draw pie segment
-      ctx.beginPath();
-      ctx.moveTo(center, center);
-      ctx.arc(center, center, center, startAngle, endAngle);
-      ctx.closePath();
-      ctx.fillStyle = i % 2 === 0 ? '#FFD700' : '#FFEC8B';
-      ctx.fill();
-
-      // Load image and draw rotated
-      const img = new Image();
-      img.src = segment.image;
-      img.onload = () => {
-        const imgSize = 100;
-        const radiusOffset = center * 0.65;
-      
-        ctx.save();
-        ctx.translate(center, center);         // Move to center
-        ctx.rotate(-140*i);    // Rotate image tangent to arc
-        ctx.drawImage(
-          img,
-          radiusOffset - imgSize / 2,
-          -imgSize / 2,
-          imgSize,
-          imgSize
-        );
-        ctx.restore();
-      };
-    });
-  };
+  // Pre-load images
+  const images = useRef([]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    drawWheel(ctx, 300);
-  }, [rotation]);
+    // Create image objects and load them
+    const imagePromises = wheelData.map(slice => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = slice.image;
+        img.onload = () => {
+          images.current.push(img); // Store the loaded images
+          resolve();
+        };
+      });
+    });
 
-  const spin = () => {
-    if (spinning) return;
+    // Wait for all images to load
+    Promise.all(imagePromises).then(() => {
+      //  setImagesLoaded(true); // All images are loaded
+    });
+  }, []);
 
-    const spins = 5 + Math.random() * 3;
-    const degrees = 360 * spins;
-    const newRotation = rotation + degrees;
 
-    setSpinning(true);
-    setRotation(newRotation);
+  const drawWheel = (ctx) => {
+    const centerX = canvasRef.current.width / 2;
+    const centerY = canvasRef.current.height / 2;
+    const radius = canvasRef.current.width / 2;
+    const sliceAngle = (2 * Math.PI) / wheelData.length;
+
+    wheelData.forEach((slice, index) => {
+      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+      gradient.addColorStop(0, slice.color1);
+      gradient.addColorStop(1, slice.color2);
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(
+        centerX,
+        centerY,
+        radius,
+        sliceAngle * index,
+        sliceAngle * (index + 1)
+      );
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Draw text on the slices with space above it
+      ctx.save();
+      const textX = centerX + Math.cos(sliceAngle * (index + 0.5)) * radius * 0.7;
+      const textY = centerY + Math.sin(sliceAngle * (index + 0.5)) * radius * 0.7; // Space above text
+
+      ctx.translate(textX, textY);
+      ctx.rotate(sliceAngle * (index + 0.5) + Math.PI / 2);
+      ctx.fillStyle = slice.textColor; // Use the text color from the array
+      ctx.font = '600 24px Math';
+      ctx.fillText(slice.label, -ctx.measureText(slice.label).width / 2, 20);
+
+      // Adjust the position of the image to have space from the text
+      const img = new Image();
+      img.src = slice.image;
+      // const img = images.current[index];
+      if (img) {
+        // ctx.drawImage(img, imageX, imageY, 25, 25); // Adjust image size and position
+        ctx.drawImage(img, slice?.label ? -10 : -20, slice?.label ? -30 : -15, slice?.label ? 25 : 40, slice?.label ? 25 : 40); // Adjust image size and position
+      }
+
+      ctx.restore();
+    });
+
+  };
+
+
+
+
+  const handleSpin = () => {
+    setRotation(0);
+    if (isSpinning) return;
+
+    setIsSpinning(true);
+
+    const spinDuration = Math.random() * 3000 + 3000; // Random spin duration
+    const spinSpeed = Math.random() * 10 + 5; // Random speed
+
+    let currentRotation = rotation;
+
+    const spinInterval = setInterval(() => {
+      currentRotation += spinSpeed;
+      setRotation(currentRotation);
+    }, 10);
 
     setTimeout(() => {
-      setSpinning(false);
-    }, 4000);
+      clearInterval(spinInterval);
+      setIsSpinning(false);
+    }, spinDuration);
   };
-  const radius = 120; // distance from center
-  const angleStep = 360 / segments.length;
+
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    canvas.width = 340;
+    canvas.height = 340;
+
+    // Re-render the wheel whenever the rotation state changes
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous rendering
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2); // Move to center of canvas
+    ctx.rotate((rotation * Math.PI) / 180); // Apply rotation
+    ctx.translate(-canvas.width / 2, -canvas.height / 2); // Move back to original position
+
+    drawWheel(ctx); // Draw the wheel
+    ctx.restore();
+  }, [rotation]);
 
   return (
     <div className="flex flex-col items-center bg-[#0b0d26] min-h-screen py-8 px-4 text-white">
@@ -96,20 +152,20 @@ const SpinWheel = () => {
             border: "8px solid #222",
           }}
         />
- <div className="wheel">
-      {segments.map((segment, index) => {
-        const angle = angleStep * index;
-        const style = {
-          transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle-20}deg)`,
-        };
+        <div className="wheel">
+          {segments.map((segment, index) => {
+            const angle = angleStep * index;
+            const style = {
+              transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle - 20}deg)`,
+            };
 
-        return (
-          <div key={segment.id} className="segment" style={style}>
-            <img src={segment.image} alt={`Prize ${segment.amount}`} />
-          </div>
-        );
-      })}
-    </div>
+            return (
+              <div key={segment.id} className="segment" style={style}>
+                <img src={segment.image} alt={`Prize ${segment.amount}`} />
+              </div>
+            );
+          })}
+        </div>
         <img
           src="https://static.quizzop.com/newton/assets/spinwheel_pointer.png"
           alt="pointer"
@@ -130,13 +186,28 @@ const SpinWheel = () => {
       </p>
 
       <button
-        onClick={spin}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 mt-10 rounded-md font-bold shadow-lg border-b-4 border-yellow-400"
+        onClick={handleSpin}
+        style={{
+          position: 'absolute',
+          top: '48%',  // Center vertically
+          left: '50%', // Center horizontally
+          zIndex: 10,
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          transform: 'translate(-50%, -50%)'  // Precisely center the button
+        }}
       >
-        SPIN THE WHEEL
+        <img
+          src={spinbtn}  // Image for the spin button
+          alt="spin button"
+          style={{ width: '68px', height: '77px' }} // You can adjust the image size
+        />
       </button>
     </div>
   );
 };
 
-export default SpinWheel;
+export default WheelCanvas;
+
+

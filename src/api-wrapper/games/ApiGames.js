@@ -42,8 +42,22 @@ const ApiGetOneCategory = (categoryId) => {
         .catch((response) => response?.data);
 };
 
+const ApiSubmitGameResult = (categoryId) => {
+    const token = getCookie("authToken");
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    };
+    return axios
+        .get(`${api}quizParticipation/update/`, { headers })
+        .then((response) => response?.data)
+        .catch((response) => response?.data);
+};
+
 export {
     ApiGetGamesQuestions,
     ApiGetOneCategory,
+    ApiSubmitGameResult,
     ApiGetGames
 };
