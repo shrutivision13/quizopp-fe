@@ -425,6 +425,7 @@ const Games = () => {
 
     const player1Offset = (botScore - score) / maxScore * totalWidth;
     const playerYouOffset = (score - botScore) / maxScore * totalWidth;
+
     return (
         <>
             <div className="w-full h-full flex flex-col items-center justify-start">
@@ -581,26 +582,6 @@ const Games = () => {
                                 </div>
                             );
                         })}
-
-
-                        {/* {shuffledOptions.map((option, idx) => (
-                            <div key={idx}
-                                className={`justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center ${shakeIndex === idx ? 'animate-shake' : ''}`}
-                                style={{
-                                    backgroundColor: selectedOption
-                                        ? (option === currentQuestion.options[0]
-                                            ? "#74C465"  // Correct answer color
-                                            : option === selectedOption
-                                                ? "#EF353D"  // Selected option color
-                                                : "")
-                                        : "",
-                                    color: !currentQuestion.options.includes(option) ? "transparent" : "",
-                                }}
-                                onClick={() => !selectedOption && handleAnswer(option, idx)}
-                            >
-                                {currentQuestion.options.includes(option) ? option : ""}
-                            </div>
-                        ))} */}
                     </div>
 
                     {/* Lifelines Toggle */}
@@ -653,7 +634,7 @@ const Games = () => {
                 </div>
 
                 {/* Active Lifeline Drawer */}
-                {activeLifeline && (
+                {activeLifeline?.id && (
                     <div className="fixed bottom-0 left-0 right-0 z-102 animate-slideInUp bg-C20213F border-C404380 border-1 rounded-t-10 text-center py-20 px-20 transition-opacity h-min-360 max-w-[500px] mx-auto">
                         {/* Close Button */}
                         <div data-testid="lifeline-close-sheet-button" className="text-CFFFFFF flex flex-row-reverse cursor-pointer absolute top-15 right-15" onClick={closeLifeline}>
@@ -677,9 +658,9 @@ const Games = () => {
                         </div>
 
                         {/* Title & Description */}
-                        <div className="font-bold text-18 text-CFFFFFF">{activeLifeline.name}</div>
+                        <div className="font-bold text-18 text-CFFFFFF">{activeLifeline?.name}</div>
                         <div className="px-20 mt-8 text-14 text-C8789C3">
-                            {activeLifeline.description}
+                            {activeLifeline?.description}
                         </div>
                         <button className="inline-flex items-center justify-center whitespace-nowrap text-18 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary primary-button disabled:primary-button-disabled box-shadow text-primary-foreground hover:bg-primary/90 font-bold rounded-6 py-12 px-48 mt-30 w-full flex-row lifeline-button" onClick={closeLifeline}>
                             <AdVideoIcon />
@@ -692,15 +673,17 @@ const Games = () => {
                         >
                             <p className="text-2xl">Use for</p>
                             <Coins />
-                            <p className="text-2xl">{activeLifeline.price}</p>
+                            <p className="text-2xl">{activeLifeline?.price}</p>
                         </button>
                     </div>
                 )}
-                {activeLifeline || openEmojiDrawer  && <div className="blur-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>}
+                {activeLifeline?.id && <div className="blur-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>}
+
+                {openEmojiDrawer?.id && <div className="blur-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>}
 
                 {/* Emoji Drawer */}
                 {
-                    openEmojiDrawer && <EmojiDrawer setOpenEmojiDrawer={setOpenEmojiDrawer} openEmojiDrawer={openEmojiDrawer}/>
+                    openEmojiDrawer && <EmojiDrawer setOpenEmojiDrawer={setOpenEmojiDrawer} openEmojiDrawer={openEmojiDrawer} />
                 }
 
             </div>
