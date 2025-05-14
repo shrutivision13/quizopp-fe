@@ -58,5 +58,6 @@ const ApiSubmitGameResult = (categoryId) => {
 export {
     ApiGetGamesQuestions,
     ApiGetOneCategory,
-    ApiSubmitGameResult
+    ApiSubmitGameResult,
+    ApiGetGames
 };

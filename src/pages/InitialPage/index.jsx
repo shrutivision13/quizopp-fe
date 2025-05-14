@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryButton from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { ApiGetCategories } from '../../api-wrapper/categories/ApiCategories';
+import { ApiGetCategories, ApiGetInitialCategory } from '../../api-wrapper/categories/ApiCategories';
 import useCookie from '../../hooks/useCookie';
 import { ApiGetStarted } from '../../api-wrapper/Auth/ApiGetStarted';
+import AdSlot from '../../components/AdSense/AdSlot';
+import { useLoader } from '../../context/LoaderContext';
 
 const InitialPage = () => {
     const [categories, setCategories] = useState([]); // State for categories from API
     const [selectedTopics, setSelectedTopics] = useState([]);
     const navigate = useNavigate();
     const { setCookie } = useCookie();
+    const { setLoading } = useLoader();
+
 
   useEffect(() => {
     setLoading(true);
