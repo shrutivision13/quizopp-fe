@@ -80,7 +80,10 @@ const FindOponent = () => {
                                         categoryslug: data?.data?.categoryslug,
                                         battleId: data?.data?.battleId,
                                         categoryId: data?.data?.category,
-                                        opponentParticipantId: data?.data?.opponent?.participantId
+                                        opponentParticipantId: data?.data?.opponent?.participantId,
+                                        participantId: data?.data?.user?.participantId,
+                                        isBot: data?.data?.isBot,
+                                        opponentUserName: data?.data?.opponent?.opponentUserName,
                                     });
                                 }, 1000);
                             }
@@ -141,7 +144,10 @@ const FindOponent = () => {
                 state: {
                     categoryId: navigateData?.categoryId,
                     opponentParticipantId: navigateData?.opponentParticipantId,
-                    userImage: matchedUser
+                    userImage: matchedUser,
+                    participantId: navigateData?.participantId,
+                    isBot: navigateData?.isBot,
+                    opponentUserName: navigateData?.opponentUserName,
                 }
             });
             setNavigateData({});
@@ -204,14 +210,6 @@ const FindOponent = () => {
                     {matchFound && countdown !== null && <p className="text-[14px] text-CFAFAFA text-center mt-10">{opponent?.opponentUserName}</p>}
                 </div>
             </div>
-
-            {/* {roomId && opponent && (
-                <div className="mt-10">
-                    <p>Match Found!</p>
-                    <p>Opponent: {opponent.name}</p>
-                    <p>Room ID: {roomId}</p>
-                </div>
-            )} */}
 
             {!matchFound && (
                 <button
