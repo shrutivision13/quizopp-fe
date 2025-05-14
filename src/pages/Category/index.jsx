@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import AdSlot from "../../components/AdSense/AdSlot";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
-import { useLoader } from "../../context/LoaderContext";
 import {
   ApiDislikeCategory,
   ApiLikeCategory,
@@ -14,7 +13,7 @@ const allTopics = {
   categoryName: "All Topics",
   sideMenuIcon: null,
   backgroundColor: "#E4CDAE",
-  categorySlug: "/contests",
+  categorySlug: "contests",
   bannerImage: null,
   uiKey: "DEFAULT",
   isPopular: false,
@@ -28,24 +27,20 @@ function Category() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const filterRef = useRef(null);
-  const { setLoading } = useLoader();
 
   const fetchCategories = () => {
     const data = {
       search: searchTerm,
       filter: selectedFilter,
     };
-    setLoading(true);
     ApiGetCategories(data)
       .then((res) => {
         if (res.isSuccess) {
           setCategories(res.data);
-          setLoading(false);
         }
       })
       .catch((err) => {
         console.error("Error fetching categories:", err);
-        setLoading(false);
       });
   };
 
@@ -74,13 +69,11 @@ function Category() {
       .then((res) => {
         if (res.isSuccess) {
           fetchCategories();
-          setLoading(false);
         } else {
           console.error("Error liking category:", res.message);
         }
       })
       .catch((err) => {
-        setLoading(false);
       });
   };
 
@@ -92,13 +85,11 @@ function Category() {
       .then((res) => {
         if (res.isSuccess) {
           fetchCategories();
-          setLoading(false);
         } else {
           console.error("Error disliking category:", res.message);
         }
       })
       .catch((err) => {
-        setLoading(false);
       });
   };
 

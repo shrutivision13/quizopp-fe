@@ -2,14 +2,9 @@ import { useEffect, useState } from 'react';
 import { getCookie } from '../../../api-wrapper/categories/ApiCategories';
 import AdSlot from '../../../components/AdSense/AdSlot';
 import CategoryCard from '../../../components/CategoryCard/CategoryCard';
-import { useNavigate, useParams } from 'react-router-dom';
-
-const category = {
-    _id: "6809c8051b04c23b60a5fb36",
-    categoryName: "Simplified Chinese",
-    imgsrc: "https://www.quizzop.com/_next/image?url=https%3A%2F%2Fstatic.quizzop.com%2Fnewton%2Fassets%2Fcategory%2Fbrain_teasers.png&w=64&q=75",
-    backgroundColor: "#ECC6D7"
-};
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { ApiGetOneCategory } from '../../../api-wrapper/games/ApiGames';
+import { toast } from 'react-toastify';
 
 const rules = [
     "5 questions, 50 seconds. ✅ answer +20, ❌ answer -10.",
@@ -19,15 +14,33 @@ const rules = [
 ]
 
 const BeginQuiz = () => {
-    const [userToken, setUserToken] = useState('');
+    const { state } = useLocation();
+    const [userData, setUserData] = useState('');
     const { categoryName } = useParams();
+    const [category, setCategory] = useState({})
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = getCookie("authToken");
-        setUserToken(token);
+        const user = localStorage.getItem('userData')
+        setUserData(user);
     }, [getCookie]);
 
+    // Fetch Category Data
+    useEffect(() => {
+        if (state?.categoryId) {
+            ApiGetOneCategory(state?.categoryId).then((res) => {
+                if (res?.isSuccess) {
+                    setCategory(res?.data)
+                }
+                else {
+                    setCategory([]);
+                    toast.error(res?.message)
+                }
+            }).catch((err) => toast.error(err?.message))
+        }
+    }, [])
+
+    // Navigate 
     const handleNavigate = (type) => {
         if (type === 'beginQuiz' || type === 'playAsGuest') {
             navigate(`/${categoryName}/join-quiz`);
@@ -100,7 +113,7 @@ const BeginQuiz = () => {
 
                         <div className="fixed bottom-0 max-w-maxW w-full py-15 px-20 bg-C27294B z-50">
                             {
-                                userToken ?
+                                userData?.isRegister ?
                                     <button onClick={() => handleNavigate('beginQuiz')} className="inline-flex items-center justify-center whitespace-nowrap text-18 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary primary-button disabled:primary-button-disabled box-shadow text-primary-foreground hover:bg-primary/90 font-bold rounded-6 py-12 px-48 w-full">
                                         BEGIN QUIZ
                                     </button>

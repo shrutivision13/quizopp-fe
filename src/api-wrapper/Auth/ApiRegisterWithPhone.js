@@ -3,7 +3,6 @@ import axios from "axios";
 const api = `${import.meta.env.VITE_API_BASE_URL}/api`;
 
 export const ApiRegisterWithPhone = (authToken, payload) => {
-  console.log("🚀 ~ ApiRegisterWithPhone ~ authToken:", authToken)
   return axios
     .post(`${api}/auth/registerPhone`, payload, {
       headers: {

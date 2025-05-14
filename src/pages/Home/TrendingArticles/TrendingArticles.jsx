@@ -26,7 +26,7 @@ const TrendingArticles = () => {
   return (
     <section className=" mt-24">
       <div className="px-20">
-        <SectionHeading title={"Trending Articles"} button={"See all"} />
+        <SectionHeading title={"Trending Articles"} button={"See all"} route={"/blogs"}/>
       </div>
       <div className="w-full max-w-maxW">
         <BlogCarousel blogCarouselData={articles?.slice(0, 3)} />

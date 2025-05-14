@@ -631,8 +631,7 @@ const Games = () => {
 
                     {/* Lifeline Cards */}
                     <div
-                        className={`transition-all duration-300 ease-in-out overflow-hidden ${lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"
-                            }`}
+                        className={`transition-all duration-300 ease-in-out overflow-hidden ${lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"}`}
                     >
                         <div className="z-10 animate__playContest_fadeInUp">
                             <div className="lifeline-card-container dark:text-CFFFFFF bg-CFFFFFF dark:bg-C20213F max-w-maxW animate__animated bottomsheet_animated lifeline-box-container w-full">

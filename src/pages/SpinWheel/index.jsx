@@ -137,8 +137,54 @@ const WheelCanvas = () => {
   }, [rotation]);
 
   return (
-    <div className='flex items-center justify-center relative'>
-      <canvas ref={canvasRef}></canvas>
+    <div className="flex flex-col items-center bg-[#0b0d26] min-h-screen py-8 px-4 text-white">
+      <h1 className="text-xl font-bold mb-4 text-center">Spin the wheel and win coins!</h1>
+
+      <div className="relative w-[300px] h-[300px]">
+        <canvas
+          ref={canvasRef}
+          width={300}
+          height={300}
+          style={{
+            transform: `rotate(${rotation}deg)`,
+            transition: spinning ? "transform 4s ease-out" : "none",
+            borderRadius: "50%",
+            border: "8px solid #222",
+          }}
+        />
+        <div className="wheel">
+          {segments.map((segment, index) => {
+            const angle = angleStep * index;
+            const style = {
+              transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle - 20}deg)`,
+            };
+
+            return (
+              <div key={segment.id} className="segment" style={style}>
+                <img src={segment.image} alt={`Prize ${segment.amount}`} />
+              </div>
+            );
+          })}
+        </div>
+        <img
+          src="https://static.quizzop.com/newton/assets/spinwheel_pointer.png"
+          alt="pointer"
+          className="absolute top-[-25px] left-1/2 transform -translate-x-1/2 w-8 z-30"
+        />
+
+        <button
+          onClick={spin}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white w-16 h-16 rounded-full border-4 border-white z-20 font-bold shadow-lg"
+        >
+          SPIN
+        </button>
+      </div>
+
+      <p className="text-center text-white mt-6 text-sm">
+        Win up to <img src="https://static.quizzop.com/newton/assets/coin.png" alt="coin" className="inline h-4" />
+        <span className="font-bold"> 500</span> with each spin.<br />Try your luck now!
+      </p>
+
       <button
         onClick={handleSpin}
         style={{
