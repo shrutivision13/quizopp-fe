@@ -277,39 +277,6 @@ const Games = () => {
             .catch(console.error);
     }, []);
 
-
-    // Fetch Oponent Score 
-    useEffect(() => {
-        const authToken = getCookie("authToken");
-        if (!authToken) {
-            return;
-        }
-
-        // if (!state?.isBot) {
-        //     console.log(score, "state?.isBot")
-        //     const socketConnection = io('ws://132.148.0.148:3000', {
-        //         extraHeaders: { Authorization: `Bearer ${authToken}` },
-        //         autoConnect: false
-        //     });
-
-        //     socketConnection.connect();
-        //     const payload = {
-        //         score: score,
-        //         category: location?.state?.categoryId,
-        //         opponentId: location?.state?.opponentParticipantId
-        //     }
-
-
-        //     socketConnection.emit('score', payload);
-        //     // setTimeout(() => {
-        //         socketConnection.on('score', (res) => {
-        //             console.log(res, "res")
-        //         })
-        //     // }, 1000)
-        // }
-
-    }, [state, score])
-
     const currentQuestion = questions[currentIndex] || { options: [], question: '' };
 
     // shuffle options only when question changes
@@ -328,35 +295,33 @@ const Games = () => {
             resetTimer();
         } else {
             if (currentIndex === questions.length - 1) {
-                // if (state?.isBot) {
-                    dispatch({ type: 'INCREMENT_TOTAL_SECONDS' });
+                dispatch({ type: 'INCREMENT_TOTAL_SECONDS' });
 
-                    const payload = {
-                        user: {
-                            score: score,
-                            totalSeconds: state.totalSeconds,
-                            lifelinesUsed: state.lifelinesUsed,
-                            correctAnswer: state.correctAnswer,
-                            coin: state.coinsSpent,
-                        },
-                        bot: {
-                            score: botScore,
-                            totalSeconds: botTotalSeconds,
-                            lifelinesUsed: botLifelinesUsed,
-                            correctAnswer: botCorrectAnswers,
-                        },
-                    };
+                const payload = {
+                    user: {
+                        score: score,
+                        totalSeconds: state.totalSeconds,
+                        lifelinesUsed: state.lifelinesUsed,
+                        correctAnswer: state.correctAnswer,
+                        coin: state.coinsSpent,
+                    },
+                    bot: {
+                        score: botScore,
+                        totalSeconds: botTotalSeconds,
+                        lifelinesUsed: botLifelinesUsed,
+                        correctAnswer: botCorrectAnswers,
+                    },
+                };
 
-                    setTimeout(() => {
-                        ApiUpdateQuizParticipation(participantId, payload)
-                            .then(res => {
-                                if (res.isSuccess) {
-                                    navigate(`/${categoryName}/end-quiz`, { state: { result: res.data, userImage: location?.state?.userImage } });
-                                }
-                            })
-                            .catch(console.error);
-                    }, 200);
-                // }/
+                setTimeout(() => {
+                    ApiUpdateQuizParticipation(participantId, payload)
+                        .then(res => {
+                            if (res.isSuccess) {
+                                navigate(`/${categoryName}/end-quiz`, { state: { result: res.data, userImage: location?.state?.userImage } });
+                            }
+                        })
+                        .catch(console.error);
+                }, 200);
             }
         }
     }, [currentIndex, questions, score, participantId, navigate, categoryName]);
