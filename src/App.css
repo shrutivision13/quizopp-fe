@@ -71,3 +71,8 @@ body {
 .article-carousel-section .slick-dots li.slick-active button:before {
   color: #fff;
 }
+
+.scroll {
+    overflow-x: scroll;
+    scrollbar-width: none;
+}

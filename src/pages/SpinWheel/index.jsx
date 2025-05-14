@@ -99,7 +99,6 @@ const SpinWheel = () => {
  <div className="wheel">
       {segments.map((segment, index) => {
         const angle = angleStep * index;
-        console.log("🚀 ~ {segments.map ~ angle:", angle)
         const style = {
           transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle-20}deg)`,
         };

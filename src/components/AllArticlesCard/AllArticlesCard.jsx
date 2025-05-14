@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import Slider from "react-slick";
 import { SectionHeading } from "../Ui/SectionHeading";
 import ArticleCard from "../ArticleCard/ArticleCard";
@@ -7,7 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import AdSlot from "../AdSense/AdSlot";
 import coin from "../../assets/images/coin.png";
 
-const ArticlesCarousel = ({
+const AllArticlesCard = ({
   articles = [],
   sectionTitle = "",
   buttonName = "see all",
@@ -16,8 +16,6 @@ const ArticlesCarousel = ({
   isShowSectionHeader = false,
   imagePath = "article",
   isShowThreeArticles = true,
-  isShowSectionButton = true,
-  isShowCategoryName = false
 }) => {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
@@ -32,36 +30,45 @@ const ArticlesCarousel = ({
   };
 
   const visibleArticles = isShowThreeArticles
-    ? articles?.slice(3, 6)
-    : articles?.slice(3);
+    ? articles.articles?.slice(3, 6)
+    : articles.articles?.slice(3);
 
   const handleNavigate = () => {
     navigate("/");
   };
   return (
-    <div>
+    <div key={articles._id}>
       {/* Section Header */}
       {isShowSectionHeader && (
         <div className="px-20 mb-20">
           <SectionHeading
             title={sectionTitle}
-            button={isShowSectionButton ? buttonName : isShowSectionButton}
+            button={buttonName}
             route={routePath}
           />
         </div>
       )}
       {/* Carousel */}
       <div className="w-full max-w-maxW">
+        <div className="px-20 py-14">
+          <div className="flex justify-between items-center">
+            <h2
+              className="font-bold text-C2C2C2C dark:text-CFFFFFF capitalize text-18"
+              key={articles?.categoryName}
+            >
+              {articles?.categoryName ?? ""}
+            </h2>
+          </div>
+        </div>
         <div
           className="article-carousel-section"
           style={{ width: "100%", margin: "0 auto" }}
         >
           <Slider {...settings}>
-            {(articles ?? [])?.slice(0, 3)?.map((item) => (
+            {(articles.articles ?? [])?.slice(0, 3)?.map((item) => (
               <div key={item?._id} className="blog-slide">
                 <Link
-                  to={`/blogs-details/${item?._id}`}
-                  state={{ categoryId: item?.categoryId?._id }}
+                  to={`/blogs/${item?._id}`}
                   className="link-anchor"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
@@ -106,7 +113,7 @@ const ArticlesCarousel = ({
                       </h3>
                       <p className="text-10 text-C8789C3 leading-14">
                         {formatDate(item?.publishedAt)} •{" "}
-                        {item?.views?.toLocaleString()} Views
+                        {item?.views.toLocaleString()} Views
                       </p>
                     </div>
                   </div>
@@ -244,7 +251,7 @@ const ArticlesCarousel = ({
               <ArticleCard
                 article={article}
                 imagePath={"article"}
-                isShowCategoryName={isShowCategoryName}
+                isShowCategoryName={false}
               />
 
               {index < visibleArticles?.length - 1 && (
@@ -254,8 +261,15 @@ const ArticlesCarousel = ({
           ))}
         </div>
       )}
+
+      <AdSlot
+        slotId="div-gpt-ad-1745314508467-0"
+        adUnitPath="/23289596447/adx6"
+        sizes={[336, 5]}
+        // sizes={[336, 280]}
+      />
     </div>
   );
 };
 
-export default ArticlesCarousel;
+export default AllArticlesCard;
