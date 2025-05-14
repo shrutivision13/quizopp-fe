@@ -1,0 +1,83 @@
+.audience-poll {
+  position: relative;
+}
+
+.audience-poll::after {
+  cursor: pointer !important;
+  content: "";
+  height: 100%;
+  background: linear-gradient(
+      90deg,
+      #fede34 19.75%,
+      rgb(255, 250, 240, 0) 112.35%
+    )
+    no-repeat; /* Gradient effect */
+  position: absolute;
+  left: -1px;
+  top: 0;
+  border-radius: 10px;
+  opacity: 0.8;
+}
+
+.aud-animation::after {
+  animation: pollAnimation 0.5s ease-out forwards; /* Apply animation */
+}
+/* Poll Animation Keyframes */
+@keyframes pollAnimation {
+  0% {
+    width: 20%;
+  }
+  50% {
+    width: 50%;
+  }
+  100% {
+    width: var(--votePercentage);
+  }
+}
+
+.width-class {
+  width: 100%;
+}
+
+/* Animation with different delay for each button */
+.audience-poll:nth-child(1)::after {
+  animation-delay: 0s; /* Starts immediately */
+}
+
+.audience-poll:nth-child(2)::after {
+  animation-delay: 0.2s; /* Starts after 0.2 seconds */
+}
+
+.audience-poll:nth-child(3)::after {
+  animation-delay: 0.4s; /* Starts after 0.4 seconds */
+}
+
+.audience-poll:nth-child(4)::after {
+  animation-delay: 0.6s; /* Starts after 0.6 seconds */
+}
+
+/* Infinite loop animation */
+.audience-poll::after {
+  animation: pollAnimation 0.8s ease-in-out forwards;
+}
+
+/* Active button gradient background */
+.active-button {
+  width: var(--votePercentage);
+  background: linear-gradient(
+      90deg,
+      #56fe34 19.75%,
+      rgb(255, 250, 240, 0) 112.35%
+    )
+    no-repeat;
+}
+
+.audience-poll.active-button::after {
+  background: linear-gradient(
+      90deg,
+      #56fe34 19.75%,
+      rgb(255, 250, 240, 0) 112.35%
+    )
+    no-repeat;
+  animation: none; /* Disable animation on active button */
+}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { SectionHeading } from "../../../components/Ui/SectionHeading";
-import { ApiGetGames } from "../../../api-wrapper/games/ApiGames";
 import { toast } from "react-toastify";
 import GameCard from "../../../components/GameCard/GameCard";
+import { ApiGetGames } from "../../../api-wrapper/games/ApiGames";
 
 const TrendingGames = () => {
   const [games, setGames] = useState([]);
