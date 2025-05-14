@@ -14,7 +14,7 @@ const GameStats = ({
                     <p>{accuracy}/5</p>
                 </div>
                 <div className="relative w-full h-10 rounded-3xl bg-C12132A">
-                    <div className="absolute rounded-3xl inset-0 bg-C24A561 background-transition" style={{ width: accuracyPercentage }}></div>
+                    <div className="absolute rounded-3xl inset-0 bg-C24A561 background-transition" style={{ width: `${accuracyPercentage}%` }}></div>
                 </div>
             </div>
             <div>
@@ -23,7 +23,7 @@ const GameStats = ({
                     <p>{speed}</p>
                 </div>
                 <div className="relative w-full h-10 rounded-3xl bg-C12132A">
-                    <div className="absolute rounded-3xl inset-0 bg-CFFCC5B background-transition" style={{ width: speedPercentage }}></div>
+                    <div className="absolute rounded-3xl inset-0 bg-CFFCC5B background-transition" style={{ width: `${speedPercentage}%` }}></div>
                 </div>
             </div>
             <div>
@@ -32,7 +32,7 @@ const GameStats = ({
                     <p>{lifelinesUsed}/4</p>
                 </div>
                 <div className="relative w-full h-10 rounded-3xl bg-C12132A">
-                    <div className="absolute rounded-3xl inset-0 bg-CE63737 background-transition" style={{ width: lifelinesUsedPercentage }}></div>
+                    <div className="absolute rounded-3xl inset-0 bg-CE63737 background-transition" style={{ width: `${lifelinesUsedPercentage}%` }}></div>
                 </div>
             </div>
         </div>

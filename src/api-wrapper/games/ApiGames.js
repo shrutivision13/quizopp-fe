@@ -55,9 +55,38 @@ const ApiSubmitGameResult = (categoryId) => {
         .catch((response) => response?.data);
 };
 
+const ApiUpdateQuizParticipation = (participantId, payload) => {
+    const token = getCookie("authToken");
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    };
+
+    return axios
+        .put(`${api}quizParticipation/update/${participantId}`, payload, { headers })
+        .then((response) => response?.data)
+        .catch((response) => response?.data);
+}
+
+const ApiGetQuizParticipationResult = (participantId) => {
+    const token = getCookie("authToken");
+
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    };
+
+    return axios
+        .get(`${api}quizParticipation/get?id=${participantId}`, { headers })
+        .then((response) => response?.data)
+        .catch((response) => response?.data);
+}
 export {
     ApiGetGamesQuestions,
     ApiGetOneCategory,
     ApiSubmitGameResult,
-    ApiGetGames
+    ApiGetGames,
+    ApiUpdateQuizParticipation,
+    ApiGetQuizParticipationResult
 };
