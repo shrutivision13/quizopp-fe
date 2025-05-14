@@ -33,7 +33,7 @@ function MenuPage({ closeMenu }) {
 
   const handleLogout = () => {
     deleteCookie("authToken");
-    navigate("/");
+    navigate("/get-started");
     handleClose();
   };
 

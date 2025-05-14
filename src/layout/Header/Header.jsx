@@ -73,7 +73,7 @@ const Header = () => {
           setLoading(false);
         });
     }
-  }, [getCookie, setLoading]);
+  }, [location.pathname]);
 
   const handleGoBack = () => {
     if (path.includes('/mini-quiz-over')) {

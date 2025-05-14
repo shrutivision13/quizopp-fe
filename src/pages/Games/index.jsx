@@ -706,7 +706,7 @@ const Games = () => {
                 )}
                 {activeLifeline?.id && <div className="blur-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>}
 
-                {openEmojiDrawer?.id && <div className="blur-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>}
+                {openEmojiDrawer && <div className="blur-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>}
 
                 {/* Emoji Drawer */}
                 {

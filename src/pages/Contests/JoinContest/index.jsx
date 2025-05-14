@@ -23,7 +23,7 @@ function JoinContest() {
             .toLowerCase()
             .replace(/\s+/g, "-")}/play-contest?contestId=${quizContest?._id
           }`,
-          { state: { participantId, categoryName: quizContest?.categoryId?.categoryName, categoryId: quizContest?.categoryId?._id } } // Pass categoryName in state
+          { state: { participantId, categoryName: quizContest?.categoryId?.categoryName, categoryId: quizContest?.categoryId?._id, timeAllowed: res.data.timeAllowed } } // Pass categoryName in state
         );
       }
       else {

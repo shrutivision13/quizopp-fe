@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ApiResendOTP, ApiVerifyOtp } from '../../../api-wrapper/Auth/ApiRegisterWithPhone'; // Adjust the import path as necessary
 import useCookie from '../../../hooks/useCookie';
+import { toast } from 'react-toastify';
 
 const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
     const [otp, setOtp] = useState(['', '', '', '']);
@@ -57,6 +58,12 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
                     setCookie('authToken', response.data.authToken);
 
                 } else {
+                    toast.error(err.message, {
+                        className: "custom-error-toast",
+                        bodyClassName: "custom-error-toast-body",
+                        closeButton: false,
+                        progress: undefined,
+                    });
                     console.error('Failed to verify OTP:', response?.message);
                 }
             })
@@ -70,9 +77,9 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
         setTimer(20);
         setShowResendButton(false);
         inputRefs.current[0].focus();
-    
+
         const payload = { phoneNumber };
-    
+
         ApiResendOTP(payload)
             .then((response) => {
                 if (response?.isSuccess) {
@@ -85,7 +92,7 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
                 console.error('Error during OTP resend:', error);
             });
     };
-    
+
 
     return (
         <div className="flex flex-col h-dynamic-screen flex flex-col justify-between pb-20">

@@ -35,7 +35,7 @@ const PhoneLogin = () => {
 
   const handleContinue = async () => {
     if (isValid) {
-      ApiRegisterWithPhone("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRiNTgzMmNlYWU0MGVjNDVhNWNkNiIsImRldmljZUlkIjoiOGM3YWY4NGQtYTNkYi00ZDEzLWExMzYtMGYzZjcyYzJiMmVlIiwiaXNSZWdpc3RlciI6ZmFsc2UsImlhdCI6MTc0NjE4NzY1MSwiZXhwIjoxNzQ2NzkyNDUxfQ.Yfb_mHEbOyTyM9_1uo8N7b4CfplWArNE0TpXROwOqHg", { phoneNumber: `+91${mobile}` })
+      ApiRegisterWithPhone(authToken, { phoneNumber: `+91${mobile}` })
         .then((response) => {
           if (response?.isSuccess) {
             setShowOtpScreen(true);
