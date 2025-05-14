@@ -86,7 +86,7 @@ export const routes = [
     element: <ContestResult />,
   },
   {
-    path: "/play-quiz",
+    path: "/:categoryName/play-quiz",
     element: <Games />,
   },
   {

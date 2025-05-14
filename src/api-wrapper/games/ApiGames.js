@@ -44,5 +44,6 @@ const ApiGetOneCategory = (categoryId) => {
 
 export {
     ApiGetGamesQuestions,
-    ApiGetOneCategory
+    ApiGetOneCategory,
+    ApiGetGames
 };

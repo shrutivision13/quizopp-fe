@@ -19,6 +19,8 @@ import AudiencePoll from '../../components/Icons/AudiencePoll';
 import Coins from '../../components/Icons/Coins';
 import AdVideoIcon from '../../components/Icons/AdVideoIcon';
 import CloseIcon from '../../components/Icons/CloseIcon';
+import ReportQuestion from './ReportQuestion';
+import { toast } from 'react-toastify';
 
 
 // 1) reducer + initialState
@@ -39,6 +41,7 @@ const initialState = {
     coinsSpent: 0,
     correctAnswer: 0,
     usedLifelines: [],
+    hasReportedQuestions: {}
 };
 
 function reducer(state, action) {
@@ -109,9 +112,19 @@ function reducer(state, action) {
                 ...state,
                 freezeLifelineActivated: true,
             };
-
+        case 'MARK_QUESTION_REPORTED':
+            return {
+                ...state,
+                hasReportedQuestions: {
+                    ...state.hasReportedQuestions,
+                    _id: action.questionId,
+                }
+            };
         case 'SHOW_REPORT':
             return { ...state, showReportUI: true };
+
+        case 'HIDE_REPORT':
+            return { ...state, showReportUI: false };
 
         case 'INCREMENT_TOTAL_SECONDS':
             return {
@@ -152,7 +165,7 @@ const Games = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const participantId = location.state?.participantId;
-    
+
     const [botScore, setBotScore] = useState(0);
 
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -268,6 +281,7 @@ const Games = () => {
     const activateLifeline = id => dispatch({ type: 'ACTIVATE_LIFELINE', id, });
     const closeLifeline = () => dispatch({ type: 'CLOSE_LIFELINE' });
     const showReport = () => dispatch({ type: 'SHOW_REPORT' });
+    const hideReport = () => dispatch({ type: 'HIDE_REPORT' });
 
     const activeLifeline = lifelinesData.find(l => l.id === activeLifelineId);
 
@@ -315,6 +329,17 @@ const Games = () => {
         { id: 3, label: "Freeze Timer", icon: <FreezeTime /> },
         { id: 4, label: "Flip Question", icon: <FlipQuestion /> },
     ];
+
+    // Handle Open Report Question
+    const handleopenReportQuestion = () => {
+        const currentQId = questions[currentIndex];
+        if (state.hasReportedQuestions?._id === currentQId?._id) {
+            toast.warning("You have already flagged this question.");
+        } else {
+            showReport();
+        }
+    }
+
     return (
         <>
             <div className="w-full h-full flex flex-col items-center justify-start">
@@ -370,7 +395,7 @@ const Games = () => {
                                 <div className="relative">
                                     <div className="relative flex items-center justify-center mb-10">
                                         <img alt="player image" width="26" height="26"
-                                            className="rounded-[50%]" src={player1} />
+                                            className="rounded-[50%]" src={location?.state?.userImage} />
                                         <div id="emoji-animation" className="relative" />
                                     </div>
                                 </div>
@@ -406,9 +431,12 @@ const Games = () => {
                             <span className="text-20 font-bold">{currentIndex + 1}</span>
                             <span className="text-12">/{questions.length}</span>
                         </div>
-                        <div className="cursor-pointer" onClick={showReport}>
+                        <div
+                            className="cursor-pointer"
+                            onClick={handleopenReportQuestion}
+                        >
                             <img alt="Flag Icon" width="30" height="30"
-                                src="https://static.quizzop.com/newton/assets/flag_active_dark.svg" />
+                                src={state.hasReportedQuestions?._id === questions[currentIndex]?._id ? "https://static.quizzop.com/newton/assets/flag_inactive_dark.svg" : "https://static.quizzop.com/newton/assets/flag_active_dark.svg"} />
                         </div>
                     </div>
 
@@ -649,6 +677,15 @@ const Games = () => {
                     </div>
                 )}
                 {activeLifeline && <div className="blur-overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm z-50"></div>}
+                {/* Report Question */}
+                {
+                    showReportUI &&
+                    <ReportQuestion
+                        onClose={hideReport}
+                        questionId={questions[currentIndex]?._id}
+                        dispatch={dispatch}
+                    />
+                }
             </div>
         </>
     );
