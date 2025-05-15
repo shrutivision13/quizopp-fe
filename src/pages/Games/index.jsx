@@ -279,39 +279,6 @@ const Games = () => {
             .catch(console.error);
     }, []);
 
-
-    // Fetch Oponent Score 
-    useEffect(() => {
-        const authToken = getCookie("authToken");
-        if (!authToken) {
-            return;
-        }
-
-        // if (!state?.isBot) {
-        //     console.log(score, "state?.isBot")
-        //     const socketConnection = io('ws://132.148.0.148:3000', {
-        //         extraHeaders: { Authorization: `Bearer ${authToken}` },
-        //         autoConnect: false
-        //     });
-
-        //     socketConnection.connect();
-        //     const payload = {
-        //         score: score,
-        //         category: location?.state?.categoryId,
-        //         opponentId: location?.state?.opponentParticipantId
-        //     }
-
-
-        //     socketConnection.emit('score', payload);
-        //     // setTimeout(() => {
-        //         socketConnection.on('score', (res) => {
-        //             console.log(res, "res")
-        //         })
-        //     // }, 1000)
-        // }
-
-    }, [state, score])
-
     const currentQuestion = questions[currentIndex] || { options: [], question: '' };
 
     // shuffle options only when question changes

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-const CountdownTimer = ({ endTime }) => {
+
+const CountdownTimer = ({ text = "Ends in ", endTime,className='text-12 text-C8789C3' }) => {
   const [timeLeft, setTimeLeft] = useState(
     endTime - Math.floor(Date.now() / 1000)
   );
@@ -29,7 +30,7 @@ const CountdownTimer = ({ endTime }) => {
   };
 
   return (
-    <p className="ml-6 text-12 text-C8789C3">Ends in {formatTime(timeLeft)}</p>
+    <p className={`ml-6  ${className}`} >{text} {formatTime(timeLeft)}</p>
   );
 };
 
