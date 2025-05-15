@@ -76,3 +76,11 @@ body {
     overflow-x: scroll;
     scrollbar-width: none;
 }
+
+.custom-dots .slick-dots li {
+  width: 71px !important;
+}
+
+.custom-dots .slick-active img{
+  border: 0.5px solid yellow;
+}

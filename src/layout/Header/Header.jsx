@@ -40,9 +40,10 @@ const Header = () => {
       `/blogs-details/${articleId}`,
       "/mini-quiz-play",
       "/mini-quiz-over",
-      "/spin-wheel"
+      "/spin-wheel",
+      "/blogs"
     ],
-    hiddenPaths: [`/${categoryName}/play-contest`, `/${categoryName}/join-quiz`, `/${categoryName}/play-quiz`],
+    hiddenPaths: [`/${categoryName}/play-contest`, '/download-app', `/${categoryName}/join-quiz`, `/${categoryName}/play-quiz`],
     freeCoinsPaths: [`/${categoryName}/begin-quiz`, '/'],
     initHeaderPaths: ["/get-started", "/start-quiz"],
   });

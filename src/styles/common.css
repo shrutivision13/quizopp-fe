@@ -17,6 +17,10 @@ body {
   background-color: var(--primary-bg-color);
 }
 
+.gradientBG {
+    background-image: url(https://static.quizzop.com/newton/assets/download-page/gradientBG.svg);
+}
+
 .flex {
   display: flex;
 }
