@@ -58,7 +58,7 @@ function reducer(state, action) {
   switch (action.type) {
     case "SET_QUESTIONS": {
       const formatOptions = (options) =>
-        options?.map((opt) => ({ text: opt, hidden: false }));
+        options?.map((opt) => ({ text: opt?.text||opt, hidden: false }));
 
       const formattedQs = action?.questions?.slice(0, 5)?.map((q) => ({
         ...q,
