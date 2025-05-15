@@ -2,9 +2,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const images = ["sachin.png", "dhoni.png", "cr7.png"];
-
-export default function HeroSlider() {
+export default function HeroSlider({images, heading, subTitle}) {
   const settings = {
     dots: true,
     infinite: true,
@@ -12,25 +10,24 @@ export default function HeroSlider() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    appendDots: (dots) =>{
-        console.log("🚀 ~ HeroSlider ~ dots:", dots)
-        return (
-      <div
-        style={{
-          borderRadius: "10px",
-          padding: "10px",
-          bottom: "13px",
-          position: "absolute",
-        }}
-      >
-        {dots}
-      </div>
-    )},
+    appendDots: (dots) => {
+      return (
+        <div
+          style={{
+            borderRadius: "10px",
+            padding: "10px",
+            bottom: "13px",
+            position: "absolute",
+          }}
+        >
+          {dots}
+        </div>
+      );
+    },
     customPaging: (i) => (
       <div
         style={{
           width: "71px",
-         
         }}
       >
         <img
@@ -47,7 +44,7 @@ export default function HeroSlider() {
   return (
     <div className="font-black text-[28px] dark:text-CFFFFFF uppercase">
       <div className="my-0 mx-auto text-center mb-24 italic px-20">
-        <p>Game On...Score Big! TOP THE</p>
+        <p>{heading}</p>
         <span className="dark:text-CFEDE34 relative">
           <svg
             width="20"
@@ -73,7 +70,30 @@ export default function HeroSlider() {
               strokeLinecap="round"
             />
           </svg>
-          Sports Quiz!
+          {subTitle}
+          <svg
+            width="78"
+            height="21"
+            viewBox="0 0 78 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="absolute right-[-13%] bottom-[-45%]"
+          >
+            <path
+              d="M2.00161 13.9053C13.8523 8.49249 45.2006 -0.446995 75.7878 7.09728"
+              stroke="white"
+              stroke-width="4"
+              stroke-linecap="round"
+            ></path>
+            <g style={{ mixBlendMode: "overlay" }}>
+              <path
+                d="M32.4768 12.1622C39.7657 10.1458 58.7188 7.70283 76.2199 14.0623"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              ></path>
+            </g>
+          </svg>
         </span>
       </div>
 
@@ -87,6 +107,7 @@ export default function HeroSlider() {
                   alt="slider image"
                   className="w-full inline-block"
                   loading="lazy"
+                  style={{border: 'none'}}
                 />
               </div>
             ))}

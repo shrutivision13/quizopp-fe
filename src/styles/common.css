@@ -18,7 +18,7 @@ body {
 }
 
 .gradientBG {
-    background-image: url(https://static.quizzop.com/newton/assets/download-page/gradientBG.svg);
+  background-image: url(https://static.quizzop.com/newton/assets/download-page/gradientBG.svg);
 }
 
 .flex {
@@ -1057,19 +1057,19 @@ body {
   margin-top: 30px;
 }
 
-.mt-50{
+.mt-50 {
   margin-top: 50px;
 }
 
-.mt-70{
+.mt-70 {
   margin-top: 70px;
 }
 
-.mt-90{
+.mt-90 {
   margin-top: 90px;
 }
 
-.mt-100{
+.mt-100 {
   margin-top: 100px;
 }
 .mb-40 {
@@ -5394,4 +5394,10 @@ p.text.off {
 .hide-scroll-view {
   width: 100vw;
   max-width: 395px;
+}
+
+.sliderBorder {
+  background-image: url(https://static.quizzop.com/newton/assets/download-page/sliderBorderColored.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
 }

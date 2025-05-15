@@ -15,16 +15,17 @@ const SlickSliderComponent = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 3,
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "0px",
     autoplay: true,
     autoplaySpeed: 3000,
+  
   };
 
   return (
-    <div className="slick-slider img-slick slick-initialized" dir="ltr">
+    <div className="slick-slider slider-images-download img-slick slick-initialized" dir="ltr">
       <Slider {...settings}>
         {imageList.map((fileName, index) => (
           <div
@@ -38,9 +39,10 @@ const SlickSliderComponent = () => {
               outline: "none",
               width: "1804px",
               opacity: "1",
+
             }}
           >
-            <div>
+            <div style={{padding: '8px'}} >
               <img
                 alt="slider image"
                 tabIndex="-1"

@@ -373,7 +373,79 @@ const DownloadApp = () => {
           Take on the quiz challenges, stand apart from the crowd!
         </span>
       </div>
-      <HeroSlider />
+      <HeroSlider
+        heading={"Game On...Score Big! TOP THE"}
+        subTitle={"Sports Quiz!"}
+        images={["sachin.png", "dhoni.png", "cr7.png"]}
+      />
+      <HeroSlider
+        heading={"Guess The Plot Twists Ace The"}
+        subTitle={"TV Quiz!"}
+        images={["moneyHeist.png", "witcher.png", "GoT.png"]}
+      />
+      <HeroSlider
+        heading={"Quiz Jutsu! Master the"}
+        subTitle={"Anime Quiz!"}
+        images={["naruto.png", "jujutsuKaisen.png", "ryuk.png"]}
+      />
+      <HeroSlider
+        heading={"Lights! Camera! Quizzaction! the Ultimate"}
+        subTitle={"Movie Quiz!"}
+        images={["ironMan.png", "batman.png", "harryPotter.png"]}
+      />
+
+      <div class="flex items-center justify-between" style={{marginBottom: '100px'}}>
+        <svg
+          width="93"
+          height="20"
+          viewBox="0 0 93 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="mix-blend-overlay"
+        >
+          <path d="M4 0L13 10L4 20H0L9 10L0 0H4Z" fill="white"></path>
+          <path d="M12 0L21 10L12 20H8L17 10L8 0H12Z" fill="white"></path>
+          <path d="M20 0L29 10L20 20H16L25 10L16 0H20Z" fill="white"></path>
+          <path d="M28 0L37 10L28 20H24L33 10L24 0H28Z" fill="white"></path>
+          <path d="M36 0L45 10L36 20H32L41 10L32 0H36Z" fill="white"></path>
+          <path d="M44 0L53 10L44 20H40L49 10L40 0H44Z" fill="white"></path>
+          <path d="M52 0L61 10L52 20H48L57 10L48 0H52Z" fill="white"></path>
+          <path d="M60 0L69 10L60 20H56L65 10L56 0H60Z" fill="white"></path>
+          <path d="M68 0L77 10L68 20H64L73 10L64 0H68Z" fill="white"></path>
+          <path d="M76 0L85 10L76 20H72L81 10L72 0H76Z" fill="white"></path>
+          <path d="M84 0L93 10L84 20H80L89 10L80 0H84Z" fill="white"></path>
+        </svg>
+        <svg
+          width="93"
+          height="20"
+          viewBox="0 0 93 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="mix-blend-overlay rotate-180"
+        >
+          <path d="M4 0L13 10L4 20H0L9 10L0 0H4Z" fill="white"></path>
+          <path d="M12 0L21 10L12 20H8L17 10L8 0H12Z" fill="white"></path>
+          <path d="M20 0L29 10L20 20H16L25 10L16 0H20Z" fill="white"></path>
+          <path d="M28 0L37 10L28 20H24L33 10L24 0H28Z" fill="white"></path>
+          <path d="M36 0L45 10L36 20H32L41 10L32 0H36Z" fill="white"></path>
+          <path d="M44 0L53 10L44 20H40L49 10L40 0H44Z" fill="white"></path>
+          <path d="M52 0L61 10L52 20H48L57 10L48 0H52Z" fill="white"></path>
+          <path d="M60 0L69 10L60 20H56L65 10L56 0H60Z" fill="white"></path>
+          <path d="M68 0L77 10L68 20H64L73 10L64 0H68Z" fill="white"></path>
+          <path d="M76 0L85 10L76 20H72L81 10L72 0H76Z" fill="white"></path>
+          <path d="M84 0L93 10L84 20H80L89 10L80 0H84Z" fill="white"></path>
+        </svg>
+      </div>
+
+      <div class="fixed py-15 bottom-0 h-80 w-full px-20 max-w-maxW items-center bg-CFAFAFA dark:bg-C27294B">
+        <button
+          onClick={() => hanldeDownload()}
+          data-testid="download-page-download-button-bottom"
+          className="w-full py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 mx-auto flex-row  cursor-pointer flex items-center flex-col select-none opacity-100"
+        >
+          <p className="text-2xl">DOWNLOAD NOW</p>
+        </button>
+      </div>
     </div>
   );
 };
