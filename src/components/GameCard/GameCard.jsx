@@ -1,6 +1,5 @@
 const GameCard = ({ game }) => {
 
-  console.log("🚀 ~ handleClick ~ game:", game)
   const handleClick = (game) => {
     window.location.replace(game.uri)
   };

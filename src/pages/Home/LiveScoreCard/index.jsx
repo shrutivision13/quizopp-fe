@@ -5,7 +5,7 @@ import ScoreCard from "../../../components/ScoreCard/ScoreCard";
 const LiveScoreCard = () => {
   return (
     <div className="px-20 mt-24">
-      <SectionHeading title={"Play Games"} powerdBy />
+      <SectionHeading title={"Cricket Scores & More!"} powerdBy />
       <div className="grid gap-14">
         <ScoreCard
           image={

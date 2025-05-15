@@ -51,16 +51,16 @@ function reducer(state, action) {
     switch (action.type) {
         case 'SET_QUESTIONS': {
             const formatOptions = (options) =>
-                options.map((opt) => ({ text: opt, hidden: false }));
+                options?.map((opt) => ({ text: opt, hidden: false }));
 
-            const formattedQs = action.questions.slice(0, 5).map(q => ({
+            const formattedQs = action?.questions?.slice(0, 5)?.map(q => ({
                 ...q,
-                options: formatOptions(q.options)
+                options: formatOptions(q?.options)
             }));
 
             const extraQuestion = {
-                ...action.questions[5],
-                options: formatOptions(action.questions[5].options),
+                ...action?.questions[5],
+                options: formatOptions(action?.questions[5]?.options),
             };
 
             return {
@@ -85,10 +85,10 @@ function reducer(state, action) {
         case 'ANSWER':
             return {
                 ...state,
-                selectedOption: action.option,
-                score: state.score + (action.correct ? 20 : -10),
-                correctAnswer: state.correctAnswer + (action.correct ? 1 : 0),
-                shakeIndex: action.correct ? null : action.index,
+                selectedOption: action?.option,
+                score: state.score + (action?.correct ? 20 : -10),
+                correctAnswer: state.correctAnswer + (action?.correct ? 1 : 0),
+                shakeIndex: action?.correct ? null : action?.index,
             };
 
         case 'TOGGLE_MUTE':
@@ -100,17 +100,17 @@ function reducer(state, action) {
         case 'ACTIVATE_LIFELINE': {
             return {
                 ...state,
-                activeLifelineId: action.id,
+                activeLifelineId: action?.id,
                 timerPaused: true
             };
         }
         case 'CONFIRM_LIFELINE_USE': {
-            if (state.usedLifelines.includes(action.id)) return state;
+            if (state.usedLifelines.includes(action?.id)) return state;
             return {
                 ...state,
-                coinsSpent: state.coinsSpent + (action.price || 0),
+                coinsSpent: state.coinsSpent + (action?.price || 0),
                 lifelinesUsed: state.lifelinesUsed + 1,
-                usedLifelines: [...state.usedLifelines, action.id],
+                usedLifelines: [...state.usedLifelines, action?.id],
             };
         }
         case 'CLOSE_LIFELINE':
@@ -118,7 +118,7 @@ function reducer(state, action) {
                 ...state,
                 lifelineOpen: false,
                 activeLifelineId: null,
-                timerPaused: state.freezeLifelineActivated,
+                timerPaused: state?.freezeLifelineActivated,
             };
 
         case 'ACTIVATE_FREEZE_TIMER':
@@ -130,7 +130,7 @@ function reducer(state, action) {
             return {
                 ...state,
                 hasReportedQuestions: {
-                    ...state.hasReportedQuestions,
+                    ...state?.hasReportedQuestions,
                     _id: action.questionId,
                 }
             };
@@ -150,7 +150,7 @@ function reducer(state, action) {
             const currentQ = state.questions[state.currentIndex];
             const correctAnswer = currentQ.options[0].text;
 
-            const updatedOptions = currentQ.options.map(o => ({ ...o }));
+            const updatedOptions = currentQ?.options?.map(o => ({ ...o }));
             const wrongIndexes = updatedOptions
                 .map((o, idx) => (o.text !== correctAnswer ? idx : null))
                 .filter(i => i !== null)
@@ -160,7 +160,7 @@ function reducer(state, action) {
 
             return {
                 ...state,
-                questions: state.questions.map((q, index) =>
+                questions: state?.questions?.map((q, index) =>
                     index === state.currentIndex
                         ? { ...q, options: updatedOptions }
                         : q
@@ -248,6 +248,8 @@ const Games = () => {
     const [openEmojiDrawer, setOpenEmojiDrawer] = useState(false);
 
     const [state, dispatch] = useReducer(reducer, initialState);
+    const category = location.state?.categoryName
+    const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
 
     generateRandomBotData(botUpdateCount, setBotUpdateCount, setBotScore, setBotCorrectAnswers, setBotLifelinesUsed, setBotTotalSeconds);
 
@@ -318,7 +320,7 @@ const Games = () => {
             return [...currentQuestion.options].sort(() => Math.random() - 0.5);
         }
 
-        return currentQuestion.options.map(o => ({ text: o, hidden: false })).sort(() => Math.random() - 0.5);
+        return currentQuestion?.options?.map(o => ({ text: o, hidden: false })).sort(() => Math.random() - 0.5);
     }, [currentQuestion]);
 
     // handle next or submit
@@ -329,33 +331,33 @@ const Games = () => {
         } else {
             if (currentIndex === questions.length - 1) {
                 // if (state?.isBot) {
-                    dispatch({ type: 'INCREMENT_TOTAL_SECONDS' });
+                dispatch({ type: 'INCREMENT_TOTAL_SECONDS' });
 
-                    const payload = {
-                        user: {
-                            score: score,
-                            totalSeconds: state.totalSeconds,
-                            lifelinesUsed: state.lifelinesUsed,
-                            correctAnswer: state.correctAnswer,
-                            coin: state.coinsSpent,
-                        },
-                        bot: {
-                            score: botScore,
-                            totalSeconds: botTotalSeconds,
-                            lifelinesUsed: botLifelinesUsed,
-                            correctAnswer: botCorrectAnswers,
-                        },
-                    };
+                const payload = {
+                    user: {
+                        score: score,
+                        totalSeconds: state.totalSeconds,
+                        lifelinesUsed: state.lifelinesUsed,
+                        correctAnswer: state.correctAnswer,
+                        coin: state.coinsSpent,
+                    },
+                    bot: {
+                        score: botScore,
+                        totalSeconds: botTotalSeconds,
+                        lifelinesUsed: botLifelinesUsed,
+                        correctAnswer: botCorrectAnswers,
+                    },
+                };
 
-                    setTimeout(() => {
-                        ApiUpdateQuizParticipation(participantId, payload)
-                            .then(res => {
-                                if (res.isSuccess) {
-                                    navigate(`/${categoryName}/end-quiz`, { state: { result: res.data, userImage: location?.state?.userImage } });
-                                }
-                            })
-                            .catch(console.error);
-                    }, 200);
+                setTimeout(() => {
+                    ApiUpdateQuizParticipation(participantId, payload)
+                        .then(res => {
+                            if (res.isSuccess) {
+                                navigate(`/${categoryName}/end-quiz`, { state: { result: res.data, userImage: location?.state?.userImage } });
+                            }
+                        })
+                        .catch(console.error);
+                }, 200);
                 // }/
             }
         }
@@ -566,26 +568,6 @@ const Games = () => {
                                 style={{ width: `${centerPosition + player1Offset}%`, transition: 'width 2s ease' }}
                             />
                         </div>
-
-                        {/* <div className="w-full px-20 my-14 h-4 flex items-center justify-center mb-28">
-                            <div className="h-full rounded-l-10 bg-CFFD949 background-transition" style={{ width: "230%" }} />
-                            <div className="transition-all duration-350">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="23"
-                                    height="24"
-                                    viewBox="0 0 23 24"
-                                    fill="none"
-                                >
-                                    <circle cx="11.5" cy="12" r="11.22" fill="#191A32" stroke="#FFD949" strokeWidth="0.44"></circle>
-                                    <path
-                                        d="M15.73 17.82L13.975 16.08L12.655 17.4L12.235 16.98C12.005 16.75 11.89 16.465 11.89 16.125C11.89 15.785 12.005 15.5 12.235 15.27L14.77 12.735C15 12.505 15.285 12.39 15.625 12.39C15.965 12.39 16.25 12.505 16.48 12.735L16.9 13.155L15.58 14.475L17.32 16.23C17.44 16.35 17.5 16.49 17.5 16.65C17.5 16.81 17.44 16.95 17.32 17.07L16.57 17.82C16.45 17.94 16.31 18 16.15 18C15.99 18 15.85 17.94 15.73 17.82ZM17.5 8.4L10.69 15.21L10.765 15.27C10.995 15.5 11.11 15.785 11.11 16.125C11.11 16.465 10.995 16.75 10.765 16.98L10.345 17.4L9.025 16.08L7.27 17.82C7.15 17.94 7.01 18 6.85 18C6.69 18 6.55 17.94 6.43 17.82L5.68 17.07C5.56 16.95 5.5 16.81 5.5 16.65C5.5 16.49 5.56 16.35 5.68 16.23L7.42 14.475L6.1 13.155L6.52 12.735C6.75 12.505 7.035 12.39 7.375 12.39C7.715 12.39 8 12.505 8.23 12.735L8.29 12.81L15.1 6H17.5V8.4ZM8.47 11.37L5.5 8.4V6H7.9L10.87 8.97L8.47 11.37Z"
-                                        fill="#FFD949"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <div className="h-full rounded-r-10 bg-CA96DFF background-transition" style={{ width: "170%" }} />
-                        </div> */}
                     </div>
                 </div>
 
@@ -609,8 +591,25 @@ const Games = () => {
                         {currentQuestion.question}
                     </div>
 
+                    {currentQuestion?.questionImage &&
+                        <div className="flex justify-center mt-22">
+                            <img
+                                alt="QuestionImage"
+                                loading="lazy"
+                                width="200"
+                                height="=140"
+                                decoding="async"
+                                data-nimg="1"
+                                className="question-section-img object-contain rounded-10 !w-min h-auto"
+                                style={{ color: "transparent" }}
+                                src={`${IMAGEURL}/images/${category}/${currentQuestion?.questionImage}`}
+                            />
+                        </div>
+                    }
+
+
                     <div className="grid mt-30 grid-cols-2 gap-20">
-                        {shuffledOptions.map((optionObj, idx) => {
+                        {shuffledOptions?.map((optionObj, idx) => {
                             const { text, hidden } = optionObj;
 
                             const correctAnswerText = currentQuestion.options[0]?.text;
@@ -673,7 +672,7 @@ const Games = () => {
                         <div className="z-10 animate__playContest_fadeInUp">
                             <div className="lifeline-card-container dark:text-CFFFFFF bg-CFFFFFF dark:bg-C20213F max-w-maxW animate__animated bottomsheet_animated lifeline-box-container w-full">
                                 <div className="px-20 flex w-full gap-30 justify-between transition-all ease-in duration-[250ms] overflow-hidden h-[120px] max-h-[120px] pt-14">
-                                    {lifelines.map(l => (
+                                    {lifelines?.map(l => (
                                         <Lifelines
                                             key={l.id}
                                             lifelineId={l.id}

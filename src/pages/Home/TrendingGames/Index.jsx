@@ -21,7 +21,7 @@ const TrendingGames = () => {
 
   return (
     <div className="px-20 mt-24">
-      <SectionHeading title={"Play Games"} button={"More Games"} powerdBy />
+      <SectionHeading title={"Play Games"} button={"More Games"} powerdBy route={'https://cfuucl7YgA.play.gamezop.com'} />
       <div className="grid gap-14">
         <div className="flex scroll mx-[1px] snap-x snap-mandatory overflow-scroll hide-scroll-bar">
           {games.map((game) => (

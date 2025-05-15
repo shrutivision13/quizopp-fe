@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import AdSlot from "../../components/AdSense/AdSlot";
 import { ApiGetAllCategoryDetails } from "../../api-wrapper/categories/ApiCategories";
@@ -83,10 +83,12 @@ function CategoryDetails() {
                   <p className="px-20 my-14 text-12 text-center font-bold text-C2C2C2C dark:text-C8789C3">
                     {categoryDetails?.category?.categoryName?.toUpperCase()} QUIZ • 10 QUESTIONS • 2 MINS
                   </p>
-                  <a
+                  <Link
                     rel=""
                     className="anchor-link"
-                    href={`/${categoryDetails?.category?.categorySlug?.toLowerCase()}/begin-quiz`}
+                    to={`/${categoryDetails?.category?.categorySlug?.toLowerCase()}/begin-quiz`}
+                    state={{ categoryId: categoryDetails?.category?._id, categoryName: categoryDetails?.category?.categoryName }}
+
                   >
                     <div className="border border-CFFCC5B mx-20 px-20 mb-14 py-10 relative rounded-10 overflow-hidden">
                       <div className="relative z-[10] flex justify-between items-center">
@@ -136,7 +138,7 @@ function CategoryDetails() {
                         />
                       </video>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -209,8 +211,8 @@ function CategoryDetails() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }
 

@@ -34,7 +34,7 @@ const TrendingArticles = () => {
       <div>
         {articles?.slice(3, 7)?.map((article, index) => (
           <div key={article.id || index}>
-            <ArticleCard article={article} />
+            <ArticleCard article={article} imagePath={"article"}/>
             {index < 2 && <hr className="h-2 border-C404380" />}
           </div>
         ))}

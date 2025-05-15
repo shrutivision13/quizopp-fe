@@ -43,7 +43,7 @@ const BeginQuiz = () => {
     // Navigate 
     const handleNavigate = (type) => {
         if (type === 'beginQuiz' || type === 'playAsGuest') {
-            navigate(`/${categoryName}/join-quiz`, { state: { categoryId: state?.categoryId } });
+            navigate(`/${categoryName}/join-quiz`, { state: { categoryId: state?.categoryId, categoryName: state?.categoryName } });
         }
 
         if (type === 'joinQuizzop') {

@@ -13,7 +13,7 @@ const ApiGetQuizBitesQuestions = (categoryId) => {
     return axios
         .post(`${api}/quiz/getQuizBitesQuestions`, categoryId, { headers })
         .then((response) => response?.data)
-        .catch((response) => response?.data);
+        .catch((error) => error);
 };
 
 const ApiUpdatePrize = (correctAnswer) => {

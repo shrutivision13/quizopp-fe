@@ -5,7 +5,7 @@ import ScoreCard from "../../../components/ScoreCard/ScoreCard";
 const HoroscopeCard = () => {
   return (
     <div className="px-20 my-24">
-      <SectionHeading title={"Play Games"} powerdBy />
+      <SectionHeading title={"Check Your Fortune"} powerdBy />
       <div className="grid gap-14">
         <ScoreCard
           image={

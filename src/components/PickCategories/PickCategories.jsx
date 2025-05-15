@@ -125,7 +125,7 @@ const PickCategories = ({
 
             <div className="w-full flex justify-center absolute top-14">
               <img
-                alt="ICC World Cup"
+                alt="categoryImage"
                 loading="lazy"
                 width="60"
                 height="60"
@@ -147,7 +147,7 @@ const PickCategories = ({
             <div
               key={`add-card-${idx}`}
               className="min-h-120 flex justify-center items-center mr-16 last:mr-0 border-1 border-dashed placeholder-box border-CFEDC34 rounded-8 bg-CFFFFFF1F w-95 !min-h-120 cursor-pointer"
-              data-testid="mini-quiz-add-card"
+              data-testid="mini-quiz-add-card" onClick={() => navigate("/mini-quiz-category-selection")}
             >
               <span className="text-40 font-medium text-CFEDC34">+</span>
             </div>

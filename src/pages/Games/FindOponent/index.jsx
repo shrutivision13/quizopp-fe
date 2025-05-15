@@ -143,6 +143,7 @@ const FindOponent = () => {
             navigate(`/${navigateData?.categoryslug}/play-quiz?&battleId=${navigateData?.battleId}`, {
                 state: {
                     categoryId: navigateData?.categoryId,
+                    categoryName: state?.categoryName,
                     opponentParticipantId: navigateData?.opponentParticipantId,
                     userImage: matchedUser,
                     participantId: navigateData?.participantId,
