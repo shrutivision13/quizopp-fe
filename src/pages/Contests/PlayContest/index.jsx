@@ -428,6 +428,7 @@ const PlayContest = () => {
         }, 200);
       }
     }
+    setAudienceVotes([0, 0, 0, 0]);
   }, [currentIndex, questions, score, participantId, navigate, categoryName]);
 
   // countdown
