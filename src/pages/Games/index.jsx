@@ -6,7 +6,10 @@ import React, {
   useState,
 } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ApiGetGamesQuestions } from "../../api-wrapper/games/ApiGames";
+import {
+  ApiGetGamesQuestions,
+  ApiUpdateQuizParticipation,
+} from "../../api-wrapper/games/ApiGames";
 import { ApiSubmitContest } from "../../api-wrapper/contest/ApiGetcontest";
 import lifelinesData from "../../utils/lifelinesData.json";
 import "../../styles/components/games/games.css";
@@ -26,6 +29,7 @@ import Coins from "../../components/Icons/Coins";
 import AdVideoIcon from "../../components/Icons/AdVideoIcon";
 import CloseIcon from "../../components/Icons/CloseIcon";
 import EmojiDrawer from "../../components/EmojiDrawer/EmojiDrawer";
+import ReportQuestion from "./ReportQuestion";
 
 // 1) reducer + initialState
 const initialState = {
@@ -45,6 +49,7 @@ const initialState = {
   coinsSpent: 0,
   correctAnswer: 0,
   usedLifelines: [],
+  hasReportedQuestions: {},
 };
 
 function reducer(state, action) {
@@ -129,8 +134,20 @@ function reducer(state, action) {
         freezeLifelineActivated: true,
       };
 
+    case "MARK_QUESTION_REPORTED":
+      return {
+        ...state,
+        hasReportedQuestions: {
+          ...state.hasReportedQuestions,
+          _id: action.questionId,
+        },
+      };
+
     case "SHOW_REPORT":
       return { ...state, showReportUI: true };
+
+    case "HIDE_REPORT":
+      return { ...state, showReportUI: false };
 
     case "INCREMENT_TOTAL_SECONDS":
       return {
@@ -378,38 +395,41 @@ const Games = () => {
       dispatch({ type: "NEXT_QUESTION" });
       resetTimer();
     } else {
-      dispatch({ type: "INCREMENT_TOTAL_SECONDS" });
+      if (currentIndex === questions.length - 1) {
+        dispatch({ type: "INCREMENT_TOTAL_SECONDS" });
 
-      const payload = {
-        user: {
-          score: score,
-          totalSeconds: state.totalSeconds,
-          lifelinesUsed: state.lifelinesUsed,
-          correctAnswer: state.correctAnswer,
-          coin: state.coinsSpent,
-        },
-        bot: {
-          score: botScore,
-          totalSeconds: botTotalSeconds,
-          lifelinesUsed: botLifelinesUsed,
-          correctAnswer: botCorrectAnswers,
-        },
-      };
+        const payload = {
+          user: {
+            score: score,
+            totalSeconds: state.totalSeconds,
+            lifelinesUsed: state.lifelinesUsed,
+            correctAnswer: state.correctAnswer,
+            coin: state.coinsSpent,
+          },
+          bot: {
+            score: botScore,
+            totalSeconds: botTotalSeconds,
+            lifelinesUsed: botLifelinesUsed,
+            correctAnswer: botCorrectAnswers,
+          },
+        };
 
-      setTimeout(() => {
-        // navigate(`/${categoryName}/end-quiz`, { state: { result: payload } });
-        // ApiSubmitContest(participantId, payload)
-        //     .then(res => {
-        //         if (res.isSuccess) {
-        //             console.log("Payload submitted successfully", res.data);
-        //             // Navigate to the result page after successful submission
-        //             navigate(`/${categoryName}/end-quiz`, { state: { result: payload } });
-        //         }
-        //     })
-        //     .catch(console.error);
-      }, 200);
+        setTimeout(() => {
+          ApiUpdateQuizParticipation(participantId, payload)
+            .then((res) => {
+              if (res.isSuccess) {
+                navigate(`/${categoryName}/end-quiz`, {
+                  state: {
+                    result: res.data,
+                    userImage: location?.state?.userImage,
+                  },
+                });
+              }
+            })
+            .catch(console.error);
+        }, 200);
+      }
     }
-    setAudienceVotes([0,0,0,0])
   }, [currentIndex, questions, score, participantId, navigate, categoryName]);
 
   // countdown
@@ -465,6 +485,7 @@ const Games = () => {
   const activateLifeline = (id) => dispatch({ type: "ACTIVATE_LIFELINE", id });
   const closeLifeline = () => dispatch({ type: "CLOSE_LIFELINE" });
   const showReport = () => dispatch({ type: "SHOW_REPORT" });
+  const hideReport = () => dispatch({ type: "HIDE_REPORT" });
 
   const activeLifeline = lifelinesData.find((l) => l.id === activeLifelineId);
 
@@ -539,6 +560,15 @@ const Games = () => {
     { id: 3, label: "Freeze Timer", icon: <FreezeTime /> },
     { id: 4, label: "Flip Question", icon: <FlipQuestion /> },
   ];
+
+  const handleopenReportQuestion = () => {
+    const currentQId = questions[currentIndex];
+    if (state.hasReportedQuestions?._id === currentQId?._id) {
+      toast.warning("You have already flagged this question.");
+    } else {
+      showReport();
+    }
+  };
 
   const maxScore = 100; // Change this as needed for your max score
 
@@ -710,12 +740,17 @@ const Games = () => {
               <span className="text-20 font-bold">{currentIndex + 1}</span>
               <span className="text-12">/{questions.length}</span>
             </div>
-            <div className="cursor-pointer" onClick={showReport}>
+            <div className="cursor-pointer" onClick={handleopenReportQuestion}>
               <img
                 alt="Flag Icon"
                 width="30"
                 height="30"
-                src="https://static.quizzop.com/newton/assets/flag_active_dark.svg"
+                src={
+                  state.hasReportedQuestions?._id ===
+                  questions[currentIndex]?._id
+                    ? "https://static.quizzop.com/newton/assets/flag_inactive_dark.svg"
+                    : "https://static.quizzop.com/newton/assets/flag_active_dark.svg"
+                }
               />
             </div>
           </div>
@@ -743,11 +778,18 @@ const Games = () => {
                 <div
                   key={idx}
                   className={`${
-                    (usedLifelines?.includes(2) && votePercentage > 0) ? "audience-poll" : ""
+                    usedLifelines?.includes(2) && votePercentage > 0
+                      ? "audience-poll"
+                      : ""
                   }   justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center min-h-[60px] ${
                     shakeIndex === idx ? "animate-shake" : ""
                   } ${!votePercentage && "aud-animation"}
-                    ${(votePercentage && usedLifelines?.includes(2) && Math.max(...audienceVotes) === votePercentage) && "active-button"}
+                    ${
+                      votePercentage &&
+                      usedLifelines?.includes(2) &&
+                      Math.max(...audienceVotes) === votePercentage &&
+                      "active-button"
+                    }
                   `}
                   style={{
                     backgroundColor: isCorrect
@@ -899,9 +941,17 @@ const Games = () => {
             openEmojiDrawer={openEmojiDrawer}
           />
         )}
+
+        {showReportUI && (
+          <ReportQuestion
+            onClose={hideReport}
+            questionId={questions[currentIndex]?._id}
+            dispatch={dispatch}
+          />
+        )}
       </div>
     </>
   );
 };
 
-export default Games; 
+export default Games;

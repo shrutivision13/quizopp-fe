@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import playerYou from '../../../assets/images/players/player-0.webp';
 import versusImage from '../../../assets/images/players/Versus.webp';
 import logo from '../../../assets/images/quizzop-logo-dark.svg';
@@ -31,14 +31,16 @@ const opponentPlayers = [
 const FindOponent = () => {
     const [socket, setSocket] = useState(null);
     const navigate = useNavigate();
+    const { state } = useLocation();
     const [roomId, setRoomId] = useState(null);
     const [opponent, setOpponent] = useState(null);
-    const [category] = useState('Bollywood');
+    const category = state?.categoryId;
     const [shuffledPlayers, setShuffledPlayers] = useState([]);
     const [isRotating, setIsRotating] = useState(true);
     const [matchFound, setMatchFound] = useState(false); // Track if match is found
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [countdown, setCountdown] = useState(null);
+    const [navigateData, setNavigateData] = useState({});
     const { getCookie } = useCookie();
 
     useEffect(() => {
@@ -47,7 +49,7 @@ const FindOponent = () => {
             return;
         }
 
-        const socketConnection = io('http://localhost:3000', {
+        const socketConnection = io('ws://132.148.0.148:3000', {
             extraHeaders: { Authorization: `Bearer ${authToken}` },
             autoConnect: false
         });
@@ -56,18 +58,17 @@ const FindOponent = () => {
         setSocket(socketConnection);
 
         socketConnection.on('connect', () => {
-            if (!matchFound) {
+            if (!matchFound && category) {
                 socketConnection.emit('findOponent', { category });
             }
         });
 
         socketConnection.on('match_found', (data) => {
             if (data.status === 'success' && !matchFound) {
-                setRoomId(data.roomId);
-                setOpponent(data.opponent);
+                setRoomId(data?.data?.roomId);
+                setOpponent(data?.data?.opponent);
                 setMatchFound(true);
                 setIsRotating(false);
-
                 setTimeout(() => {
                     setCountdown(3);
                     const countdownInterval = setInterval(() => {
@@ -75,13 +76,21 @@ const FindOponent = () => {
                             if (prev === 1) {
                                 clearInterval(countdownInterval);
                                 setTimeout(() => {
-                                    navigate(`/login`);
+                                    setNavigateData({
+                                        categoryslug: data?.data?.categoryslug,
+                                        battleId: data?.data?.battleId,
+                                        categoryId: data?.data?.category,
+                                        opponentParticipantId: data?.data?.opponent?.participantId,
+                                        participantId: data?.data?.user?.participantId,
+                                        isBot: data?.data?.isBot,
+                                        opponentUserName: data?.data?.opponent?.opponentUserName,
+                                    });
                                 }, 1000);
                             }
                             return prev - 1;
                         });
                     }, 1000);
-                }, 5000);
+                }, 6000);
             }
         });
 
@@ -109,7 +118,7 @@ const FindOponent = () => {
         }
         setShuffledPlayers(shuffled);
 
-        socket.emit('findOponent', { category });
+        category && socket.emit('findOponent', { category });
 
         setTimeout(() => {
             if (!matchFound) setIsRotating(false);
@@ -127,6 +136,23 @@ const FindOponent = () => {
         }
     }, [isRotating]);
 
+    useEffect(() => {
+        const matchedUser = shuffledPlayers[currentImageIndex];
+
+        if (Object.keys(navigateData ?? {})?.length !== 0) {
+            navigate(`/${navigateData?.categoryslug}/play-quiz?&battleId=${navigateData?.battleId}`, {
+                state: {
+                    categoryId: navigateData?.categoryId,
+                    opponentParticipantId: navigateData?.opponentParticipantId,
+                    userImage: matchedUser,
+                    participantId: navigateData?.participantId,
+                    isBot: navigateData?.isBot,
+                    opponentUserName: navigateData?.opponentUserName,
+                }
+            });
+            setNavigateData({});
+        }
+    }, [navigateData]);
 
     return (
         <main className="flex flex-col items-center justify-center hide-scroll-bar h-screen">
@@ -161,33 +187,29 @@ const FindOponent = () => {
                 <div>
                     <img alt="Versus" src={versusImage} width={35} height={50} />
                 </div>
-
-                <div className="relative h-80 w-80 rounded-full overflow-hidden">
-                    <div className="absolute battle-opponent-animation-8">
-                        {isRotating && shuffledPlayers.map((img, index) => (
-                            <img key={index} alt={`Player ${index + 1}`} src={img} width={80} height={80} className="pb-20" />
-                        ))}
-                        {!isRotating && matchFound && shuffledPlayers.map((img, index) => (
-                            <img
-                                key={index}
-                                alt={`Player ${index + 1}`}
-                                src={img}
-                                width={80}
-                                height={80}
-                                className={`pb-20 ${index === currentImageIndex ? 'highlighted' : ''}`}
-                            />
-                        ))}
+                <div className='flex flex-col justify-center items-center'>
+                    <div className="relative h-80 w-80 rounded-full overflow-hidden">
+                        <div className="absolute battle-opponent-animation-8">
+                            {isRotating && shuffledPlayers.map((img, index) => (
+                                <img key={index} alt={`Player ${index + 1}`} src={img} width={80} height={80} className="pb-20" />
+                            ))}
+                            {!isRotating && matchFound && shuffledPlayers.map((img, index) => (
+                                <Fragment>
+                                    <img
+                                        key={index}
+                                        alt={`Player ${index + 1}`}
+                                        src={img}
+                                        width={80}
+                                        height={80}
+                                        className={`pb-20 ${index === currentImageIndex ? 'highlighted' : ''}`}
+                                    />
+                                </Fragment>
+                            ))}
+                        </div>
                     </div>
+                    {matchFound && countdown !== null && <p className="text-[14px] text-CFAFAFA text-center mt-10">{opponent?.opponentUserName}</p>}
                 </div>
             </div>
-
-            {roomId && opponent && (
-                <div className="mt-10">
-                    <p>Match Found!</p>
-                    <p>Opponent: {opponent.name}</p>
-                    <p>Room ID: {roomId}</p>
-                </div>
-            )}
 
             {!matchFound && (
                 <button

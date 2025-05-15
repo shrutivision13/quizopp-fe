@@ -42,7 +42,7 @@ const Header = () => {
       "/mini-quiz-over",
       "/blogs"
     ],
-    hiddenPaths: [`/${categoryName}/play-contest`],
+    hiddenPaths: [`/${categoryName}/play-contest`, `/${categoryName}/join-quiz`, `/${categoryName}/play-quiz`],
     freeCoinsPaths: [`/${categoryName}/begin-quiz`, '/'],
     initHeaderPaths: ["/get-started", "/start-quiz"],
   });
@@ -76,7 +76,15 @@ const Header = () => {
     }
   }, [getCookie, setLoading]);
 
-  const handleGoBack = () => navigate(-1);
+  const handleGoBack = () => {
+    if (path.includes('/mini-quiz-over') || path.includes(`/${categoryName}/end-quiz`) || path.includes(`/${categoryName}/contest-rank`)) {
+      navigate('/');
+    }
+    else {
+      navigate(-1)
+    }
+  };
+
   const handlePlayQuiz = () => navigate("/");
 
   if (isHiddenHeader) return null;
