@@ -4,16 +4,36 @@
     "description": "Quizzop is a trivia/quizzing platform where the users can test their knowledge by playing quiz games in 25+ categories like History, GK, Maths, Literature etc and can win coins.",
     "icons": [
         {
-            "src": "logo192.png",
-            "sizes": "192x192",
-            "type": "image/png"
+          "src": "favicon.ico",
+          "sizes": "64x64 32x32 24x24 16x16",
+          "type": "image/x-icon"
         },
-        {
-            "src": "logo512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
+          {
+              "src": "72.png",
+              "sizes": "72x72",
+              "type": "image/png"
+          },
+          {
+              "src": "128.png",
+              "sizes": "128x128",
+              "type": "image/png"
+          },
+          {
+              "src": "144.png",
+              "sizes": "144x144",
+              "type": "image/png"
+          },
+          {
+              "src": "logo192.png",
+              "sizes": "192x192",
+              "type": "image/png"
+          },
+          {
+              "src": "logo512.png",
+              "sizes": "512x512",
+              "type": "image/png"
+          }
+      ],
     "dir": "ltr",
     "lang": "en",
     "background_color": "#FEDE34",
