@@ -95,6 +95,7 @@ function PlayContest() {
   const searchParams = new URLSearchParams(location.search);
   const contestId = searchParams.get("contestId");
   const participantId = location.state?.participantId;
+  const timeAllowed = location.state?.timeAllowed;
   const [questions, setQuestions] = React.useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
   const [score, setScore] = React.useState(0);
@@ -143,7 +144,7 @@ function PlayContest() {
   }, [currentQuestionIndex, questions.length, score, participantId, navigate, categoryName, location?.state?.categoryId]);
 
   const { count: timeLeft, reset: resetTimer } = useCountdown(
-    10,
+    timeAllowed,
     state.timerPaused,
     goToNextOrSubmit
   );

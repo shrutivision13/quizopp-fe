@@ -1,8 +1,8 @@
 const GameCard = ({ game }) => {
 
+  console.log("🚀 ~ handleClick ~ game:", game)
   const handleClick = (game) => {
-    console.log("🚀 ~ handleClick ~ game:", game)
-    window.location.replace(game.url)
+    window.location.replace(game.uri)
   };
 
     return (
@@ -27,7 +27,7 @@ const GameCard = ({ game }) => {
               bottom: 0,
               color: "transparent",
             }}
-            src={game?.url}
+            src={game?.imageSrc}
           />
         </div>
         <div className="absolute inset-0 z-10 bg-gamezop-overlay rounded-20"></div>

@@ -21,9 +21,9 @@ const BeginQuiz = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const user = localStorage.getItem('userData')
+        const user = JSON.parse(localStorage.getItem("userData"));
         setUserData(user);
-    }, [getCookie]);
+    }, [location.pathname]);
 
     // Fetch Category Data
     useEffect(() => {
