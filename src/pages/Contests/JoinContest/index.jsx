@@ -54,7 +54,7 @@ function JoinContest() {
                       decoding="async"
                       data-nimg="1"
                       className=""
-                      src={`http://132.148.0.110:3000/images/category/${quizContest?.categoryId?.categoryIcon}`}
+                      src={`${import.meta.env.VITE_API_BASE_URL}/images/category/${quizContest?.categoryId?.categoryIcon}`}
                       style={{ color: "transparent" }}
                     />
                   </div>

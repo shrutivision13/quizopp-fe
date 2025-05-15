@@ -101,7 +101,7 @@ const InitialPage = () => {
                         decoding="async"
                         className="h-27 w-38"
                         style={{ color: "transparent" }}
-                        src={`http://132.148.0.110:3000/images/category/${category.categoryIcon}`}
+                        src={`${import.meta.env.VITE_API_BASE_URL}/images/category/${category.categoryIcon}`}
                       />
                     </div>
                     <div className="z-10 w-full flex justify-center bottom-0 relative pr-12">
