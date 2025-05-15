@@ -10,20 +10,19 @@ import {
   ApiGetGamesQuestions,
   ApiUpdateQuizParticipation,
 } from "../../api-wrapper/games/ApiGames";
-import { ApiSubmitContest } from "../../api-wrapper/contest/ApiGetcontest";
 import lifelinesData from "../../utils/lifelinesData.json";
-
+import "../../styles/components/games/games.css";
 import player1 from "../../assets/images/players/player-1.webp";
 import playerYou from "../../assets/images/players/player-0.webp";
 import chatIcon from "../../assets/images/chat-icon.webp";
 import stopWatch from "../../assets/images/stopwatch.webp";
 import speakerActive from "../../assets/images/battle-speaker-active.webp";
 import speakerInactive from "../../assets/images/battle-speaker-inactive.webp";
-import fiftyfiftyImg from "../../assets/images/fifty-fifty.webp";
 import Lifelines from "../../components/Lifelines/Lifelines";
 import FiftyFiftyIcon from "../../components/Icons/FiftyFiftyIcon";
 import FlipQuestion from "../../components/Icons/FlipQuestion";
 import FreezeTime from "../../components/Icons/FreezeTime";
+
 import AudiencePoll from "../../components/Icons/AudiencePoll";
 import Coins from "../../components/Icons/Coins";
 import AdVideoIcon from "../../components/Icons/AdVideoIcon";
@@ -31,8 +30,8 @@ import CloseIcon from "../../components/Icons/CloseIcon";
 import ReportQuestion from "./ReportQuestion";
 import { toast } from "react-toastify";
 import EmojiDrawer from "../../components/EmojiDrawer/EmojiDrawer";
-import { io } from "socket.io-client";
-import { getCookie } from "../../api-wrapper/categories/ApiCategories";
+
+
 
 // 1) reducer + initialState
 const initialState = {
@@ -273,6 +272,7 @@ const Games = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const category = location.state?.categoryName;
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
+  const [audienceVotes, setAudienceVotes] = useState([0, 0, 0, 0]);
 
   generateRandomBotData(
     botUpdateCount,
@@ -308,13 +308,11 @@ const Games = () => {
       })
       .catch(console.error);
   }, []);
-
   const currentQuestion = questions[currentIndex] || {
     options: [],
     question: "",
   };
 
-  // shuffle options only when question changes
   const shuffledOptions = useMemo(() => {
     if (
       Array.isArray(currentQuestion.options) &&
@@ -323,10 +321,84 @@ const Games = () => {
       return [...currentQuestion.options].sort(() => Math.random() - 0.5);
     }
 
-    return currentQuestion?.options
-      ?.map((o) => ({ text: o, hidden: false }))
+    return currentQuestion.options
+      .map((o) => ({ text: o, hidden: false }))
       .sort(() => Math.random() - 0.5);
   }, [currentQuestion]);
+
+  const updateAudienceVotes = useCallback(() => {
+    // Get the current question's options
+    const correctAnswerIndex = shuffledOptions.indexOf(
+      currentQuestion.options[0]
+    );
+
+    // Create new vote data
+    // const newVotes = [...audienceVotes];
+    // newVotes[correctAnswerIndex] += 1;
+
+    // // Optionally add votes for other options
+    // const randomIndex = Math.floor(Math.random() * 4);
+    // if (randomIndex !== correctAnswerIndex) {
+    //   newVotes[randomIndex] += 1;
+    // }
+
+    const totalVotes = 100;
+
+    // Initialize audienceVotes with all 0 votes for the options
+    const newVotes = [0, 0, 0, 0];
+
+    // Allocate most of the votes to the correct answer
+    newVotes[correctAnswerIndex] = totalVotes * 0.75; // 75% of the votes to the correct answer
+
+    // Distribute the remaining 25% of votes randomly among the other options
+    let remainingVotes = totalVotes * 0.25;
+
+    while (remainingVotes > 0) {
+      // Randomly choose an incorrect option
+      const randomIndex = Math.floor(Math.random() * 4);
+
+      if (
+        randomIndex !== correctAnswerIndex &&
+        newVotes[randomIndex] < totalVotes * 0.25
+      ) {
+        // Add 1 vote to the randomly chosen incorrect option, ensuring no option gets more than 25% of the votes
+        newVotes[randomIndex] += 1;
+        remainingVotes--;
+      }
+    }
+
+    setAudienceVotes(newVotes?.map((item) => (item < 75 ? item + 40 : item)));
+  }, [usedLifelines]);
+
+  useEffect(() => {
+    let intervalId;
+    let timeoutId;
+    if (usedLifelines?.includes(2)) {
+      intervalId = setInterval(updateAudienceVotes, 1000); // Update votes every second
+
+      timeoutId = setTimeout(() => {
+        clearInterval(intervalId); // Stop the interval after 3 seconds
+      }, 3000);
+    }
+
+    // Cleanup
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, [usedLifelines]);
+
+  // fetch once
+  useEffect(() => {
+    ApiGetGamesQuestions(location?.state?.categoryId)
+      .then(res => {
+        if (res.isSuccess) {
+          dispatch({ type: 'SET_QUESTIONS', questions: res.data });
+          resetTimer();
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   // handle next or submit
   const goToNextOrSubmit = useCallback(() => {
@@ -371,6 +443,7 @@ const Games = () => {
         // }/
       }
     }
+    setAudienceVotes([0, 0, 0, 0]);
   }, [currentIndex, questions, score, participantId, navigate, categoryName]);
 
   // countdown
@@ -476,6 +549,16 @@ const Games = () => {
       dispatch({ type: "ACTIVATE_FREEZE_TIMER" });
     }
 
+
+    if (activeLifelineId === 2) {
+      dispatch({
+        type: "CONFIRM_LIFELINE_USE",
+        id: activeLifelineId,
+        price: cost,
+      });
+      //   dispatch({ type: "" });
+    }
+
     // 4) Close drawer & resume
     dispatch({ type: "CLOSE_LIFELINE" });
   }, [
@@ -532,9 +615,8 @@ const Games = () => {
                     />
                   </div>
                   <span
-                    className={`text-12 font-bold transition-all duration-250 ${
-                      timeLeft > 5 ? "text-white" : "text-red-700"
-                    }`}
+                    className={`text-12 font-bold transition-all duration-250 ${timeLeft > 5 ? "text-white" : "text-red-700"
+                      }`}
                   >
                     00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}s
                   </span>
@@ -663,7 +745,7 @@ const Games = () => {
                 height="30"
                 src={
                   state.hasReportedQuestions?._id ===
-                  questions[currentIndex]?._id
+                    questions[currentIndex]?._id
                     ? "https://static.quizzop.com/newton/assets/flag_inactive_dark.svg"
                     : "https://static.quizzop.com/newton/assets/flag_active_dark.svg"
                 }
@@ -700,31 +782,51 @@ const Games = () => {
               const isSelectedWrong =
                 selectedOption && text === selectedOption && !isCorrect;
 
+              const totalVotes = audienceVotes?.reduce(
+                (sum, vote) => sum + vote,
+                0
+              );
+              const votePercentage = totalVotes === 0 ? 0 : audienceVotes[idx];
+
               return (
                 <div
                   key={idx}
-                  className={`justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center min-h-[60px] ${
-                    shakeIndex === idx ? "animate-shake" : ""
-                  }`}
+                  className={`${usedLifelines?.includes(2) && votePercentage > 0
+                      ? "audience-poll"
+                      : ""
+                    }   justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center min-h-[60px] ${shakeIndex === idx ? "animate-shake" : ""
+                    } ${!votePercentage && "aud-animation"}
+                    ${votePercentage &&
+                    usedLifelines?.includes(2) &&
+                    Math.max(...audienceVotes) === votePercentage &&
+                    "active-button"
+                    }
+                  `}
                   style={{
                     backgroundColor: isCorrect
                       ? "#74C465"
                       : isSelectedWrong
-                      ? "#EF353D"
-                      : "",
+                        ? "#EF353D"
+                        : "",
                     color: hidden ? "transparent" : "",
                     pointerEvents: selectedOption || hidden ? "none" : "auto",
+                    "--votePercentage": votePercentage + "%",
                   }}
                   onClick={() =>
                     !selectedOption && !hidden && handleAnswer(text, idx)
                   }
                 >
-                  <span style={{ visibility: hidden ? "hidden" : "visible" }}>
+                  <p
+                    className={votePercentage && "width-class"}
+                    style={{ visibility: hidden ? "hidden" : "visible" }}
+                  >
                     {text}
-                  </span>
+                  </p>
+                  {/* Adjust the width directly in the .audience-poll div using the ::after pseudo-element */}
                 </div>
               );
             })}
+
           </div>
 
           {/* Lifelines Toggle */}
@@ -761,9 +863,8 @@ const Games = () => {
 
           {/* Lifeline Cards */}
           <div
-            className={`transition-all duration-300 ease-in-out overflow-hidden ${
-              lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"
-            }`}
+            className={`transition-all duration-300 ease-in-out overflow-hidden ${lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"
+              }`}
           >
             <div className="z-10 animate__playContest_fadeInUp">
               <div className="lifeline-card-container dark:text-CFFFFFF bg-CFFFFFF dark:bg-C20213F max-w-maxW animate__animated bottomsheet_animated lifeline-box-container w-full">
@@ -806,7 +907,7 @@ const Games = () => {
                   height="95"
                   decoding="async"
                   data-nimg="1"
-                  src={fiftyfiftyImg}
+                  src={IMAGEURL + activeLifeline?.image}
                   style={{ color: "transparent" }}
                 />
               </div>
