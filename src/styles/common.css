@@ -4110,7 +4110,7 @@ body {
 }
 
 .blur {
-  --tw-blur: blur(8px);
+  --tw-blur: blur(2px);
 }
 
 .blur,

@@ -49,7 +49,7 @@ const FindOponent = () => {
             return;
         }
 
-        const socketConnection = io('ws://132.148.0.148:3000', {
+        const socketConnection = io(`${import.meta.env.VITE_SOCKET_API}`, {
             extraHeaders: { Authorization: `Bearer ${authToken}` },
             autoConnect: false
         });

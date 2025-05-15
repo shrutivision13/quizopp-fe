@@ -40,6 +40,7 @@ const Header = () => {
       `/blogs-details/${articleId}`,
       "/mini-quiz-play",
       "/mini-quiz-over",
+      "/spin-wheel"
     ],
     hiddenPaths: [`/${categoryName}/play-contest`, `/${categoryName}/join-quiz`, `/${categoryName}/play-quiz`],
     freeCoinsPaths: [`/${categoryName}/begin-quiz`, '/'],
@@ -157,6 +158,9 @@ const Header = () => {
       return <span className="capitalize">{categoryName?.replace(/-/g, " ")} Articles</span>;
     } else if (path.includes(`/blogs-details/${articleId}`)) {
       return <div className="mr-10 h-30 flex flex-auto items-center justify-start"><img src={logo} alt="logo" className="h-30" /></div>;
+    
+    } else if (path.includes(`/spin-wheel`)) {
+      return "Spin Wheel";
     }
     return "Back";
   };
