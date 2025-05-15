@@ -12,6 +12,11 @@ export default defineConfig({
     "name": "Quizzop - Play Quiz, Win Coins!",
     "description": "Quizzop is a trivia/quizzing platform where the users can test their knowledge by playing quiz games in 25+ categories like History, GK, Maths, Literature etc and can win coins.",
     "icons": [
+      {
+        "src": "favicon.ico",
+        "sizes": "64x64 32x32 24x24 16x16",
+        "type": "image/x-icon"
+      },
         {
             "src": "72.png",
             "sizes": "72x72",
