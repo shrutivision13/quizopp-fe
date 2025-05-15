@@ -13,6 +13,21 @@ export default defineConfig({
     "description": "Quizzop is a trivia/quizzing platform where the users can test their knowledge by playing quiz games in 25+ categories like History, GK, Maths, Literature etc and can win coins.",
     "icons": [
         {
+            "src": "72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
             "src": "logo192.png",
             "sizes": "192x192",
             "type": "image/png"
