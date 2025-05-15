@@ -76,7 +76,7 @@ const Header = () => {
   }, [location.pathname]);
 
   const handleGoBack = () => {
-    if (path.includes('/mini-quiz-over') || path.includes(`/${categoryName}/end-quiz`)) {
+    if (path.includes('/mini-quiz-over') || path.includes(`/${categoryName}/end-quiz`) || path.includes(`/${categoryName}/contest-rank`)) {
       navigate('/');
     }
     else {
