@@ -31,6 +31,8 @@ import CloseIcon from "../../components/Icons/CloseIcon";
 import EmojiDrawer from "../../components/EmojiDrawer/EmojiDrawer";
 import ReportQuestion from "./ReportQuestion";
 
+const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
+
 // 1) reducer + initialState
 const initialState = {
   questions: [],
@@ -377,15 +379,15 @@ const Games = () => {
 
   // fetch once
   useEffect(() => {
-    ApiGetGamesQuestions("6809c8051b04c23b60a5fb37")
-      .then((res) => {
-        if (res.isSuccess) {
-          dispatch({ type: "SET_QUESTIONS", questions: res.data });
-          resetTimer();
-        }
-      })
-      .catch(console.error);
-  }, []);
+        ApiGetGamesQuestions(location?.state?.categoryId)
+            .then(res => {
+                if (res.isSuccess) {
+                    dispatch({ type: 'SET_QUESTIONS', questions: res.data });
+                    resetTimer();
+                }
+            })
+            .catch(console.error);
+    }, []);
 
   // shuffle options only when question changes
 
@@ -896,7 +898,7 @@ const Games = () => {
                   height="95"
                   decoding="async"
                   data-nimg="1"
-                  src={fiftyfiftyImg}
+                  src={IMAGEURL + activeLifeline?.image}
                   style={{ color: "transparent" }}
                 />
               </div>

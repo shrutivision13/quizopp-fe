@@ -42,7 +42,7 @@ const Header = () => {
       "/mini-quiz-over",
       "/blogs"
     ],
-    hiddenPaths: [`/${categoryName}/play-contest`, `/${categoryName}/join-quiz`, `/${categoryName}/play-quiz`],
+    hiddenPaths: [`/${categoryName}/play-contest`, '/download-app', `/${categoryName}/join-quiz`, `/${categoryName}/play-quiz`],
     freeCoinsPaths: [`/${categoryName}/begin-quiz`, '/'],
     initHeaderPaths: ["/get-started", "/start-quiz"],
   });

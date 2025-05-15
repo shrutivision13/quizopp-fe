@@ -23,6 +23,7 @@ import { AuthProtectedRoute } from "../components/AuthProtectedRoute/AuthProtect
 import FindOponent from "../pages/Games/FindOponent";
 import MiniQuizPlay from "../pages/QuizBites/MiniQuizPlay";
 import MiniQuizOver from "../pages/QuizBites/MiniQuizOver";
+import DownloadApp from "../pages/DownloadApp";
 
 export const routes = [
   {
@@ -124,5 +125,9 @@ export const routes = [
   {
     path: "/mini-quiz-over",
     element: <MiniQuizOver />,
+  },
+  {
+    path: "/download-app",
+    element: <DownloadApp />,
   },
 ];

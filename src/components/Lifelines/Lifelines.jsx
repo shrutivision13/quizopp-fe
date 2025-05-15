@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Lifelines = ({ lifelineId, label, icon, usedLifelines, activateLifeline }) => {
-    const isUsed = usedLifelines.includes(lifelineId);
+    const isUsed = usedLifelines?.includes(lifelineId);
     return (
         <div className="flex justify-center animate__animated">
             <div className="max-w-60" onClick={() => !isUsed && activateLifeline(lifelineId)}>
