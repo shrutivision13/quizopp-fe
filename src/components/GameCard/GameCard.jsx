@@ -1,4 +1,5 @@
 const GameCard = ({ game }) => {
+  const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
   return (
     <a
       href={game?.uri}
@@ -23,7 +24,7 @@ const GameCard = ({ game }) => {
             bottom: 0,
             color: "transparent",
           }}
-          src={game?.imageSrc}
+          src={`${IMAGEURL}/images/Play_Games/${game?.imageSrc}`}
         />
       </div>
       <div className="absolute inset-0 z-10 bg-gamezop-overlay rounded-20"></div>
