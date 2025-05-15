@@ -458,7 +458,6 @@ const PlayContest = () => {
   useEffect(() => {
     setTimeout(() => {
       if (currentIndex === questions.length - 1) {
-        console.log("if");
         goToNextOrSubmit();
         // setTimeout(goToNextOrSubmit, 2000);
       } else {
