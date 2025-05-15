@@ -320,7 +320,7 @@ function MenuPage({ closeMenu }) {
                       decoding="async"
                       data-nimg="1"
                       style={{ color: "transparent" }}
-                      src="/src/assets/images/gamezop_icon.webp"
+                      src="/src/assets/images/gamezop_icon.png"
                     />
                     <span className="text-12">
                       <strong>Gamezop -</strong> Play Free Games Online!
