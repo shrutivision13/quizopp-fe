@@ -317,31 +317,13 @@ const PlayContest = () => {
       currentQuestion.options[0]
     );
 
-    // Create new vote data
-    // const newVotes = [...audienceVotes];
-    // newVotes[correctAnswerIndex] += 1;
-
-    // // Optionally add votes for other options
-    // const randomIndex = Math.floor(Math.random() * 4);
-    // if (randomIndex !== correctAnswerIndex) {
-    //   newVotes[randomIndex] += 1;
-    // }
-
     const totalVotes = 100;
-
-    // Initialize audienceVotes with all 0 votes for the options
     const newVotes = [0, 0, 0, 0];
-
-    // Allocate most of the votes to the correct answer
     newVotes[correctAnswerIndex] = totalVotes * 0.75; // 75% of the votes to the correct answer
-
-    // Distribute the remaining 25% of votes randomly among the other options
     let remainingVotes = totalVotes * 0.25;
 
     while (remainingVotes > 0) {
-      // Randomly choose an incorrect option
       const randomIndex = Math.floor(Math.random() * 4);
-
       if (
         randomIndex !== correctAnswerIndex &&
         newVotes[randomIndex] < totalVotes * 0.25
@@ -637,120 +619,6 @@ const PlayContest = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="mt-14 px-20 w-full flex items-center justify-between">
-              <div className="flex">
-                <div className="relative">
-                  <div className="relative flex items-center justify-center mb-10">
-                    <img
-                      alt="player image"
-                      width="26"
-                      height="26"
-                      className="rounded-[50%]"
-                      src={playerYou}
-                    />
-                    <div id="emoji-animation" className="relative" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center">
-                  <div className="pl-10 flex flex-col text-10">
-                    <div className="text-CFAFAFA uppercase">You</div>
-                    <div className="font-bold text-CFFCC5B">Score: {score}</div>
-                  </div>
-                  <div
-                    id="chat-icon"
-                    className="ml-8 relative cursor-pointer chat-icon circle"
-                    onClick={() => setOpenEmojiDrawer(true)}
-                  >
-                    <img
-                      alt="chat icon"
-                      width="24"
-                      height="24"
-                      src={chatIcon}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex">
-                <div className="pr-10 flex flex-col text-10">
-                  <div className="text-CFAFAFA uppercase">IronHunter</div>
-                  <div className="font-bold text-CA96DFF">
-                    Score: {botScore}
-                  </div>
-                </div>
-                <div className="relative">
-                  <div className="relative flex items-center justify-center mb-10">
-                    <img
-                      alt="player image"
-                      width="26"
-                      height="26"
-                      className="rounded-[50%]"
-                      src={player1}
-                    />
-                    <div id="emoji-animation" className="relative" />
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
-            {/* <div className="w-full px-20 my-14 h-4 flex items-center justify-center mb-28">
-              <div
-                className="h-full rounded-l-10 bg-CFFD949 background-transition"
-                style={{
-                  width: `${centerPosition + playerYouOffset}%`,
-                  transition: "width 2s ease",
-                }}
-              />
-              <div className="transition-all duration-350">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="24"
-                  viewBox="0 0 23 24"
-                  fill="none"
-                >
-                  <circle
-                    cx="11.5"
-                    cy="12"
-                    r="11.22"
-                    fill="#191A32"
-                    stroke="#FFD949"
-                    strokeWidth="0.44"
-                  ></circle>
-                  <path
-                    d="M15.73 17.82L13.975 16.08L12.655 17.4L12.235 16.98C12.005 16.75 11.89 16.465 11.89 16.125C11.89 15.785 12.005 15.5 12.235 15.27L14.77 12.735C15 12.505 15.285 12.39 15.625 12.39C15.965 12.39 16.25 12.505 16.48 12.735L16.9 13.155L15.58 14.475L17.32 16.23C17.44 16.35 17.5 16.49 17.5 16.65C17.5 16.81 17.44 16.95 17.32 17.07L16.57 17.82C16.45 17.94 16.31 18 16.15 18C15.99 18 15.85 17.94 15.73 17.82ZM17.5 8.4L10.69 15.21L10.765 15.27C10.995 15.5 11.11 15.785 11.11 16.125C11.11 16.465 10.995 16.75 10.765 16.98L10.345 17.4L9.025 16.08L7.27 17.82C7.15 17.94 7.01 18 6.85 18C6.69 18 6.55 17.94 6.43 17.82L5.68 17.07C5.56 16.95 5.5 16.81 5.5 16.65C5.5 16.49 5.56 16.35 5.68 16.23L7.42 14.475L6.1 13.155L6.52 12.735C6.75 12.505 7.035 12.39 7.375 12.39C7.715 12.39 8 12.505 8.23 12.735L8.29 12.81L15.1 6H17.5V8.4ZM8.47 11.37L5.5 8.4V6H7.9L10.87 8.97L8.47 11.37Z"
-                    fill="#FFD949"
-                  ></path>
-                </svg>
-              </div>
-              <div
-                className="h-full rounded-r-10 bg-CA96DFF background-transition"
-                style={{
-                  width: `${centerPosition + player1Offset}%`,
-                  transition: "width 2s ease",
-                }}
-              />
-            </div> */}
-
-            {/* <div className="w-full px-20 my-14 h-4 flex items-center justify-center mb-28">
-                            <div className="h-full rounded-l-10 bg-CFFD949 background-transition" style={{ width: "230%" }} />
-                            <div className="transition-all duration-350">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="23"
-                                    height="24"
-                                    viewBox="0 0 23 24"
-                                    fill="none"
-                                >
-                                    <circle cx="11.5" cy="12" r="11.22" fill="#191A32" stroke="#FFD949" strokeWidth="0.44"></circle>
-                                    <path
-                                        d="M15.73 17.82L13.975 16.08L12.655 17.4L12.235 16.98C12.005 16.75 11.89 16.465 11.89 16.125C11.89 15.785 12.005 15.5 12.235 15.27L14.77 12.735C15 12.505 15.285 12.39 15.625 12.39C15.965 12.39 16.25 12.505 16.48 12.735L16.9 13.155L15.58 14.475L17.32 16.23C17.44 16.35 17.5 16.49 17.5 16.65C17.5 16.81 17.44 16.95 17.32 17.07L16.57 17.82C16.45 17.94 16.31 18 16.15 18C15.99 18 15.85 17.94 15.73 17.82ZM17.5 8.4L10.69 15.21L10.765 15.27C10.995 15.5 11.11 15.785 11.11 16.125C11.11 16.465 10.995 16.75 10.765 16.98L10.345 17.4L9.025 16.08L7.27 17.82C7.15 17.94 7.01 18 6.85 18C6.69 18 6.55 17.94 6.43 17.82L5.68 17.07C5.56 16.95 5.5 16.81 5.5 16.65C5.5 16.49 5.56 16.35 5.68 16.23L7.42 14.475L6.1 13.155L6.52 12.735C6.75 12.505 7.035 12.39 7.375 12.39C7.715 12.39 8 12.505 8.23 12.735L8.29 12.81L15.1 6H17.5V8.4ZM8.47 11.37L5.5 8.4V6H7.9L10.87 8.97L8.47 11.37Z"
-                                        fill="#FFD949"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <div className="h-full rounded-r-10 bg-CA96DFF background-transition" style={{ width: "170%" }} />
-                        </div> */}
           </div>
         </div>
 
@@ -815,7 +683,7 @@ const PlayContest = () => {
                 <div
                   key={idx}
                   className={`${
-                    usedLifelines?.includes(2) && votePercentage > 0
+                    !hidden && usedLifelines?.includes(2) && votePercentage > 0
                       ? "audience-poll"
                       : ""
                   }   justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center min-h-[60px] ${
@@ -827,6 +695,7 @@ const PlayContest = () => {
                       Math.max(...audienceVotes) === votePercentage &&
                       "active-button"
                     }
+                   
                   `}
                   style={{
                     backgroundColor: isCorrect
@@ -836,7 +705,7 @@ const PlayContest = () => {
                       : "",
                     color: hidden ? "transparent" : "",
                     pointerEvents: selectedOption || hidden ? "none" : "auto",
-                    "--votePercentage": votePercentage + "%",
+                    "--votePercentage": isCorrect ? "100%":votePercentage + "%",
                   }}
                   onClick={() =>
                     !selectedOption && !hidden && handleAnswer(text, idx)

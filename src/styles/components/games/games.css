@@ -64,6 +64,7 @@
 /* Active button gradient background */
 .active-button {
   width: var(--votePercentage);
+ 
   background: linear-gradient(
       90deg,
       #56fe34 19.75%,
@@ -71,6 +72,8 @@
     )
     no-repeat;
 }
+
+
 
 .audience-poll.active-button::after {
   background: linear-gradient(
