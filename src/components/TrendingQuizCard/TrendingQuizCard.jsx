@@ -11,7 +11,7 @@ const TrendingQuizCard = ({ category }) => {
       <Link to={`/${category?.categorySlug}/category`} state={{ _id: category?._id }}>
         <div
           className="whitespace-nowrap text-18 font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer relative flex justify-center items-center bg-CFFDEE5 h-[120px] w-[97px] rounded-[12px] pb-10"
-          style={{ backgroundColor: "rgb(248, 215, 176)" }}
+          style={{ background : category?.backgroundColor }}
         >
           <img
             alt="India"

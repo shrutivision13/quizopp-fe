@@ -17,7 +17,6 @@ const ContestsCard = ({ quizContest }) => {
         { state: { quizContest, participant: res?.data } }
       );
     })
-
   };
 
   return (

@@ -4,6 +4,7 @@ import PopularQuizTopics from "./popularQuizTopic";
 import TrendingArticles from "./TrendingArticles";
 import useCookie from "../../hooks/useCookie"; // Import useCookie hook
 import { ApiGetTrendingArticles } from "../../api-wrapper/article/ApiArticle";
+import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 
 function MenuPage({ closeMenu }) {
   const { getCookie, deleteCookie } = useCookie(); // Use deleteCookie
@@ -12,10 +13,23 @@ function MenuPage({ closeMenu }) {
   const [isMoreOptionsOpen, setIsMoreOptionsOpen] = useState(false);
   const [isOtherProductsOpen, setIsOtherProductsOpen] = useState(false);
   const [isBackHeader, setIsBackHeader] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const authToken = getCookie("authToken"); // Check for auth token
 
+  const fetchQuizs = () => {
+    ApiGetCategories()
+      .then((res) => {
+        if (res.isSuccess) {
+          setCategories(res.data);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+      });
+  }
   useEffect(() => {
+    fetchQuizs()
     setIsVisible(true);
   }, []);
 
@@ -94,7 +108,7 @@ function MenuPage({ closeMenu }) {
           </div>
         </div>
         <div style={{ backgroundColor: "#191A32" }}>
-          <PopularQuizTopics />
+          <PopularQuizTopics categories={categories} />
           <TrendingArticles closeMenu={closeMenu} />
         </div>
         <div className="flex h-full justify-between flex-col bg-C191A32">

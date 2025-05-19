@@ -1,100 +1,9 @@
 import React from "react";
 import Slider from "../../../components/Slider/Slider";
 
-function PopularQuizTopics() {
-  const quizTopics = [
-    {
-      name: "India",
-      image: "src/assets/images/india-new.webp",
-      link: "/india/category",
-      bgColor: "#f8d7b0",
-    },
-    {
-      name: "Bollywood",
-      image: "src/assets/images/bollywood.png",
-      link: "/bollywood/category",
-      bgColor: "#ffeaf3",
-    },
-    { name: "IPL", image: "", link: "/ipl/category", bgColor: "#fff0e0" },
-    {
-      name: "Hindi English",
-      image: "/src/assets/images/hindi_english.webp",
-      link: "/hindi-english/category",
-      bgColor: "#f8efff",
-    },
-    {
-      name: "SSC",
-      image: "/src/assets/images/ssc.webp",
-      link: "/ssc/category",
-      bgColor: "#ffe7d4",
-    },
-    {
-      name: "Bank PO & Clerk",
-      image: "src/assets/images/bank_po.png",
-      link: "/bank-po-clerk/category",
-      bgColor: "#c8f3ff",
-    },
-    {
-      name: "Indian Independence",
-      image: "src/assets/images/indian-independence-new.WEBP",
-      link: "/indian-independence/category",
-      bgColor: "#ffeee0",
-    },
-    {
-      name: "Indian Mythology",
-      image: "src/assets/images/indian-mythology-new.WEBP",
-      link: "/indian-mythology/category",
-      bgColor: "#efe1c3",
-    },
-    {
-      name: "Shah Rukh Khan",
-      image: "src/assets/images/srk.WEBP",
-      link: "/shah-rukh-khan/category",
-      bgColor: "#ffeae4",
-    },
-    {
-      name: "Salman Khan",
-      image: "src/assets/images/salman_khan.WEBP",
-      link: "/salman-khan/category",
-      bgColor: "#dae5ff",
-    },
-    {
-      name: "Narendra Modi",
-      image: "src/assets/images/narendra-modi.WEBP",
-      link: "/narendra-modi/category",
-      bgColor: "#ffedda",
-    },
-    {
-      name: "Mahatma Gandhi",
-      image: "src/assets/images/mahatma-gandhi.WEBP",
-      link: "/mahatma-gandhi/category",
-      bgColor: "#ffeada",
-    },
-    {
-      name: "Indian Constitution",
-      image: "src/assets/images/indian-constitution.WEBP",
-      link: "/indian-constitution/category",
-      bgColor: "#f2d4bf",
-    },
-    {
-      name: "ICC World Cup",
-      image: "src/assets/images/icc-worldcup.WEBP",
-      link: "/icc-world-cup/category",
-      bgColor: "#f3d6bb",
-    },
-    {
-      name: "Sachin Tendulkar",
-      image: "/src/assets/images/sachin_tendulkar.WEBP",
-      link: "/sachin-tendulkar/category",
-      bgColor: "#c7e5ff",
-    },
-    {
-      name: "Virat Kohli",
-      image: "/src/assets/images/virat_kohli.WEBP",
-      link: "/virat-kohli/category",
-      bgColor: "#ffe1d4",
-    },
-  ];
+function PopularQuizTopics({categories}) {
+
+  const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
 
   return (
     <>
@@ -135,29 +44,29 @@ function PopularQuizTopics() {
           <Slider arrowSize={20}>
             <div className="relative">
               <div className="flex scroll snap-x snap-mandatory overflow-scroll px-14 hide-scroll-bar">
-                {quizTopics.map((topic, index) => (
+                {categories?.map((topic, index) => (
                   <div
                     key={index}
                     className="snap-center relative rounded-20 mr-10 flex flex-col items-center justify-center min-w-[70px] first:ml-0 last:mr-0 pr-[0px]"
                     data-testid={`quiz-category-icon-${index}`}
                   >
-                    <a href={topic.link}>
+                    <a href={`/${categories?.categorySlug}`}>
                       <div
                         className="whitespace-nowrap text-18 font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-CFFDEE5 cursor-pointer relative flex justify-center items-center h-[70px] w-[70px] rounded-[12px]"
-                        style={{ backgroundColor: topic.bgColor }}
+                        style={{ backgroundColor: topic.backgroundColor }}
                       >
                         <img
-                          alt={topic.name}
+                          alt={topic.categoryName}
                           fetchPriority="high"
                           width="45"
                           height="45"
                           decoding="async"
                           style={{ color: "transparent" }}
-                          src={topic.image}
+                          src={`${IMAGEURL}/images/category/${topic?.categoryIcon}`}
                         />
                       </div>
                       <div className="pt-6 text-10 text-CBBBDDD line-clamp-1">
-                        <p className="text-center">{topic.name}</p>
+                        <p className="text-center">{topic.categoryName}</p>
                       </div>
                     </a>
                   </div>
