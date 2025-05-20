@@ -33,8 +33,8 @@ export const Contests = () => {
   const handleFetchContest = () => {
     ApiGetContests()
       .then((res) => {
-        if (res.isSuccess) {
-          setContest(res.data);
+        if (res?.isSuccess) {
+          setContest(res?.data);
         }
       })
       .catch(() => {})
@@ -46,7 +46,7 @@ export const Contests = () => {
 
     ApiGetCategories()
       .then((res) => {
-        if (res.isSuccess) {
+        if (res?.isSuccess) {
           setCategories(res.data.slice(0, 5));
         }
       })
@@ -56,8 +56,8 @@ export const Contests = () => {
   const handleChangeCategory = (category) => {
     ApiGetContestsById(category?._id)
       .then((res) => {
-        if (res.isSuccess) {
-          setContest(res.data);
+        if (res?.isSuccess) {
+          setContest(res?.data);
           setSelectedCategory(category);
         }
       })

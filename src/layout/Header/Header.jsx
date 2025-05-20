@@ -66,8 +66,8 @@ const Header = () => {
       setLoading(true);
       ApiGetWalletBalance()
         .then((res) => {
-          if (res.isSuccess) {
-            setWallet(res.data);
+          if (res?.isSuccess) {
+            setWallet(res?.data);
           }
           setLoading(false);
         })

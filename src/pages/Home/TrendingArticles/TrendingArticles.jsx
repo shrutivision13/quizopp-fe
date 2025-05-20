@@ -13,7 +13,7 @@ const TrendingArticles = () => {
     setLoading(true);
     ApiGetArticle()
       .then((res) => {
-        if (res.isSuccess) {
+        if (res?.isSuccess) {
           setArticle(res.data);
           setLoading(false);
         }

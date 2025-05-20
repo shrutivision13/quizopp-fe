@@ -11,8 +11,8 @@ const OrderHistory = () => {
     setLoading(true);
     ApiGetCoinHistory()
       .then((res) => {
-        if (res.isSuccess) {
-          setHistory(res.data);
+        if (res?.isSuccess) {
+          setHistory(res?.data);
           setLoading(false);
         }
       })

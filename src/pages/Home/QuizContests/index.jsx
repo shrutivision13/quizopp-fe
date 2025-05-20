@@ -12,8 +12,8 @@ export const QuizContests = () => {
     setLoading(true);
     ApiGetContests()  
       .then((res) => {
-        if (res.isSuccess) {
-          setContest(res.data);
+        if (res?.isSuccess) {
+          setContest(res?.data);
           setLoading(false);
         }
       })

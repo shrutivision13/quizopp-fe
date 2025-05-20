@@ -359,8 +359,8 @@ const PlayContest = () => {
   useEffect(() => {
     ApiGetContestQuestions(contestId)
       .then((res) => {
-        if (res.isSuccess) {
-          dispatch({ type: "SET_QUESTIONS", questions: res.data });
+        if (res?.isSuccess) {
+          dispatch({ type: "SET_QUESTIONS", questions: res?.data });
           resetTimer();
         }
       })
@@ -397,10 +397,10 @@ const PlayContest = () => {
         setTimeout(() => {
           ApiSubmitContest(participantId, payload)
             .then((res) => {
-              if (res.isSuccess) {
+              if (res?.isSuccess) {
                 navigate(`/${categoryName}/end-quiz`, {
                   state: {
-                    result: res.data,
+                    result: res?.data,
                     userImage: location?.state?.userImage,
                   },
                 });
