@@ -301,8 +301,8 @@ const Games = () => {
   useEffect(() => {
     ApiGetGamesQuestions(location?.state?.categoryId)
       .then((res) => {
-        if (res.isSuccess) {
-          dispatch({ type: "SET_QUESTIONS", questions: res.data });
+        if (res?.isSuccess) {
+          dispatch({ type: "SET_QUESTIONS", questions: res?.data });
           resetTimer();
         }
       })
@@ -392,8 +392,8 @@ const Games = () => {
   useEffect(() => {
     ApiGetGamesQuestions(location?.state?.categoryId)
       .then(res => {
-        if (res.isSuccess) {
-          dispatch({ type: 'SET_QUESTIONS', questions: res.data });
+        if (res?.isSuccess) {
+          dispatch({ type: 'SET_QUESTIONS', questions: res?.data });
           resetTimer();
         }
       })
@@ -429,10 +429,10 @@ const Games = () => {
         setTimeout(() => {
           ApiUpdateQuizParticipation(participantId, payload)
             .then((res) => {
-              if (res.isSuccess) {
+              if (res?.isSuccess) {
                 navigate(`/${categoryName}/end-quiz`, {
                   state: {
-                    result: res.data,
+                    result: res?.data,
                     userImage: location?.state?.userImage,
                   },
                 });
@@ -757,7 +757,7 @@ const Games = () => {
             {currentQuestion.question}
           </div>
 
-          {currentQuestion?.questionImage && (
+          {currentQuestion?.questionImage && category && (
             <div className="flex justify-center mt-22">
               <img
                 alt="QuestionImage"

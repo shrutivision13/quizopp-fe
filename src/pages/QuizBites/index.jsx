@@ -14,8 +14,8 @@ const QuizBites = () => {
   const fetchQuizBites = () => {
     ApiGetQuizBites()
       .then((res) => {
-        if (res.isSuccess) {
-          setQuizBites(res.data);
+        if (res?.isSuccess) {
+          setQuizBites(res?.data);
         }
       })
       .catch((err) => {
@@ -35,12 +35,12 @@ const QuizBites = () => {
   const handleRemove = (id) => {
     ApiRemoveQuizBites(id)
       .then((res) => {
-        if (res.isSuccess) {
+        if (res?.isSuccess) {
           fetchQuizBites()
         }
       })
       .catch((err) => {
-        toast.error(err.message, {
+        toast.error(err?.message, {
           className: "custom-error-toast",
           bodyClassName: "custom-error-toast-body",
           closeButton: false,
@@ -52,7 +52,7 @@ const QuizBites = () => {
   const handleAdd = (id) => {
       ApiAddQuizBites(id)
       .then((res) => {
-        if (res.isSuccess) {
+        if (res?.isSuccess) {
           fetchQuizBites()
         }
       })

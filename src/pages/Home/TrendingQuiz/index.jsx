@@ -9,8 +9,8 @@ const TrendingQuiz = () => {
   const fetchCategories = async () => {
     try {
       const res = await ApiGetCategories();
-      if (res.isSuccess) {
-        setCategories(res.data);
+      if (res?.isSuccess) {
+        setCategories(res?.data);
       } else {
         console.error("Error fetching categories:", res.message);
       }

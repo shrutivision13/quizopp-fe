@@ -24,7 +24,7 @@ function ContestResult() {
       );
 
     ApiGetScore(location?.state?.participantId).then((res) => {
-      if (res.isSuccess) {
+      if (res?.isSuccess) {
         setContenstDetails(res?.data);
       }
       else {

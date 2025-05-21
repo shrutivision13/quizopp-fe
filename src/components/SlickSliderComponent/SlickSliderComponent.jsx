@@ -38,7 +38,7 @@ const SlickSliderComponent = () => {
             style={{
               width: "164px",
               outline: "none",
-              width: "1804px",
+              // width: "1804px",
               opacity: "1",
 
             }}

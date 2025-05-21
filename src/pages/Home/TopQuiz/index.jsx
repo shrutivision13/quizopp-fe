@@ -19,10 +19,10 @@ const TopQuiz = ({ removeHeader, quizBites, handleRemove, handleAdd, isNavigate 
   const fetchCategories = async () => {
     try {
       const res = await ApiGetCategories();
-      if (res.isSuccess) {
-        setCategories(res.data);
+      if (res?.isSuccess) {
+        setCategories(res?.data);
       } else {
-        console.error("Error fetching categories:", res.message);
+        console.error("Error fetching categories:", res?.message);
       }
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -55,10 +55,10 @@ const TopQuiz = ({ removeHeader, quizBites, handleRemove, handleAdd, isNavigate 
     };
     ApiDislikeCategory(payload)
       .then((res) => {
-        if (res.isSuccess) {
+        if (res?.isSuccess) {
           fetchCategories();
         } else {
-          console.error("Error disliking category:", res.message);
+          console.error("Error disliking category:", res?.message);
         }
       })
       .catch((err) => {

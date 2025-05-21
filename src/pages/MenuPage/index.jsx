@@ -20,8 +20,8 @@ function MenuPage({ closeMenu }) {
   const fetchQuizs = () => {
     ApiGetCategories()
       .then((res) => {
-        if (res.isSuccess) {
-          setCategories(res.data);
+        if (res?.isSuccess) {
+          setCategories(res?.data);
         }
       })
       .catch((err) => {

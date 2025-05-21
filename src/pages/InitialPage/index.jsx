@@ -19,8 +19,8 @@ const InitialPage = () => {
     setLoading(true);
     ApiGetInitialCategory()
       .then((res) => {
-        if (res.isSuccess) {
-          setCategories(res.data);
+        if (res?.isSuccess) {
+          setCategories(res?.data);
           setLoading(false);
         }
       })

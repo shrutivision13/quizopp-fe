@@ -10,12 +10,12 @@ const TrendingGames = () => {
   useEffect(() => {
     ApiGetGames()
       .then((res) => {
-        if (res.isSuccess) {
-          setGames(res.data);
+        if (res?.isSuccess) {
+          setGames(res?.data);
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.message);
       });
   }, []);
 

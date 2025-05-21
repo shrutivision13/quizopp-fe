@@ -35,7 +35,7 @@ function Category() {
     };
     ApiGetCategories(data)
       .then((res) => {
-        if (res.isSuccess) {
+        if (res?.isSuccess) {
           setCategories(res.data);
         }
       })
@@ -83,10 +83,10 @@ function Category() {
     };
     ApiDislikeCategory(payload)
       .then((res) => {
-        if (res.isSuccess) {
+        if (res?.isSuccess) {
           fetchCategories();
         } else {
-          console.error("Error disliking category:", res.message);
+          console.error("Error disliking category:", res?.message);
         }
       })
       .catch((err) => {

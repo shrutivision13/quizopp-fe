@@ -19,7 +19,7 @@ const QuizBattlesEndQuiz = () => {
         if (participantId) {
             ApiGetQuizParticipationResult(participantId).then((res) => {
                 if (res?.isSuccess) {
-                    setResults(res.data);
+                    setResults(res?.data);
                     setLoading(false);
                 }
                 else {

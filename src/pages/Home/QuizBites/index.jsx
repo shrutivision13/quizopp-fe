@@ -11,8 +11,8 @@ const QuizBites = () => {
     setLoading(true);
     ApiGetQuizBites()
       .then((res) => {
-        if (res.isSuccess) {
-          setQuizBites(res.data);
+        if (res?.isSuccess) {
+          setQuizBites(res?.data);
           setLoading(false);
         }
       })

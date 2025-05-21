@@ -87,7 +87,7 @@ const MiniQuizPlay = () => {
               navigate("/mini-quiz-over", {
                 state: {
                   totalCorrect,
-                  totalQuestion: questions.length,
+                  totalQuestion: questions?.length,
                   prize: res,
                 },
               });
