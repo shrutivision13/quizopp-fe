@@ -4,57 +4,65 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), VitePWA({ registerType: 'autoUpdate' , devOptions: {
-    enabled: true
-  },
-  manifest: {
-    "short_name": "Quizzop",
-    "name": "Quizzop - Play Quiz, Win Coins!",
-    "description": "Quizzop is a trivia/quizzing platform where the users can test their knowledge by playing quiz games in 25+ categories like History, GK, Maths, Literature etc and can win coins.",
-    "icons": [
-      {
-        "src": "favicon.ico",
-        "sizes": "64x64 32x32 24x24 16x16",
-        "type": "image/x-icon"
-      },
+  plugins: [react(), VitePWA({
+    registerType: 'autoUpdate', devOptions: {
+      enabled: true
+    },
+    manifest: {
+      "short_name": "Quizzop",
+      "name": "Quizzop - Play Quiz, Win Coins!",
+      "description": "Quizzop is a trivia/quizzing platform where the users can test their knowledge by playing quiz games in 25+ categories like History, GK, Maths, Literature etc and can win coins.",
+      "icons": [
         {
-            "src": "72.png",
-            "sizes": "72x72",
-            "type": "image/png"
+          "src": "favicon.ico",
+          "sizes": "64x64 32x32 24x24 16x16",
+          "type": "image/x-icon"
         },
-        {
-            "src": "128.png",
-            "sizes": "128x128",
-            "type": "image/png"
-        },
-        {
-            "src": "144.png",
-            "sizes": "144x144",
-            "type": "image/png"
-        },
-        {
-            "src": "logo192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "logo512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "dir": "ltr",
-    "lang": "en",
-    "background_color": "#FEDE34",
-    "theme_color": "#FEDE34",
-    "display": "standalone",
-    "start_url": "/",
-    "orientation": "portrait"
-}
+          {
+              "src": "72.png",
+              "sizes": "72x72",
+              "type": "image/png"
+          },
+          {
+              "src": "128.png",
+              "sizes": "128x128",
+              "type": "image/png"
+          },
+          {
+              "src": "144.png",
+              "sizes": "144x144",
+              "type": "image/png"
+          },
+          {
+              "src": "256.png",
+              "sizes": "256x256",
+              "type": "image/png"
+          },
+          
+          {
+              "src": "512.png",
+              "sizes": "512x512",
+              "type": "image/png"
+          },
+          {
+              "src": "1024.png",
+              "sizes": "1024x1024",
+              "type": "image/png"
+          }
+          
+      ],
+      "dir": "ltr",
+      "lang": "en",
+      "background_color": "#FEDE34",
+      "theme_color": "#FEDE34",
+      "display": "standalone",
+      "start_url": "/",
+      "orientation": "portrait"
+    }
 
-})],
-  server:{
-    allowedHosts:true,
-    host:true
+  })],
+  server: {
+    allowedHosts: true,
+    host: true
   }
 })
