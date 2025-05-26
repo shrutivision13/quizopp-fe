@@ -6,6 +6,9 @@ import useCookie from "../../hooks/useCookie"; // Import useCookie hook
 import { ApiGetTrendingArticles } from "../../api-wrapper/article/ApiArticle";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 import adGrowLogo from "../../assets/images/adgroup.png"
+import instagram from "../../assets/images/instagram.webp";
+import facebook from "../../assets/images/facebook.webp";
+import x from "../../assets/images/x.webp";
 
 function MenuPage({ closeMenu }) {
   const { getCookie, deleteCookie } = useCookie(); // Use deleteCookie
@@ -348,7 +351,7 @@ function MenuPage({ closeMenu }) {
                   decoding="async"
                   data-nimg="1"
                   style={{ color: "transparent" }}
-                  src="/src/assets/images/instagram.webp"
+                  src={instagram}
                 />
               </div>
               <div
@@ -363,7 +366,7 @@ function MenuPage({ closeMenu }) {
                   decoding="async"
                   data-nimg="1"
                   style={{ color: "transparent" }}
-                  src="/src/assets/images/facebook.webp"
+                  src={facebook}
                 />
               </div>
               <div
@@ -378,7 +381,7 @@ function MenuPage({ closeMenu }) {
                   decoding="async"
                   data-nimg="1"
                   style={{ color: "transparent" }}
-                  src="/src/assets/images/x.webp"
+                  src={x}
                 />
               </div>
               <div

@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "../../../components/Slider/Slider";
-
+import nextYellow from "../../../assets/images/next-arrow-yellow.svg";
 function PopularQuizTopics({categories}) {
 
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
@@ -36,7 +36,7 @@ function PopularQuizTopics({categories}) {
                   height="16"
                   decoding="async"
                   style={{ color: "transparent" }}
-                  src="src/assets/images/next-arrow-yellow.svg"
+                  src={nextYellow}
                 />
               </div>
             </a>
