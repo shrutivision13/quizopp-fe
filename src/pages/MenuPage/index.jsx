@@ -7,7 +7,7 @@ import { ApiGetTrendingArticles } from "../../api-wrapper/article/ApiArticle";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
 import instagram from "../../assets/images/instagram.webp";
 import facebook from "../../assets/images/facebook.webp";
-import x from "../../assets/images/x.png";
+import x from "../../assets/images/x.webp";
 
 function MenuPage({ closeMenu }) {
   const { getCookie, deleteCookie } = useCookie(); // Use deleteCookie
