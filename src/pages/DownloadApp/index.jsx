@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SlickSliderComponent from "../../components/SlickSliderComponent/SlickSliderComponent";
 import HeroSlider from "../../components/HeroSlider/HeroSlider";
 import { useNavigate } from "react-router-dom";
+import logo from '../../assets/images/logo.png';
 
 const DownloadApp = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const DownloadApp = () => {
   };
 
   return (
-    <div className="gradientBG" style={{ marginTop: "-60px" }}>
+    <div className="" style={{ marginTop: "-60px" }}>
       <div className="flex pl-20 pr-28 pt-10 mb-14 justify-between">
         <div className="flex flex-col relative pt-8">
           <svg
@@ -50,20 +51,20 @@ const DownloadApp = () => {
                 y2="185.625"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#1D0346"></stop>
-                <stop offset="1" stopColor="#661DD8"></stop>
+                <stop stopColor="#0A2250"></stop>
+                <stop offset="1" stopColor="#223F74"></stop>
               </linearGradient>
             </defs>
           </svg>
           <div className="mb-14 z-10">
             <img
-              alt="Quizzop"
+              alt="Quizonez"
               fetchpriority="high"
               width="150"
               height="40"
               decoding="async"
-              style={{ color: "transparent" }}
-              src="https://static.quizzop.com/newton/assets/quizzop-logo-dark.svg"
+              style={{ color: "transparent", borderRadius: "4px" }}
+              src={logo}
             />
           </div>
           <div className="dark:text-CFFFFFF text-CFAFAFA font-semibold text-12 mb-26 italic relative">
@@ -78,7 +79,7 @@ const DownloadApp = () => {
             >
               <path
                 d="M2 9.69776C8 6.19776 24.1 -0.102241 40.5 2.69776"
-                stroke="#8848ED"
+                stroke="#0A2250"
                 strokeWidth="4"
                 strokeLinecap="round"
               ></path>
@@ -112,7 +113,7 @@ const DownloadApp = () => {
             onClick={() => hanldeDownload()}
             type="button"
             data-testid="download-page-downlaod-button-top"
-            className="py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 !py-10 !px-0 text-16 uppercase z-10 mb-10 cursor-pointer flex items-center flex-col select-none opacity-100"
+            className="py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B primary-button px-36 !py-10 !px-0 text-16 uppercase z-10 mb-10 cursor-pointer flex items-center flex-col select-none opacity-100"
           >
             DOWNLOAD NOW
           </button>
@@ -394,7 +395,7 @@ const DownloadApp = () => {
         images={["ironMan.png", "batman.png", "harryPotter.png"]}
       />
 
-      <div class="flex items-center justify-between" style={{marginBottom: '100px'}}>
+      <div class="flex items-center justify-between" style={{ marginBottom: '100px' }}>
         <svg
           width="93"
           height="20"
@@ -441,7 +442,7 @@ const DownloadApp = () => {
         <button
           onClick={() => hanldeDownload()}
           data-testid="download-page-download-button-bottom"
-          className="w-full py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 mx-auto flex-row  cursor-pointer flex items-center flex-col select-none opacity-100"
+          className="w-full py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B primary-button px-36 mx-auto flex-row  cursor-pointer flex items-center flex-col select-none opacity-100"
         >
           <p className="text-2xl">DOWNLOAD NOW</p>
         </button>

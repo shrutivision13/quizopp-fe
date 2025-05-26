@@ -8,9 +8,9 @@ export default defineConfig({
     enabled: true
   },
   manifest: {
-    "short_name": "Quizzop",
-    "name": "Quizzop - Play Quiz, Win Coins!",
-    "description": "Quizzop is a trivia/quizzing platform where the users can test their knowledge by playing quiz games in 25+ categories like History, GK, Maths, Literature etc and can win coins.",
+    "short_name": "Quizonez",
+    "name": "Quizonez - Play Quiz, Win Coins!",
+    "description": "Quizonez is a trivia/quizzing platform where the users can test their knowledge by playing quiz games in 25+ categories like History, GK, Maths, Literature etc and can win coins.",
     "icons": [
       {
         "src": "favicon.ico",

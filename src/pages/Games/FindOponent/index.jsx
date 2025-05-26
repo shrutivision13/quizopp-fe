@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { useLocation, useNavigate } from 'react-router-dom';
 import playerYou from '../../../assets/images/players/player-0.webp';
 import versusImage from '../../../assets/images/players/Versus.webp';
-import logo from '../../../assets/images/quizzop-logo-dark.svg';
+import logo from '../../../assets/images/logo.png';
 import useCookie from '../../../hooks/useCookie';
 
 import player1 from '../../../assets/images/players/player-1.webp';
@@ -158,7 +158,7 @@ const FindOponent = () => {
     return (
         <main className="flex flex-col items-center justify-center hide-scroll-bar h-screen">
             <div className="mt-14 flex items-center justify-center">
-                <img alt="Logo" src={logo} width={100} height={100} />
+                <img alt="Logo" src={logo} width={100} height={100} style={{borderRadius: "4px"}}/>
             </div>
 
             <div className="mt-20 w-3/5 h-1 mx-auto bg-gradient-to-r from-C40438000 via-C404380 to-C40438000" />

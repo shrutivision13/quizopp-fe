@@ -5,27 +5,11 @@
   width: 100%;
 }
 
-.style_foreground__jJqg2 {
+/* .style_foreground__jJqg2 {
   background-color: #191a32;
   max-width: 500px;
   overflow-x: hidden;
   position: relative;
   text-overflow: ellipsis;
   width: 100%;
-}
-
-@media only screen and (min-width: 492px) {
-  .style_background__W3FcZ {
-    background: url(https://static.quizzop.com/newton/assets/desktop_bg.png) 0 0/1200px
-      fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  .style_foreground__jJqg2 {
-    border-color: #282a4f;
-    border-left-width: 4px;
-    border-right-width: 4px;
-  }
-}
+} */

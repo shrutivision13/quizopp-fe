@@ -25,11 +25,15 @@ export const ApiRegisterWithGoogle = (authToken, payload) => {
 };
 
 
-export const ApiVerifyOtp = (payload) => {
+export const ApiVerifyOtp = (authToken, payload) => {
   return axios
-    .post(`${api}/auth/verifyOTP`, payload)
+    .post(`${api}/auth/verifyOTP`, payload, {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      },
+    })
     .then((response) => response?.data)
-    .catch((response) => response?.data);
+    .catch((response) => response?.response?.data);
 };
 
 export const ApiResendOTP = (payload) => {

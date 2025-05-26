@@ -37,7 +37,7 @@ const StartQuiz = () => {
         </div>
 
         <p className="text-14 mb-28 text-center font-bold text-CFAFAF9">
-          Quizzop is ready for you!
+          Quizonez is ready for you!
         </p>
 
         <PrimaryButton

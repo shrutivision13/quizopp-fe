@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MenuPage from "../../pages/MenuPage";
 import "../../styles/components/header/header.css";
 import coin from "../../assets/images/coin.png";
-import logo from "../../assets/images/quizzop-logo-dark.svg";
+import logo from "../../assets/images/logo.png";
 import sidearrow from "../../assets/images/side-arrow.svg";
 import bellGif from "../../assets/images/bell-new.gif";
 import menuIcon from "../../assets/images/icons8-menu.svg";
@@ -144,7 +144,7 @@ const Header = () => {
 
   const renderBackHeaderTitle = (path) => {
     if (path === "/contests" || path.includes("/join-contest") || path.includes("/contest-rank")) {
-      return <img src={logo} alt="Quizzop" width="100" height="18" />;
+      return <img src={logo} alt="Quizonez" width="100" height="18" style={{ height: "40px", width: "40px", borderRadius: "4px" }} />;
     } else if (path.includes("/category") && !categoryName) {
       return "Quiz Topics";
     } else if (path.includes("/category") && categoryName) {
@@ -158,8 +158,8 @@ const Header = () => {
     } else if (path.includes(`/blogs/${categoryName}`)) {
       return <span className="capitalize">{categoryName?.replace(/-/g, " ")} Articles</span>;
     } else if (path.includes(`/blogs-details/${articleId}`)) {
-      return <div className="mr-10 h-30 flex flex-auto items-center justify-start"><img src={logo} alt="logo" className="h-30" /></div>;
-    
+      return <div className="mr-10 h-30 flex flex-auto items-center justify-start"><img src={logo} alt="logo" className="h-30" style={{ height: "40px", borderRadius: "4px" }} /></div>;
+
     } else if (path.includes(`/spin-wheel`)) {
       return "Spin Wheel";
     }
@@ -192,7 +192,7 @@ const Header = () => {
             </div>
         }
         <div className="mr-10 h-30 flex flex-auto items-center justify-start">
-          <img src={logo} alt="logo" className="h-30" />
+          <img src={logo} alt="logo" className="h-30" style={{ height: "40px", borderRadius: "4px" }} />
         </div>
         <div className="flex items-center">
           {userData?.isRegister ? (
@@ -227,7 +227,7 @@ const Header = () => {
     <header className="h-60 fixed z-99 max-w-maxW top-0 w-full duration-350 bg-C26284C !mt-0">
       <div className="flex flex-row justify-between items-center h-full px-20">
         <div className="mr-10 h-30 flex flex-auto items-center justify-center">
-          <img src={logo} alt="Quizzop" width="100" height="18" />
+          <img src={logo} alt="Quizonez" width="100" height="18" style={{ height: "40px", width: "40px", borderRadius: "4px" }} />
         </div>
       </div>
     </header>

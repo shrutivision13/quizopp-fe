@@ -30,6 +30,7 @@ import CloseIcon from "../../components/Icons/CloseIcon";
 import ReportQuestion from "./ReportQuestion";
 import { toast } from "react-toastify";
 import EmojiDrawer from "../../components/EmojiDrawer/EmojiDrawer";
+import AdSlot from "../../components/AdSense/AdSlot";
 
 
 
@@ -52,13 +53,14 @@ const initialState = {
   correctAnswer: 0,
   usedLifelines: [],
   hasReportedQuestions: {},
+  audienceVotes: [0, 0, 0, 0],
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_QUESTIONS": {
       const formatOptions = (options) =>
-        options?.map((opt) => ({ text: opt?.text||opt, hidden: false }));
+        options?.map((opt) => ({ text: opt?.text || opt, hidden: false }));
 
       const formattedQs = action?.questions?.slice(0, 5)?.map((q) => ({
         ...q,
@@ -85,6 +87,7 @@ function reducer(state, action) {
         shakeIndex: null,
         timerPaused: false,
         freezeLifelineActivated: false,
+        audienceVotes: [0, 0, 0, 0],
       };
 
     case "ANSWER":
@@ -107,10 +110,12 @@ function reducer(state, action) {
       };
 
     case "ACTIVATE_LIFELINE": {
+      const resetVotes = action?.id !== 2;
       return {
         ...state,
         activeLifelineId: action?.id,
         timerPaused: true,
+        audienceVotes: resetVotes ? [0, 0, 0, 0] : state.audienceVotes,
       };
     }
     case "CONFIRM_LIFELINE_USE": {
@@ -128,6 +133,7 @@ function reducer(state, action) {
         lifelineOpen: false,
         activeLifelineId: null,
         timerPaused: state?.freezeLifelineActivated,
+        audienceVotes: [0, 0, 0, 0],
       };
 
     case "ACTIVATE_FREEZE_TIMER":
@@ -135,6 +141,7 @@ function reducer(state, action) {
         ...state,
         freezeLifelineActivated: true,
       };
+
     case "MARK_QUESTION_REPORTED":
       return {
         ...state,
@@ -143,6 +150,7 @@ function reducer(state, action) {
           _id: action.questionId,
         },
       };
+
     case "SHOW_REPORT":
       return { ...state, showReportUI: true };
 
@@ -176,6 +184,12 @@ function reducer(state, action) {
         lifelinesUsed: state.lifelinesUsed + 1,
       };
     }
+
+    case "SET_AUDIENCE_VOTES":
+      return {
+        ...state,
+        audienceVotes: action.payload,
+      };
 
     default:
       throw new Error(`Unknown action ${action.type}`);
@@ -272,7 +286,8 @@ const Games = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const category = location.state?.categoryName;
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
-  const [audienceVotes, setAudienceVotes] = useState([0, 0, 0, 0]);
+
+  // const [audienceVotes, setAudienceVotes] = useState([0, 0, 0, 0]);
 
   generateRandomBotData(
     botUpdateCount,
@@ -295,6 +310,7 @@ const Games = () => {
     showReportUI,
     timerPaused,
     usedLifelines,
+    audienceVotes
   } = state;
 
   // fetch once
@@ -326,7 +342,7 @@ const Games = () => {
       .sort(() => Math.random() - 0.5);
   }, [currentQuestion]);
 
-  const updateAudienceVotes = useCallback(() => {
+  const updateAudienceVotes = useCallback((cost) => {
     // Get the current question's options
     const correctAnswerIndex = shuffledOptions.indexOf(
       currentQuestion.options[0]
@@ -366,27 +382,32 @@ const Games = () => {
         remainingVotes--;
       }
     }
+    dispatch({ type: "SET_AUDIENCE_VOTES", payload: newVotes });
+    dispatch({
+      type: "CONFIRM_LIFELINE_USE",
+      id: activeLifelineId,
+      price: cost,
+    });
+    // setAudienceVotes(newVotes?.map((item) => (item < 75 ? item + 40 : item)));
+  }, [shuffledOptions, currentQuestion, activeLifelineId]);
 
-    setAudienceVotes(newVotes?.map((item) => (item < 75 ? item + 40 : item)));
-  }, [usedLifelines]);
+  // useEffect(() => {
+  //   let intervalId;
+  //   let timeoutId;
+  //   if (usedLifelines?.includes(2)) {
+  //     intervalId = setInterval(updateAudienceVotes, 1000); // Update votes every second
 
-  useEffect(() => {
-    let intervalId;
-    let timeoutId;
-    if (usedLifelines?.includes(2)) {
-      intervalId = setInterval(updateAudienceVotes, 1000); // Update votes every second
+  //     timeoutId = setTimeout(() => {
+  //       clearInterval(intervalId); // Stop the interval after 3 seconds
+  //     }, 3000);
+  //   }
 
-      timeoutId = setTimeout(() => {
-        clearInterval(intervalId); // Stop the interval after 3 seconds
-      }, 3000);
-    }
-
-    // Cleanup
-    return () => {
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
-    };
-  }, [usedLifelines]);
+  //   // Cleanup
+  //   return () => {
+  //     clearInterval(intervalId);
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [usedLifelines]);
 
   // fetch once
   useEffect(() => {
@@ -443,7 +464,7 @@ const Games = () => {
         // }/
       }
     }
-    setAudienceVotes([0, 0, 0, 0]);
+    // setAudienceVotes([0, 0, 0, 0]);
   }, [currentIndex, questions, score, participantId, navigate, categoryName]);
 
   // countdown
@@ -551,13 +572,16 @@ const Games = () => {
 
 
     if (activeLifelineId === 2) {
-      dispatch({
-        type: "CONFIRM_LIFELINE_USE",
-        id: activeLifelineId,
-        price: cost,
-      });
-      //   dispatch({ type: "" });
+
+
+        let intervalId;
+        intervalId = setInterval(()=>updateAudienceVotes(cost), 1000); // Update votes every second
+
+        setTimeout(() => {
+          clearInterval(intervalId); // Stop the interval after 3 seconds
+        }, 3000);
     }
+    //   dispatch({ type: "" });
 
     // 4) Close drawer & resume
     dispatch({ type: "CLOSE_LIFELINE" });
@@ -732,7 +756,7 @@ const Games = () => {
         </div>
 
         {/* Question Card */}
-        <div className="bg-CFFFFFF mx-10 my-5 p-10 pt-0 border-1 rounded-10 border-CF1F1F1 shadow-quizCard dark:border-C26284C dark:bg-C20213F relative pb-30">
+        <div className="bg-CFFFFFF mx-10 my-5 p-10 pt-0 border-1 rounded-10 border-CF1F1F1 shadow-quizCard dark:border-C26284C dark:bg-C20213F relative pb-30" style={{ width: "90%" }}>
           <div className="flex items-end justify-between mt-8">
             <div className="font-bold text-C4782F4 dark:text-CBAC8FF">
               <span className="text-20 font-bold">{currentIndex + 1}</span>
@@ -792,8 +816,8 @@ const Games = () => {
                 <div
                   key={idx}
                   className={`${usedLifelines?.includes(2) && votePercentage > 0
-                      ? "audience-poll"
-                      : ""
+                    ? "audience-poll"
+                    : ""
                     }   justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center min-h-[60px] ${shakeIndex === idx ? "animate-shake" : ""
                     } ${!votePercentage && "aud-animation"}
                     ${votePercentage &&
@@ -830,7 +854,7 @@ const Games = () => {
           </div>
 
           {/* Lifelines Toggle */}
-          <div className="cursor-pointer flex justify-center text-center -mt-12 z-40 absolute -bottom-16 left-1/2 -translate-x-1/2">
+          <div className="bg-C20213F cursor-pointer flex rounded-full justify-center text-center -mt-12 z-40 absolute -bottom-16 left-1/2 -translate-x-1/2">
             <div
               onClick={toggleLifelines}
               className="border border-CC7C7C7 text-CC7C7C7 dark:text-CFAFAFA dark:border-C404380 rounded-full py-4 px-16 mb-4 bg-CFAFAFA dark:bg-C191A32 transition-all"
@@ -930,7 +954,7 @@ const Games = () => {
             <p className="px-20 mt-20 font-bold text-14 text-C8789C3">OR</p>
             <button
               onClick={handleUseForCoins}
-              className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground py-12 px-48 mt-10 w-full text-lg border rounded-2 border-C8789C3 bg-C20213F hover:bg-C20213F text-primary-foreground"
+              className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 py-12 px-48 mt-10 w-full text-lg border rounded-2 border-C8789C3 bg-C20213F hover:bg-C20213F text-primary-foreground"
             >
               <p className="text-2xl">Use for</p>
               <Coins />
@@ -962,6 +986,12 @@ const Games = () => {
           />
         )}
       </div>
+      <AdSlot
+        slotId="div-gpt-ad-1745314508467-0"
+        adUnitPath="/23289596447/adx6"
+        sizes={[336, 5]}
+      // sizes={[336, 280]}
+      />
     </>
   );
 };

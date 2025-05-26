@@ -5,6 +5,7 @@ import TrendingArticles from "./TrendingArticles";
 import useCookie from "../../hooks/useCookie"; // Import useCookie hook
 import { ApiGetTrendingArticles } from "../../api-wrapper/article/ApiArticle";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
+import adGrowLogo from "../../assets/images/adgroup.png"
 
 function MenuPage({ closeMenu }) {
   const { getCookie, deleteCookie } = useCookie(); // Use deleteCookie
@@ -64,9 +65,8 @@ function MenuPage({ closeMenu }) {
     >
       <div
         id="sidebar-brackdrop"
-        className={`absolute left-0 top-0 transition-all duration-250 transform-gpu h-full w-full bg-C000000DE ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute left-0 top-0 transition-all duration-250 transform-gpu h-full w-full bg-C000000DE ${isVisible ? "opacity-100" : "opacity-0"
+          }`}
         style={{ pointerEvents: isVisible ? "auto" : "none" }}
         onClick={handleClose}
       ></div>
@@ -107,7 +107,7 @@ function MenuPage({ closeMenu }) {
             </div>
           </div>
         </div>
-        <div style={{ backgroundColor: "#191A32" }}>
+        <div style={{ padding: "10px 5px", borderRadius: "10px" }}>
           <PopularQuizTopics categories={categories} />
           <TrendingArticles closeMenu={closeMenu} />
         </div>
@@ -127,9 +127,8 @@ function MenuPage({ closeMenu }) {
                     viewBox="0 0 21 21"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`fill-current text-C8789C3 transform transition-transform ${
-                      isMoreOptionsOpen ? "rotate-180" : ""
-                    }`}
+                    className={`fill-current text-C8789C3 transform transition-transform ${isMoreOptionsOpen ? "rotate-180" : ""
+                      }`}
                   >
                     <path d="M10.8461 13.827L15.6741 9C15.7849 8.88852 15.8471 8.7377 15.8471 8.5805C15.8471 8.4233 15.7849 8.27248 15.6741 8.161L15.3191 7.805C15.2077 7.69392 15.0569 7.63154 14.8996 7.63154C14.7423 7.63154 14.5914 7.69392 14.4801 7.805L10.4251 11.859L6.36707 7.8C6.25559 7.68917 6.10477 7.62695 5.94757 7.62695C5.79037 7.62695 5.63955 7.68917 5.52807 7.8L5.17207 8.156C5.06124 8.26748 4.99902 8.4183 4.99902 8.5755C4.99902 8.7327 5.06124 8.88352 5.17207 8.995L10.0041 13.827C10.1163 13.9375 10.2675 13.9995 10.4251 13.9995C10.5826 13.9995 10.7338 13.9375 10.8461 13.827Z"></path>
                   </svg>
@@ -190,42 +189,26 @@ function MenuPage({ closeMenu }) {
                   </div>
                   <hr className="mx-14 border-C404380" />
                 </a>
-                <div>
-                  <div className="text=[12px] font-medium text-CBBBDDD text-left">
-                    <div className="flex items-center gap-10 p-14 pl-28">
-                      <img
-                        alt="drawer_icon"
-                        loading="lazy"
-                        width="32"
-                        height="32"
-                        decoding="async"
-                        data-nimg="1"
-                        style={{ color: "transparent" }}
-                        src="https://static.quizzop.com/newton/assets/ic_partner_with_us_dark.svg"
-                      />
-                      <span className="text-12">Partner With Us</span>
+                <a target="_self" href="https://adgrowup.com">
+                  <div>
+                    <div className="text=[12px] font-medium text-CBBBDDD text-left">
+                      <div className="flex items-center gap-10 p-14 pl-28">
+                        <img
+                          alt="drawer_icon"
+                          loading="lazy"
+                          width="32"
+                          height="32"
+                          decoding="async"
+                          data-nimg="1"
+                          style={{ color: "transparent" }}
+                          src="https://static.quizzop.com/newton/assets/ic_partner_with_us_dark.svg"
+                        />
+                        <span className="text-12">Partner With Us</span>
+                      </div>
+                      <hr className="mx-14 border-C404380" />
                     </div>
-                    <hr className="mx-14 border-C404380" />
                   </div>
-                </div>
-                <div>
-                  <div className="text=[12px] font-medium text-CBBBDDD text-left">
-                    <div className="flex items-center gap-10 p-14 pl-28">
-                      <img
-                        alt="drawer_icon"
-                        loading="lazy"
-                        width="32"
-                        height="32"
-                        decoding="async"
-                        data-nimg="1"
-                        style={{ color: "transparent" }}
-                        src="https://static.quizzop.com/newton/assets/ic_issue_dark.svg"
-                      />
-                      <span className="text-12">Report An Issue</span>
-                    </div>
-                    <hr className="mx-14 border-C404380" />
-                  </div>
-                </div>
+                </a>
                 <a href="/download-app">
                   <div>
                     <div className="text=[12px] font-medium text-CBBBDDD text-left">
@@ -271,7 +254,7 @@ function MenuPage({ closeMenu }) {
                           fill="white"
                         ></path>
                       </svg>
-                      <span className="text-12">Join QUIZZOP</span>
+                      <span className="text-12">Join QUIZONEZ</span>
                     </div>
                   </a>
                 )}
@@ -312,9 +295,8 @@ function MenuPage({ closeMenu }) {
                     viewBox="0 0 21 21"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`fill-current text-C8789C3 transform transition-transform ${
-                      isOtherProductsOpen ? "rotate-180" : ""
-                    }`}
+                    className={`fill-current text-C8789C3 transform transition-transform ${isOtherProductsOpen ? "rotate-180" : ""
+                      }`}
                   >
                     <path d="M10.8461 13.827L15.6741 9C15.7849 8.88852 15.8471 8.7377 15.8471 8.5805C15.8471 8.4233 15.7849 8.27248 15.6741 8.161L15.3191 7.805C15.2077 7.69392 15.0569 7.63154 14.8996 7.63154C14.7423 7.63154 14.5914 7.69392 14.4801 7.805L10.4251 11.859L6.36707 7.8C6.25559 7.68917 6.10477 7.62695 5.94757 7.62695C5.79037 7.62695 5.63955 7.68917 5.52807 7.8L5.17207 8.156C5.06124 8.26748 4.99902 8.4183 4.99902 8.5755C4.99902 8.7327 5.06124 8.88352 5.17207 8.995L10.0041 13.827C10.1163 13.9375 10.2675 13.9995 10.4251 13.9995C10.5826 13.9995 10.7338 13.9375 10.8461 13.827Z"></path>
                   </svg>
@@ -324,78 +306,23 @@ function MenuPage({ closeMenu }) {
                 className="text-14 text-CFAFAFA transition-all duration-350 overflow-hidden"
                 style={{ height: isOtherProductsOpen ? "auto" : "0px" }}
               >
-                <a target="_blank" href="https://cfuucl7YgA.play.gamezop.com">
+                <a target="_blank" href="https://adgrowup.com">
                   <div className="text-12 font-medium text-CBBBDDD text-left p-14 pl-28 flex items-center gap-10">
                     <img
                       alt="drawer icon"
                       loading="lazy"
-                      width="32"
-                      height="32"
+                      width="55"
+                      height="55"
                       decoding="async"
                       data-nimg="1"
                       style={{ color: "transparent" }}
-                      src="/src/assets/images/gamezop_icon.png"
+                      src={adGrowLogo}
                     />
                     <span className="text-12">
-                      <strong>Gamezop -</strong> Play Free Games Online!
+                      <strong>AdGrowUp</strong>
                     </span>
                   </div>
                   <hr className="mx-14 border-C404380" />
-                </a>
-                <a target="_blank" href="https://6302.read.astrozop.com">
-                  <div className="text-12 font-medium text-CBBBDDD text-left p-14 pl-28 flex items-center gap-10">
-                    <img
-                      alt="drawer icon"
-                      loading="lazy"
-                      width="32"
-                      height="32"
-                      decoding="async"
-                      data-nimg="1"
-                      style={{ color: "transparent" }}
-                      src="/src/assets/images/astrozop_icon.webp"
-                    />
-                    <span className="text-12">
-                      <strong>Astrozop -</strong> Daily Horoscope For Your Sun
-                      Sign
-                    </span>
-                  </div>
-                  <hr className="mx-14 border-C404380" />
-                </a>
-                <a target="_blank" href="https://5571.read.newszop.com">
-                  <div className="text-12 font-medium text-CBBBDDD text-left p-14 pl-28 flex items-center gap-10">
-                    <img
-                      alt="drawer icon"
-                      loading="lazy"
-                      width="32"
-                      height="32"
-                      decoding="async"
-                      data-nimg="1"
-                      style={{ color: "transparent" }}
-                      src="/src/assets/images/newszop_icon.webp"
-                    />
-                    <span className="text-12">
-                      <strong>Newszop -</strong> Get The Latest News Updates!
-                    </span>
-                  </div>
-                  <hr className="mx-14 border-C404380" />
-                </a>
-                <a target="_blank" href="https://6508.read.criczop.com">
-                  <div className="text-12 font-medium text-CBBBDDD text-left p-14 pl-28 flex items-center gap-10">
-                    <img
-                      alt="drawer icon"
-                      loading="lazy"
-                      width="32"
-                      height="32"
-                      decoding="async"
-                      data-nimg="1"
-                      style={{ color: "transparent" }}
-                      src="/src/assets/images/criczop.webp"
-                    />
-                    <span className="text-12">
-                      <strong>Criczop -</strong> Never Miss Any LIVE Cricket
-                      Update!
-                    </span>
-                  </div>
                 </a>
               </div>
             </div>

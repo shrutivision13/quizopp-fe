@@ -157,7 +157,7 @@ const AllArticlesCard = ({
                       </div>
                       <p className="text-[12px] text-C2C2C2C dark:text-CFAFAFA">
                         Play fun quizzes and read informative blogs on 40+
-                        topics and win coins. Join Quizzop now!!
+                        topics and win coins. Join Quizonez now!!
                       </p>
                     </div>
                     <div>
@@ -216,7 +216,7 @@ const AllArticlesCard = ({
                       </div>
                       <p className="text-[12px] text-C2C2C2C dark:text-CFAFAFA">
                         Play fun quizzes and read informative blogs on 40+
-                        topics and win coins. Join Quizzop now!!
+                        topics and win coins. Join Quizonez now!!
                       </p>
                     </div>
                     <div>

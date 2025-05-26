@@ -67,7 +67,7 @@ const PhoneLogin = () => {
       <div>
         <div className="text-center">
           <div className="font-black text-18 mt-36 dark:text-CFFFFFF">
-            Join Quizzop now! 👋
+            Join Quizonez now! 👋
           </div>
           <div className="mt-4 text-12 text-C676767 dark:text-C8789C3">
             For users in India only
@@ -117,7 +117,7 @@ const PhoneLogin = () => {
                 ? "phone-login-button-active"
                 : "phone-login-button-inactive"
             }
-            className={`w-calc60 m-auto max-w-360 py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 cursor-pointer flex items-center flex-col select-none ${isTouched
+            className={`w-calc60 m-auto max-w-360 py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B primary-button px-36 cursor-pointer flex items-center flex-col select-none ${isTouched
                 ? isValid
                   ? "opacity-100"
                   : "opacity-70"

@@ -274,7 +274,7 @@ const WheelCanvas = () => {
             </div>
             {!isSpinning &&  <div class="fixed w-full max-w-maxW bottom-0 z-50 bg-CFAFAFA dark:bg-C26284C ">
               <div class="my-30 mx-20">
-                <button data-testid="spin-wheel-button" disabled={spinCount === 2} onClick={handleSpin} class={`py-12 text-center w-full inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 mt-30 mx-auto flex-row lifeline-button  cursor-pointer flex items-center flex-col select-none ${spinCount === 2 ? "opacity-70" :"opacity-100"
+                <button data-testid="spin-wheel-button" disabled={spinCount === 2} onClick={handleSpin} className={`py-12 text-center w-full inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B primary-button px-36 mt-30 mx-auto flex-row lifeline-button  cursor-pointer flex items-center flex-col select-none ${spinCount === 2 ? "opacity-70" :"opacity-100"
 
                 }`}>
                   <p class="text-2xl">{rotate ? spinCount === 1 ? "Spin Again":" " : "Spin the Wheel"} {spinCount === 2 &&spinTimer && <CountdownTimer endTime={spinTimer} text='Next Spin In ' className='text-2xl'/>}</p>

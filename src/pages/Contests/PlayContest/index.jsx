@@ -45,13 +45,14 @@ const initialState = {
   correctAnswer: 0,
   usedLifelines: [],
   hasReportedQuestions: {},
+  audienceVotes: [0, 0, 0, 0],
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_QUESTIONS": {
-      const formatOptions = (options) =>{
-        return options?.map((opt) => ({ text: opt?.text||opt, hidden: false }));
+      const formatOptions = (options) => {
+        return options?.map((opt) => ({ text: opt?.text || opt, hidden: false }));
       }
 
 
@@ -59,7 +60,7 @@ function reducer(state, action) {
         ...q,
         options: formatOptions(q.options),
       }));
-      
+
       const extraQuestion = {
         ...action.questions[5],
         options: formatOptions(action.questions[5].options),
@@ -80,6 +81,7 @@ function reducer(state, action) {
         shakeIndex: null,
         timerPaused: false,
         freezeLifelineActivated: false,
+        audienceVotes: [0, 0, 0, 0],
       };
 
     case "ANSWER":
@@ -102,10 +104,12 @@ function reducer(state, action) {
       };
 
     case "ACTIVATE_LIFELINE": {
+      const resetVotes = action?.id !== 2;
       return {
         ...state,
         activeLifelineId: action.id,
         timerPaused: true,
+        audienceVotes: resetVotes ? [0, 0, 0, 0] : state.audienceVotes,
       };
     }
     case "CONFIRM_LIFELINE_USE": {
@@ -123,6 +127,7 @@ function reducer(state, action) {
         lifelineOpen: false,
         activeLifelineId: null,
         timerPaused: state.freezeLifelineActivated,
+        audienceVotes: [0, 0, 0, 0],
       };
 
     case "ACTIVATE_FREEZE_TIMER":
@@ -173,6 +178,12 @@ function reducer(state, action) {
         lifelinesUsed: state.lifelinesUsed + 1,
       };
     }
+
+    case "SET_AUDIENCE_VOTES":
+      return {
+        ...state,
+        audienceVotes: action.payload,
+      };
 
     default:
       throw new Error(`Unknown action ${action.type}`);
@@ -267,7 +278,7 @@ const PlayContest = () => {
   const [openEmojiDrawer, setOpenEmojiDrawer] = useState(false);
   const category = location.state?.categoryName;
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [audienceVotes, setAudienceVotes] = useState([0, 0, 0, 0]);
+  // const [audienceVotes, setAudienceVotes] = useState([0, 0, 0, 0]);
   const timeAllow = location.state?.timeAllowed;
 
   generateRandomBotData(
@@ -291,6 +302,7 @@ const PlayContest = () => {
     showReportUI,
     timerPaused,
     usedLifelines,
+    audienceVotes
   } = state;
 
   const currentQuestion = questions[currentIndex] || {
@@ -311,7 +323,7 @@ const PlayContest = () => {
       .sort(() => Math.random() - 0.5);
   }, [currentQuestion]);
 
-  const updateAudienceVotes = useCallback(() => {
+  const updateAudienceVotes = useCallback((cost) => {
     // Get the current question's options
     const correctAnswerIndex = shuffledOptions.indexOf(
       currentQuestion.options[0]
@@ -334,26 +346,34 @@ const PlayContest = () => {
       }
     }
 
-    setAudienceVotes(newVotes?.map((item) => (item < 75 ? item + 40 : item)));
-  }, [usedLifelines]);
+    dispatch({ type: "SET_AUDIENCE_VOTES", payload: newVotes });
+    dispatch({
+      type: "CONFIRM_LIFELINE_USE",
+      id: activeLifelineId,
+      price: cost,
+    });
 
-  useEffect(() => {
-    let intervalId;
-    let timeoutId;
-    if (usedLifelines?.includes(2)) {
-      intervalId = setInterval(updateAudienceVotes, 1000); // Update votes every second
+    // setAudienceVotes(newVotes?.map((item) => (item < 75 ? item + 40 : item)));
+  }, [shuffledOptions, currentQuestion, activeLifelineId]);
 
-      timeoutId = setTimeout(() => {
-        clearInterval(intervalId); // Stop the interval after 3 seconds
-      }, 3000);
-    }
+  // useEffect(() => {
+  //   let intervalId;
+  //   let timeoutId;
+  //   if (usedLifelines?.includes(2)) {
+  //     intervalId = setInterval(updateAudienceVotes, 1000); // Update votes every second
 
-    // Cleanup
-    return () => {
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
-    };
-  }, [usedLifelines]);
+  //     timeoutId = setTimeout(() => {
+  //       clearInterval(intervalId); // Stop the interval after 3 seconds
+  //     }, 3000);
+  //   }
+
+  //   // Cleanup
+  //   return () => {
+  //     clearInterval(intervalId);
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [usedLifelines]);
+
 
   // fetch once
   useEffect(() => {
@@ -410,7 +430,7 @@ const PlayContest = () => {
         }, 200);
       }
     }
-    setAudienceVotes([0, 0, 0, 0]);
+    // setAudienceVotes([0, 0, 0, 0]);
   }, [currentIndex, questions, score, participantId, navigate, categoryName]);
 
   // countdown
@@ -516,11 +536,12 @@ const PlayContest = () => {
       dispatch({ type: "ACTIVATE_FREEZE_TIMER" });
     }
     if (activeLifelineId === 2) {
-      dispatch({
-        type: "CONFIRM_LIFELINE_USE",
-        id: activeLifelineId,
-        price: cost,
-      });
+      let intervalId;
+      intervalId = setInterval(() => updateAudienceVotes(cost), 1000); // Update votes every second
+
+      setTimeout(() => {
+        clearInterval(intervalId); // Stop the interval after 3 seconds
+      }, 3000);
       //   dispatch({ type: "" });
     }
 
@@ -623,7 +644,7 @@ const PlayContest = () => {
         </div>
 
         {/* Question Card */}
-        <div className="bg-CFFFFFF mx-10 my-5 p-10 pt-0 border-1 rounded-10 border-CF1F1F1 shadow-quizCard dark:border-C26284C dark:bg-C20213F relative pb-30">
+        <div className="bg-CFFFFFF mx-10 my-5 p-10 pt-0 border-1 rounded-10 border-CF1F1F1 shadow-quizCard dark:border-C26284C dark:bg-C20213F relative pb-30" style={{ width: "90%" }}>
           <div className="flex items-end justify-between mt-8">
             <div className="font-bold text-C4782F4 dark:text-CBAC8FF">
               <span className="text-20 font-bold">{currentIndex + 1}</span>
@@ -636,7 +657,7 @@ const PlayContest = () => {
                 height="30"
                 src={
                   state.hasReportedQuestions?._id ===
-                  questions[currentIndex]?._id
+                    questions[currentIndex]?._id
                     ? "https://static.quizzop.com/newton/assets/flag_inactive_dark.svg"
                     : "https://static.quizzop.com/newton/assets/flag_active_dark.svg"
                 }
@@ -682,18 +703,15 @@ const PlayContest = () => {
               return (
                 <div
                   key={idx}
-                  className={`${
-                    !hidden && usedLifelines?.includes(2) && votePercentage > 0
-                      ? "audience-poll"
-                      : ""
-                  }   justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center min-h-[60px] ${
-                    shakeIndex === idx ? "animate-shake" : ""
-                  } ${!votePercentage && "aud-animation"}
-                    ${
-                      votePercentage &&
-                      usedLifelines?.includes(2) &&
-                      Math.max(...audienceVotes) === votePercentage &&
-                      "active-button"
+                  className={`${!hidden && usedLifelines?.includes(2) && votePercentage > 0
+                    ? "audience-poll"
+                    : ""
+                    }   justify-center py-10 text-14 shadow-quizCard border-1 font-medium rounded-10 bg-CFFFFFF border-CF1F1F1 dark:text-CFFFFFF dark:border-C26284C dark:bg-C26284C px-22 answer-input cursor-pointer flex items-center flex-col select-none text-center min-h-[60px] ${shakeIndex === idx ? "animate-shake" : ""
+                    } ${!votePercentage && "aud-animation"}
+                    ${votePercentage &&
+                    usedLifelines?.includes(2) &&
+                    Math.max(...audienceVotes) === votePercentage &&
+                    "active-button"
                     }
                    
                   `}
@@ -701,11 +719,11 @@ const PlayContest = () => {
                     backgroundColor: isCorrect
                       ? "#74C465"
                       : isSelectedWrong
-                      ? "#EF353D"
-                      : "",
+                        ? "#EF353D"
+                        : "",
                     color: hidden ? "transparent" : "",
                     pointerEvents: selectedOption || hidden ? "none" : "auto",
-                    "--votePercentage": isCorrect ? "100%":votePercentage + "%",
+                    "--votePercentage": isCorrect ? "100%" : votePercentage + "%",
                   }}
                   onClick={() =>
                     !selectedOption && !hidden && handleAnswer(text, idx)
@@ -724,7 +742,7 @@ const PlayContest = () => {
           </div>
 
           {/* Lifelines Toggle */}
-          <div className="cursor-pointer flex justify-center text-center -mt-12 z-40 absolute -bottom-16 left-1/2 -translate-x-1/2">
+          <div className="bg-C20213F cursor-pointer flex rounded-full justify-center text-center -mt-12 z-40 absolute -bottom-16 left-1/2 -translate-x-1/2">
             <div
               onClick={toggleLifelines}
               className="border border-CC7C7C7 text-CC7C7C7 dark:text-CFAFAFA dark:border-C404380 rounded-full py-4 px-16 mb-4 bg-CFAFAFA dark:bg-C191A32 transition-all"
@@ -757,9 +775,8 @@ const PlayContest = () => {
 
           {/* Lifeline Cards */}
           <div
-            className={`transition-all duration-300 ease-in-out overflow-hidden ${
-              lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"
-            }`}
+            className={`transition-all duration-300 ease-in-out overflow-hidden ${lifelineOpen ? "h-auto opacity-100 mt-5" : "h-0 opacity-0"
+              }`}
           >
             <div className="z-10 animate__playContest_fadeInUp">
               <div className="lifeline-card-container dark:text-CFFFFFF bg-CFFFFFF dark:bg-C20213F max-w-maxW animate__animated bottomsheet_animated lifeline-box-container w-full">
@@ -825,7 +842,7 @@ const PlayContest = () => {
             <p className="px-20 mt-20 font-bold text-14 text-C8789C3">OR</p>
             <button
               onClick={handleUseForCoins}
-              className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground py-12 px-48 mt-10 w-full text-lg border rounded-2 border-C8789C3 bg-C20213F hover:bg-C20213F text-primary-foreground"
+              className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 py-12 px-48 mt-10 w-full text-lg border rounded-2 border-C8789C3 bg-C20213F hover:bg-C20213F text-primary-foreground"
             >
               <p className="text-2xl">Use for</p>
               <Coins />
@@ -860,9 +877,8 @@ const PlayContest = () => {
         slotId="div-gpt-ad-1745314508467-0"
         adUnitPath="/23289596447/adx6"
         sizes={[336, 5]}
-        // sizes={[336, 280]}
+      // sizes={[336, 280]}
       />
-      F
     </>
   );
 };

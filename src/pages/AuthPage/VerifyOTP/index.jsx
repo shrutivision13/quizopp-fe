@@ -2,14 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ApiResendOTP, ApiVerifyOtp } from '../../../api-wrapper/Auth/ApiRegisterWithPhone'; // Adjust the import path as necessary
 import useCookie from '../../../hooks/useCookie';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { getCookie } from '../../../api-wrapper/categories/ApiCategories';
 
 const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
     const [showResendButton, setShowResendButton] = useState(false);
     const [timer, setTimer] = useState(20);
+    const authToken = getCookie("authToken");
     const inputRefs = useRef([]);
     const { setCookie } = useCookie();
+    const navigate = useNavigate();
 
     const handleChange = (e, index) => {
         const value = e.target.value.replace(/\D/, '')
@@ -52,13 +56,13 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
             otp: enteredOtp,
         };
 
-        ApiVerifyOtp(payload)
+        ApiVerifyOtp(authToken, payload)
             .then((response) => {
                 if (response?.isSuccess) {
                     setCookie('authToken', response.data.authToken);
-
+                    navigate('/');
                 } else {
-                    toast.error(err.message, {
+                    toast.error(response?.message, {
                         className: "custom-error-toast",
                         bodyClassName: "custom-error-toast-body",
                         closeButton: false,
@@ -123,7 +127,7 @@ const VerifyOTP = ({ phoneNumber, onChangeNumber }) => {
                     data-testid="phone-login-otp-button-inactive"
                     disabled={!isSubmitEnabled}
                     onClick={handleSubmit}
-                    className={`py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 w-full mt-36 cursor-pointer flex items-center flex-col select-none ${isSubmitEnabled ? 'opacity-100' : 'opacity-70'
+                    className={`py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B primary-button px-36 w-full mt-36 cursor-pointer flex items-center flex-col select-none ${isSubmitEnabled ? 'opacity-100' : 'opacity-70'
                         }`}
                 >
                     Submit OTP

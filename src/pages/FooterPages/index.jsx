@@ -5,7 +5,7 @@ import PrivacyPolicy from './PrivacyPolicy'
 const FooterPage = () => {
     return (
         <>
-            {/* <Header /> */}
+           
             <PrivacyPolicy/>
         </>
     )

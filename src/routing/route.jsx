@@ -24,6 +24,8 @@ import FindOponent from "../pages/Games/FindOponent";
 import MiniQuizPlay from "../pages/QuizBites/MiniQuizPlay";
 import MiniQuizOver from "../pages/QuizBites/MiniQuizOver";
 import DownloadApp from "../pages/DownloadApp";
+import TermsofUse from "../pages/FooterPages/TermsofUse";
+import PrivacyPolicy from "../pages/FooterPages/PrivacyPolicy";
 
 export const routes = [
   {
@@ -129,5 +131,13 @@ export const routes = [
   {
     path: "/download-app",
     element: <DownloadApp />,
+  },
+   {
+    path: "/termsofuse",
+    element: <TermsofUse />,
+  },
+  {
+    path: "/privacy-policy",
+    element: <PrivacyPolicy />,
   },
 ];

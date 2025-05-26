@@ -13,7 +13,7 @@ import ArticlesCarousel from "../../components/ArticlesCarousel/ArticlesCarousel
 import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
 
 const shareData = {
-    title: 'Quizzop',
+    title: 'Quizonez',
     text: 'Check out this cool quiz platform!',
     url: 'https://www.qizzop.com',
 };
@@ -247,7 +247,7 @@ const BlogArticlesDetails = () => {
                                     style={{ color: 'transparent', width: '100%', height: 'auto' }}
                                 />
                                 <div className="absolute top-[50%] translate-y-[-50%] left-20 w-[210px] z-10 text-16 font-black text-CFAFAFA">
-                                    <p className="mb-10">Never Miss An Update From Quizzop!</p>
+                                    <p className="mb-10">Never Miss An Update From Quizonez!</p>
                                     <p className="text-14 text-CFFCC5B">TURN ON NOTIFICATIONS</p>
                                 </div>
                             </div>

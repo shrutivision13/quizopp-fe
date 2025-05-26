@@ -9,9 +9,9 @@ function PopularQuizTopics({categories}) {
     <>
       <div
         style={{
-          backgroundColor: "#20213F",
-          margin: "5px",
-          padding: "5px",
+          backgroundColor: "#0A2250",
+          margin: "10px 5px",
+          padding: "10px 5px",
           borderRadius: "10px",
         }}
         id="S:4"

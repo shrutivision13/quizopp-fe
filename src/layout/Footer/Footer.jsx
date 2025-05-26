@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom'; // Import useLocation
+import { Link, useLocation, useParams } from 'react-router-dom'; // Import useLocation
 import '../../styles/components/footer/footer.css';
 import arrow from '../../assets/images/arrow.svg';
-import logo from '../../assets/images/quizzop-logo-dark.svg';
+import logo from '../../assets/images/logo.png';
 
 const Footer = ({ gameStarted }) => {
   const { categoryName } = useParams();
@@ -34,16 +34,16 @@ const Footer = ({ gameStarted }) => {
         onClick={toggleFooter}
       >
         <div
-          className={`mr-10 h-30 flex items-center gap-10 ${isOpen ? "justify-center flex-1" : ""
+          className={`mr-10 h-30 flex items-center py-20 gap-10 ${isOpen ? "justify-center flex-1" : ""
             }`}
         >
           <img
-            alt="Quizzop"
+            alt="Quizonez"
             fetchPriority="high"
             width="100"
             height="21"
             decoding="async"
-            style={{ color: "transparent" }}
+            style={{ color: "transparent", height: "50px", width: "50px", borderRadius: "4px" }}
             src={logo}
           />
           {!isOpen && (
@@ -67,45 +67,38 @@ const Footer = ({ gameStarted }) => {
           {!gameStarted ? (
             <div>
               <div className="transition px-20 flex gap-x-20 text-12 flex-wrap mx-auto w-250 justify-center">
-                <a
+                <Link
                   target="_blank"
                   className="mb-20 text-12 text-CFFFFFF underline"
-                  href="https://static.quizzop.com/legal/terms-of-use/?utm_source=qzp_footer"
+                  to="/termsofuse"
                 >
                   Terms of Use
-                </a>
-                <a
+                </Link>
+                <Link
                   target="_blank"
                   className="mb-20 text-12 text-CFFFFFF underline"
-                  href="https://static.quizzop.com/legal/privacy/?utm_source=qzp_footer"
+                  to="/privacy-policy"
                 >
                   Privacy Policy
-                </a>
-                <a
+                </Link>
+                <Link
                   target="_blank"
                   className="mb-20 text-12 text-CFFFFFF underline"
-                  href="https://business.gamezop.com/about-us?utm_source=qzp_footer"
+                  to="https://adgrowup.com/#about"
                 >
                   About
-                </a>
-                <a
+                </Link>
+                <Link
                   target="_blank"
                   className="mb-20 text-12 text-CFFFFFF underline"
-                  href="https://careers.gamezop.com/?utm_source=qzp_footer"
-                >
-                  Jobs
-                </a>
-                <a
-                  target="_blank"
-                  className="mb-20 text-12 text-CFFFFFF underline"
-                  href="https://business.gamezop.com/?utm_source=qzp_footer"
+                  to="https://adgrowup.com/#contact"
                 >
                   Partner With Us
-                </a>
+                </Link>
               </div>
               <div className="text-center text-10 pb-20 text-C8789C3 mx-auto w-3/4 sm:w-p60">
-                © 2025 Advergame Technologies Pvt. Ltd. ("ATPL"). Gamezop ®
-                &amp; Quizzop ® are registered trademarks of ATPL.
+                © 2025 Advergame Technologies Pvt. Ltd. ("ATPL"). AdGrowUp ®
+                &amp; Quizonez ® are registered trademarks of ATPL.
               </div>
             </div>
           ) : (
@@ -114,21 +107,21 @@ const Footer = ({ gameStarted }) => {
               <div className="px-20 pb-20 text-10 text-C8789C3 footer-about-text">
                 <div style={{ marginTop: "20px" }}>
                   <p>
-                    Quizzop is a plug-and-play quizzing platform that any app or
-                    website can integrate to bring trivia for its users. Quizzop
-                    is affiliated with Gamezop, a gaming platform that digital
+                    Quizonez is a plug-and-play quizzing platform that any app or
+                    website can integrate to bring trivia for its users. Quizonez
+                    is affiliated with AdGrowUp, a gaming platform that digital
                     products can add as a gaming section.
                   </p>
                 </div>
                 <div style={{ marginTop: "20px" }}>
                   <p>
                     Over 5,000 products from more than 70 countries have
-                    integrated Quizzop and Gamezop. These include Amazon,
+                    integrated Quizonez and AdGrowUp. These include Amazon,
                     Samsung Internet, Snap, Tata Play, AccuWeather, Paytm, Gulf
                     News, and Branch. Trivia and games increase user engagement
                     significantly within all kinds of apps and websites, besides
-                    opening a new stream of advertising revenue. Gamezop and
-                    Quizzop take 30 minutes to integrate and can be used for
+                    opening a new stream of advertising revenue. AdGrowUp and
+                    Quizonez take 30 minutes to integrate and can be used for
                     free: both by the products integrating them and end users.
                   </p>
                 </div>
@@ -136,9 +129,9 @@ const Footer = ({ gameStarted }) => {
                   <p>
                     Increase ad revenue and engagement on your app / website
                     with games, quizzes, astrology, and cricket content. Visit:{" "}
-                    <a href="https://business.gamezop.com">
+                    <Link to="https://adgrowup.com/index.html#about">
                       business.gamezop.com
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>
@@ -157,20 +150,20 @@ const Footer = ({ gameStarted }) => {
             <div style={{ marginTop: "20px" }}>
               <p>
                 {" "}
-                Quizzop is a plug-and-play quizzing platform that any app or
-                website can integrate to bring trivia for its users. Quizzop is
-                affiliated with Gamezop, a gaming platform, that digital
+                Quizonez is a plug-and-play quizzing platform that any app or
+                website can integrate to bring trivia for its users. Quizonez is
+                affiliated with AdGrowUp, a gaming platform, that digital
                 products can add as a gaming section.{" "}
               </p>{" "}
             </div>
             <div style={{ marginTop: "20px" }}>
               <p>
                 Over 5,000 products from more than 70 countries have integrated
-                Quizzop and Gamezop. These include Amazon, Samsung Internet,
+                Quizonez and AdGrowUp. These include Amazon, Samsung Internet,
                 Snap, Tata Play, AccuWeather, Paytm, Gulf News, and Branch.
                 Trivia and games increase user engagement significantly within
                 all kinds of apps and websites, besides opening a new stream of
-                advertising revenue. Gamezop and Quizzop take 30 minutes to
+                advertising revenue. AdGrowUp and Quizonez take 30 minutes to
                 integrate and can be used for free: both by the products
                 integrating them and end users.
               </p>{" "}
@@ -182,9 +175,9 @@ const Footer = ({ gameStarted }) => {
                 {" "}
                 Increase ad revenue and engagement on your app / website with
                 games, quizzes, astrology, and cricket content. Visit:
-                <a href="https://business.gamezop.com">
+                <Link to="/about">
                   business.gamezop.com
-                </a>{" "}
+                </Link>{" "}
               </p>{" "}
             </div>
           </div>

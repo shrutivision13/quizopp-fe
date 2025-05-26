@@ -120,7 +120,7 @@ const BeginQuiz = () => {
                                     :
                                     <div class="flex">
                                         <button onClick={() => handleNavigate('joinQuizzop')} className="inline-flex items-center justify-center whitespace-nowrap text-18 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary primary-button disabled:primary-button-disabled box-shadow text-primary-foreground hover:bg-primary/90 font-bold rounded-6 py-12 px-48 h-48 w-full shine-animation" data-testid="join-quizzop-button">
-                                            <span className="mt-3">JOIN QUIZZOP</span>
+                                            <span className="mt-3">JOIN QUIZONEZ</span>
                                         </button>
                                         <button onClick={() => handleNavigate('playAsGuest')} className="inline-flex text-white items-center justify-center whitespace-nowrap text-18 font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 py-12 ml-10 w-full h-53 border px-24 border-C8789C3 bg-C20213F hover:bg-C20213F" data-testid="play-as-guest-button">PLAY AS GUEST</button>
                                     </div>

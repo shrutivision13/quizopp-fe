@@ -1,5 +1,6 @@
 import React from "react";
 import { SeeAllButton } from "./SeeAllButton";
+import adgrowUpLogo from "../../assets/images/adgroup.png";
 
 export const SectionHeading = ({ title, button, powerdBy, route }) => (
   <div className="mb-14">
@@ -10,16 +11,16 @@ export const SectionHeading = ({ title, button, powerdBy, route }) => (
       }
     </div>
     {powerdBy && (
-      <p className="flex text-12 font-normal italic text-CFAFAFA">
+      <p className="flex text-12 font-normal italic text-CFAFAFA items-center">
         <span className="mr-4">Powered by</span>
         <img
-          alt="Gamezop"
+          alt="AdGrowUp"
           loading="lazy"
-          width={65}
-          height={16}
+          width={80}
+          height={5}
           decoding="async"
-          style={{ color: "transparent" }}
-          src="https://static.quizzop.com/newton/assets/gamezop-logo-dark.svg"
+          style={{ color: "transparent", height: "10px", width: "65px" }}
+          src={adgrowUpLogo}
         />
       </p>
     )}

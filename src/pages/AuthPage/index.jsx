@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/images/quizzop-logo-dark.svg";
+import logo from "../../assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import GoogleSignIn from "./GoogleSignIn/index";
 
@@ -14,14 +14,14 @@ const AuthPage = () => {
           <div className="h-dynamic-screen overflow">
             <div className="text-center">
               <div className="my-30 flex justify-center">
-                <img alt="Quizzop" width="100" height="21" src={logo} />
+                <img alt="Quizonez" width="100" height="21" src={logo} style={{borderRadius: "4px"}}/>
               </div>
               <div className="mx-20 py-24 px-20 bg-C20213F rounded-10">
                 <div className="font-black text-18 dark:text-CFAFAFA">
-                  Sign in to Quizzop👋
+                  Sign in to Quizonez👋
                 </div>
                 <div className="mt-4 text-12 text-C676767 dark:text-C8789C3">
-                  Grow your knowledge with Quizzop's quizzes
+                  Grow your knowledge with Quizonez's quizzes
                 </div>
 
                 {/* --- Google Sign-In Button --- */}

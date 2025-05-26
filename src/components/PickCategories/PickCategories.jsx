@@ -17,10 +17,10 @@ const PickCategories = ({
     >
       {!quizBites ? (
         <div
-          className="absolute inset-0 h-full w-full"
+          className="absolute inset-0 h-full w-full bg-C0C0D26"
           style={{ zIndex: -100 }}
         >
-          <img
+          {/* <img
             alt="mini-quiz"
             decoding="async"
             className="mini-quiz-bg"
@@ -36,7 +36,7 @@ const PickCategories = ({
             }}
             sizes="100vw"
             src="https://static.quizzop.com/newton/assets/mini-quiz-bg.png?w=3840&q=75"
-          />
+          /> */}
         </div>
       ) : null}
       <div className="flex items-center justify-center mb-14">
