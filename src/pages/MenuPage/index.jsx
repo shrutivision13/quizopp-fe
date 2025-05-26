@@ -5,6 +5,9 @@ import TrendingArticles from "./TrendingArticles";
 import useCookie from "../../hooks/useCookie"; // Import useCookie hook
 import { ApiGetTrendingArticles } from "../../api-wrapper/article/ApiArticle";
 import { ApiGetCategories } from "../../api-wrapper/categories/ApiCategories";
+import instagram from "../../assets/images/instagram.webp";
+import facebook from "../../assets/images/facebook.webp";
+import x from "../../assets/images/x.png";
 
 function MenuPage({ closeMenu }) {
   const { getCookie, deleteCookie } = useCookie(); // Use deleteCookie
@@ -64,9 +67,8 @@ function MenuPage({ closeMenu }) {
     >
       <div
         id="sidebar-brackdrop"
-        className={`absolute left-0 top-0 transition-all duration-250 transform-gpu h-full w-full bg-C000000DE ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute left-0 top-0 transition-all duration-250 transform-gpu h-full w-full bg-C000000DE ${isVisible ? "opacity-100" : "opacity-0"
+          }`}
         style={{ pointerEvents: isVisible ? "auto" : "none" }}
         onClick={handleClose}
       ></div>
@@ -127,9 +129,8 @@ function MenuPage({ closeMenu }) {
                     viewBox="0 0 21 21"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`fill-current text-C8789C3 transform transition-transform ${
-                      isMoreOptionsOpen ? "rotate-180" : ""
-                    }`}
+                    className={`fill-current text-C8789C3 transform transition-transform ${isMoreOptionsOpen ? "rotate-180" : ""
+                      }`}
                   >
                     <path d="M10.8461 13.827L15.6741 9C15.7849 8.88852 15.8471 8.7377 15.8471 8.5805C15.8471 8.4233 15.7849 8.27248 15.6741 8.161L15.3191 7.805C15.2077 7.69392 15.0569 7.63154 14.8996 7.63154C14.7423 7.63154 14.5914 7.69392 14.4801 7.805L10.4251 11.859L6.36707 7.8C6.25559 7.68917 6.10477 7.62695 5.94757 7.62695C5.79037 7.62695 5.63955 7.68917 5.52807 7.8L5.17207 8.156C5.06124 8.26748 4.99902 8.4183 4.99902 8.5755C4.99902 8.7327 5.06124 8.88352 5.17207 8.995L10.0041 13.827C10.1163 13.9375 10.2675 13.9995 10.4251 13.9995C10.5826 13.9995 10.7338 13.9375 10.8461 13.827Z"></path>
                   </svg>
@@ -312,9 +313,8 @@ function MenuPage({ closeMenu }) {
                     viewBox="0 0 21 21"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`fill-current text-C8789C3 transform transition-transform ${
-                      isOtherProductsOpen ? "rotate-180" : ""
-                    }`}
+                    className={`fill-current text-C8789C3 transform transition-transform ${isOtherProductsOpen ? "rotate-180" : ""
+                      }`}
                   >
                     <path d="M10.8461 13.827L15.6741 9C15.7849 8.88852 15.8471 8.7377 15.8471 8.5805C15.8471 8.4233 15.7849 8.27248 15.6741 8.161L15.3191 7.805C15.2077 7.69392 15.0569 7.63154 14.8996 7.63154C14.7423 7.63154 14.5914 7.69392 14.4801 7.805L10.4251 11.859L6.36707 7.8C6.25559 7.68917 6.10477 7.62695 5.94757 7.62695C5.79037 7.62695 5.63955 7.68917 5.52807 7.8L5.17207 8.156C5.06124 8.26748 4.99902 8.4183 4.99902 8.5755C4.99902 8.7327 5.06124 8.88352 5.17207 8.995L10.0041 13.827C10.1163 13.9375 10.2675 13.9995 10.4251 13.9995C10.5826 13.9995 10.7338 13.9375 10.8461 13.827Z"></path>
                   </svg>
@@ -421,7 +421,7 @@ function MenuPage({ closeMenu }) {
                   decoding="async"
                   data-nimg="1"
                   style={{ color: "transparent" }}
-                  src="/src/assets/images/instagram.webp"
+                  src={instagram}
                 />
               </div>
               <div
@@ -436,7 +436,7 @@ function MenuPage({ closeMenu }) {
                   decoding="async"
                   data-nimg="1"
                   style={{ color: "transparent" }}
-                  src="/src/assets/images/facebook.webp"
+                  src={facebook}
                 />
               </div>
               <div
@@ -451,7 +451,7 @@ function MenuPage({ closeMenu }) {
                   decoding="async"
                   data-nimg="1"
                   style={{ color: "transparent" }}
-                  src="/src/assets/images/x.webp"
+                  src={x}
                 />
               </div>
               <div

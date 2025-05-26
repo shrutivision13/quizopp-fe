@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Slider from "../../../components/Slider/Slider";
 import { ApiGetTrendingArticles } from "../../../api-wrapper/article/ApiArticle";
 import { Link } from "react-router-dom";
-
+import nextYellow from "../../../assets/images/next-arrow-yellow.svg";
 function TrendingArticles({ closeMenu }) {
   const IMAGEURL = import.meta.env.VITE_API_BASE_URL;
   const [trendingArticles, setTrendingArticles] = useState([]);
@@ -48,7 +48,7 @@ function TrendingArticles({ closeMenu }) {
                 height="16"
                 decoding="async"
                 style={{ color: "transparent" }}
-                src="src/assets/images/next-arrow-yellow.svg"
+                src={nextYellow}
               />
             </div>
           </a>
