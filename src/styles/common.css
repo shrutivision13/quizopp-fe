@@ -51,6 +51,7 @@
 .dark {
   background: radial-gradient(#607cb3, transparent);
 }
+
 /* .dark {
   background: radial-gradient(#6285C8, transparent);
 } */
@@ -3114,7 +3115,7 @@ body {
 }
 
 .bg-skin-footer-dark {
-  background-color: var( --footer-bg-color);
+  background-color: var(--footer-bg-color);
 }
 
 .bg-C27294B {
@@ -5170,7 +5171,7 @@ p.text.off {
 }
 
 .dark .dark\:bg-skin-footer-dark {
-  background-color: var( --footer-bg-color);
+  background-color: var(--footer-bg-color);
 }
 
 .dark .dark\:bg-C27294B {
@@ -5361,7 +5362,7 @@ p.text.off {
   width: 100vw;
   height: 100vh;
   background: url(https://static.quizzop.com/newton/assets/desktop_bg.png) 0 0/1200px fixed,
-    #000428;
+    #384c72;
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -5506,8 +5507,7 @@ p.text.off {
 
 @media only screen and (min-width: 492px) {
   .style_background__W3FcZ {
-    background: url(https://static.quizzop.com/newton/assets/desktop_bg.png) 0 0/1200px
-      fixed;
+    background: url(https://static.quizzop.com/newton/assets/desktop_bg.png) 0 0/1200px fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

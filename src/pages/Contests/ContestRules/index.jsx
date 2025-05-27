@@ -77,7 +77,7 @@ function ContestRules() {
           <div className="min-h-56">
             <div
               data-testid="back-to-home-button"
-              className="py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B defaultButton px-36 max-w-maxW mx-20 cursor-pointer flex items-center flex-col select-none opacity-100"
+              className="py-12 text-center inline-block uppercase font-bold text-16 text-CFFFFFF rounded-5 bg-C0DB25B primary-button px-36 max-w-maxW mx-20 cursor-pointer flex items-center flex-col select-none opacity-100"
               onClick={() => navigate("/")} 
             >
               Back To Home
